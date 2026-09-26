@@ -145,6 +145,12 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .lcb .lvl{background:var(--accent-soft); border-radius:8px; padding:6px 10px; font-weight:700}
 @media (max-width:420px){ .lcb .row{grid-template-columns:1fr; gap:2px} }
 @media (prefers-reduced-motion: reduce){ .lcm .tr{transition:none} }
+.spbtn{background:linear-gradient(135deg,#C98A12,#D0587E)}
+.sptop{background:var(--amber-soft); border:1px solid var(--amber); border-radius:12px; padding:10px 12px; font-size:14px; display:grid; gap:6px}
+.sptop h3{margin:0; font-size:16px}
+.sptop .lay{display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 10px}
+.qbig{display:flex; flex-wrap:wrap; gap:6px}
+.qbig span{background:var(--amber-soft); color:var(--ink); border:1px solid var(--amber); border-radius:8px; padding:2px 10px; font-weight:700; font-size:13.5px; font-variant-numeric:tabular-nums}
 .note{font-size:13.5px; color:var(--muted); margin:0}
 #toast{position:fixed; inset-inline:0; bottom:calc(18px + env(safe-area-inset-bottom,0px)); margin:auto; width:max-content; max-width:calc(100% - 32px); background:var(--accent); color:var(--accent-ink); padding:10px 18px; border-radius:12px; font-weight:700; opacity:0; transition:opacity .2s; pointer-events:none}
 #toast.show{opacity:1}
@@ -159,6 +165,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     <h1>چمبیلی خوشبو — 10 کیمیکل نسخہ</h1>
     <p class="sync off" id="sync">محفوظ: صرف اس ڈیوائس میں</p>
     <p class="sub">بیچ کا وزن لکھیں — ہر جزو کی مقدار خود بخود نکل آئے گی۔</p>
+    <button type="button" class="libbtn spbtn" id="spBtn">⭐ اسپیشل کیمیکل — ZHF فارمولے کے 18 کیمیکل</button>
     <button type="button" class="libbtn" id="libBtn">📚 خوشبو کے تمام کیمیکل — مکمل تفصیل (A سے Z)</button>
   </header>
 
@@ -203,6 +210,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     <nav class="az" id="az" aria-label="حروف"></nav>
   </div>
   <div class="libbody" id="libBody"></div>
+</div>
+<div class="lib" id="sp" hidden role="dialog" aria-modal="true" aria-labelledby="spT">
+  <div class="libtop">
+    <div class="libhead"><h2 id="spT">⭐ اسپیشل کیمیکل</h2><button type="button" class="libx" id="spX" aria-label="بند کریں">✕</button></div>
+    <input type="search" class="libsearch" id="spQ" placeholder="تلاش کریں — اردو یا English نام…" aria-label="اسپیشل کیمیکل تلاش کریں">
+  </div>
+  <div class="libbody" id="spBody"></div>
 </div>
 <div id="toast" role="status" aria-live="polite"></div>
 
@@ -372,6 +386,52 @@ const FAMC={"الڈیہائیڈ": "#2F8FA5", "تازگی": "#2FA58F", "تازگ�
     $('az').hidden=!!q; };
 })();
 
+const ZHF=[["Dihydromyrcenol", 1800, "top", "3", "فارمولے کی سب سے بڑی چیز — پیکٹ کھولتے ہی صاف لیموں والی تازگی، اسی سے 'ڈیٹرجنٹ' والی پہچان بنتی ہے۔"], ["Linalool", 700, "heart", "2", "تازگی اور پھولوں کے بیچ پل — شروع کی تازگی کو درمیان کے پھولوں سے جوڑتا ہے۔"], ["Linalyl Acetate", 400, "top", "2", "برگاموٹ جیسی میٹھی تازگی — لینالول کے ساتھ مل کر نرم صاف شروعات۔"], ["Phenyl Ethyl Alcohol", 400, "heart", "2", "نرم گلاب — پھولوں والے حصے کو گول اور بھرپور بناتا ہے۔"], ["Hedione", 1000, "heart", "2", "ہوا دار چمبیلی — خوشبو کو پورے کمرے میں پھیلاتا ہے، 'چمبیلی جیسی تازگی' اسی سے۔"], ["Iso E Super", 700, "base", "1", "مخملی لکڑی — آخر میں 'نرم لکڑی والی تازگی' اور گہرائی دیتا ہے۔"], ["Galaxolide 50%", 1500, "base", "1", "صاف سفید مشک — دھلے کپڑوں پر کئی دن رہنے والی خوشبو کی بنیاد۔"], ["Benzyl Salicylate", 600, "base", "1", "خوشبو پکڑنے والا — باقی خوشبو کو جلد اڑنے نہیں دیتا۔"], ["Hexyl Cinnamic Aldehyde", 500, "heart", "2", "نرم چمبیلی — پھولوں کو بھرتا اور کپڑوں پر ٹھہراتا ہے۔"], ["Citronellol", 300, "heart", "2", "ہلکا تازہ گلاب — پھولوں کو قدرتی بناتا ہے۔"], ["Geraniol", 200, "heart", "2", "میٹھا گلاب — تھوڑی مقدار میں پھولوں کو بھرتا ہے۔"], ["Hydroxycitronellal", 300, "heart", "2", "للی جیسی نرمی — 'صاف لانڈری' والا سفید پھولوں کا احساس۔"], ["Aldehyde C-10", 100, "top", "3", "صاف تازہ شروعات — 'دھلے کپڑوں' والی چمک۔"], ["Aldehyde C-12 MNA", 50, "top", "3", "'ابھی دھلے کپڑے' والا خاص الڈیہائیڈ احساس — بہت تھوڑے میں۔"], ["Lemon Oil Terpeneless", 300, "top", "3", "قدرتی لیموں کی چمک — شروع کی تازگی کو اصلی بناتا ہے۔"], ["cis-3-Hexenyl Salicylate", 100, "top", "3", "سبز پتوں والی تازگی — 'bright green notes' اسی سے۔"], ["Triethyl Citrate", 550, "solv", "1", "گھولنے والا — سب کیمیکل کو یکساں ملاتا ہے، خود خوشبو نہیں دیتا۔"], ["Dipropylene Glycol", 500, "solv", "1", "گھولنے والا — مکسچر کو پتلا اور یکساں رکھتا ہے۔"]];
+(function(){
+  const LAY={top:['شروع (ٹاپ نوٹ)','پیکٹ کھولتے ہی پہلی خوشبو — جلد اڑتی ہے'],heart:['درمیان (ہارٹ نوٹ)','خوشبو کا دل — دھلائی کے دوران اور بعد'],base:['آخر (بیس نوٹ)','کپڑوں پر دنوں تک رہنے والی'],solv:['گھولنے والا','خوشبو نہیں، صرف ملانے کے لیے']};
+  const PH={'1':'مرحلہ 1 — بیس: پہلے یہ ڈالیں اور 10–15 منٹ ملائیں','2':'مرحلہ 2 — پھول: بیس کے بعد یہ ڈالیں','3':'مرحلہ 3 — تازگی: سب سے آخر میں ڈالیں (یہ جلد اڑتے ہیں)'};
+  const by={}; LIB.forEach(d=>by[d.en]=d);
+  const inF=new Set(R.map(r=>r.en.replace(/ \(.*\)$/,'')));
+  const body=$('spBody'), sp=$('sp'); let built=false;
+  const kg=g=>(g/1000).toLocaleString('en-US',{minimumFractionDigits:3,maximumFractionDigits:3});
+  function card(z,i){
+    const d=by[z[0]], g=z[1], pc=g/100, L=LAY[z[2]], names=[[d.ur,d.en]].concat(d.alt), ok=pc>=d.mn&&pc<=d.mx;
+    return '<details class="lc" data-s="'+esc((d.en+' '+d.ur+' '+d.alt.map(a=>a.join(' ')).join(' ')).toLowerCase())+'" style="--fc:'+(FAMC[d.fam]||'#6B7F7A')+'"><summary>'+
+      '<span class="lno">'+(i+1)+'</span><span class="lcn"><span class="lcen">'+esc(d.en)+'</span><span class="lcur">'+esc(d.ur)+'</span></span>'+
+      '<span class="lcm"><span class="qbig"><span>'+g.toLocaleString('en-US')+' گرام</span><span>'+pc+' فیصد</span></span><span style="color:'+(FAMC[d.fam]||'inherit')+';border-color:currentColor">'+esc(d.fam)+'</span>'+
+      (inF.has(d.en)?'<span class="in">✓ آپ کے نسخے میں بھی</span>':'')+(d.fl==='warn'?'<span class="wr">⚠ احتیاط</span>':'')+'<span class="tr" aria-hidden="true">▼</span></span></summary><div class="lcb">'+
+      '<div class="row"><b>⚖ ZHF میں مقدار</b><span class="lvl">10 کلو میں '+g.toLocaleString('en-US')+' گرام ('+kg(g)+' کلو) — 100 گرام میں '+pc+' گرام — یعنی '+pc+' فیصد</span></div>'+
+      '<div class="row"><b>🎯 فارمولے میں کام</b><span>'+esc(z[4])+'</span></div>'+
+      '<div class="row"><b>🌸 خوشبو کی تہہ</b><span><b>'+L[0]+'</b> — '+L[1]+'</span></div>'+
+      '<div class="row"><b>🧪 ملانے کا مرحلہ</b><span>'+PH[z[3]]+'</span></div>'+
+      '<div class="row"><b>دوسرے نام</b><ol class="ilist" style="margin:0">'+names.map(x=>'<li><span class="iur">'+esc(x[0])+'</span><span class="ien">'+esc(x[1])+'</span></li>').join('')+'</ol></div>'+
+      '<div class="row"><b>خوشبو کیسی</b><span>'+esc(d.sm)+'</span></div>'+
+      '<div class="row"><b>✅ فوائد</b><span>'+esc(d.use)+'</span></div>'+
+      '<div class="row"><b>❌ نقصان</b><span>'+esc(d.harm)+'</span></div>'+
+      '<div class="row"><b>🛡 احتیاط</b><span>'+esc(d.care)+'</span></div>'+
+      '<div class="row"><b>📏 لیول</b><span class="lvl">کم از کم '+d.mn+' فیصد — زیادہ سے زیادہ '+d.mx+' فیصد<br>'+(ok?'✓ ZHF کی مقدار ('+pc+' فیصد) اس حد کے اندر ہے':'⚠ ZHF کی مقدار ('+pc+' فیصد) اس عام حد سے باہر ہے — تازگی والے فارمولے میں یہ جان بوجھ کر ہے')+'</span></div>'+
+      '<div class="row"><b>⬇ کم ڈالیں تو</b><span>'+esc(d.lo)+'</span></div>'+
+      '<div class="row"><b>⬆ زیادہ ڈالیں تو</b><span>'+esc(d.hi)+'</span></div>'+
+      '</div></details>';
+  }
+  function build(){
+    const sum=k=>ZHF.filter(z=>z[2]===k).reduce((a,z)=>a+z[1],0)/100;
+    body.innerHTML='<div class="sptop"><h3>ZHF — لانڈری ڈیٹرجنٹ خوشبو (10 کلو)</h3>'+
+      '<span>Zubair Habib Flavours & Ingredients کا 18 کیمیکل والا فارمولا، تصویر والی ترتیب سے (1 سے 18)۔ ہر نام دبائیں تو پوری تفصیل کھلے گی۔</span>'+
+      '<div class="lay"><b>شروع:</b><span>تازہ لیموں، صاف الڈیہائیڈ اور سبز تازگی — '+sum('top')+' فیصد</span>'+
+      '<b>درمیان:</b><span>نرم پھول، چمبیلی جیسی تازگی — '+sum('heart')+' فیصد</span>'+
+      '<b>آخر:</b><span>دیرپا مشک، نرم لکڑی — '+sum('base')+' فیصد</span>'+
+      '<b>گھولنے والے:</b><span>'+sum('solv')+' فیصد</span></div>'+
+      '<span>کل: 10,000 گرام = 10 کلو۔ فیصد خوشبو کے تیل میں ہے — پاؤڈر میں پوری خوشبو 0.20 سے 0.50 فیصد ڈالی جاتی ہے۔</span></div>'+
+      '<div style="display:grid;gap:8px">'+ZHF.map(card).join('')+'</div>';
+    built=true;
+  }
+  function open(){ if(!built) build(); sp.hidden=false; document.body.style.overflow='hidden'; sp.scrollTop=0; setTimeout(()=>$('spX').focus(),0); }
+  function close(){ sp.hidden=true; document.body.style.overflow=''; $('spBtn').focus(); }
+  $('spBtn').onclick=open; $('spX').onclick=close;
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!sp.hidden) close(); });
+  $('spQ').oninput=()=>{ const q=$('spQ').value.trim().toLowerCase(); body.querySelectorAll('.lc').forEach(c=>{ c.hidden=!!q&&c.dataset.s.indexOf(q)<0; }); };
+})();
 })();
 </script>
 
