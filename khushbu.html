@@ -151,6 +151,14 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .sptop .lay{display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 10px}
 .qbig{display:flex; flex-wrap:wrap; gap:6px}
 .qbig span{background:var(--amber-soft); color:var(--ink); border:1px solid var(--amber); border-radius:8px; padding:2px 10px; font-weight:700; font-size:13.5px; font-variant-numeric:tabular-nums}
+.phh{display:grid; grid-template-columns:auto minmax(0,1fr); gap:2px 10px; align-items:center; background:var(--accent); color:var(--accent-ink); border-radius:12px; padding:8px 12px; margin-top:6px}
+.phh .phn{grid-row:span 2; background:var(--accent-ink); color:var(--accent); border-radius:8px; padding:2px 10px; font-weight:700; font-size:14px; white-space:nowrap}
+.phh b{font-size:16px}
+.phh .phs{font-size:13px; opacity:.95}
+.how{display:grid; gap:6px}
+.how h2{margin:0; font-size:18px}
+.how ol{margin:0; padding-inline-start:22px; display:grid; gap:6px; font-size:14.5px}
+.how li b{color:var(--accent)}
 .note{font-size:13.5px; color:var(--muted); margin:0}
 #toast{position:fixed; inset-inline:0; bottom:calc(18px + env(safe-area-inset-bottom,0px)); margin:auto; width:max-content; max-width:calc(100% - 32px); background:var(--accent); color:var(--accent-ink); padding:10px 18px; border-radius:12px; font-weight:700; opacity:0; transition:opacity .2s; pointer-events:none}
 #toast.show{opacity:1}
@@ -181,6 +189,19 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   </section>
 
   <section class="list" id="list"></section>
+
+  <section class="panel how" aria-labelledby="howT">
+    <h2 id="howT">🧪 ملانے کا طریقہ (مختصر)</h2>
+    <ol>
+      <li><b>تیاری:</b> صاف، خشک سٹین لیس سٹیل یا سخت پلاسٹک کا ڈھکن والا ڈبہ، ڈیجیٹل ترازو، دستانے اور ماسک۔ جگہ ہوادار ہو، آگ سے دور۔</li>
+      <li><b>تولنا:</b> ڈبہ ترازو پر رکھ کر زیرو کریں، پھر اوپر کی ترتیب سے (مرحلہ 1، پھر 2، پھر 3) ایک ایک کیمیکل تول کر ڈالیں۔ ہر کیمیکل کے لیے الگ صاف کپ یا چمچ۔</li>
+      <li><b>ہلانا:</b> ہر مرحلے کے بعد 10 منٹ آہستہ ہلائیں۔ آخر میں ترازو پر کل وزن چیک کریں۔</li>
+      <li><b>پکانا:</b> ڈھکن بند کر کے ٹھنڈی اندھیری جگہ 3 سے 7 دن رکھیں، روز ایک بار ہلکا ہلا دیں۔</li>
+      <li><b>چھاننا:</b> صاف کپڑے سے چھان کر بوتل یا ڈرم اوپر تک بھریں اور بند رکھیں۔</li>
+      <li><b>پاؤڈر میں:</b> پاؤڈر بالکل ٹھنڈا ہو — 100 کلو پاؤڈر میں 300 گرام (کم کے لیے 200، تیز کے لیے 500 گرام)۔ مکسر چلتے ہوئے اسپرے کریں، 10–15 منٹ ملائیں، فوراً ہوا بند پیکنگ۔</li>
+      <li><b>جانچ:</b> پہلے 1 کلو پاؤڈر میں 3 گرام ڈال کر کپڑے دھوئیں — پیکٹ کھولنے پر، دھلائی میں اور اگلے دن سوکھے کپڑوں پر سونگھیں۔</li>
+    </ol>
+  </section>
 
   <section class="panel" style="display:grid;gap:10px">
     <div class="bar" id="bar"></div>
@@ -222,23 +243,26 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 
 <script>
 (function(){
-const R=[{"n": "ہیڈیون", "en": "Hedione", "g": 22, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "ہوا دار چنبیلی — خوشبو کو پورے کمرے میں پھیلاتا ہے۔ اس نسخے کی سب سے بڑی چیز۔", "alt": [["میتھائل ڈائی ہائیڈرو جیسمونیٹ", "Methyl Dihydrojasmonate"], ["ایم ڈی جے", "MDJ"]], "src": []}, {"n": "ایچ سی اے", "en": "Hexyl Cinnamic Aldehyde", "g": 18, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "نرم بھرپور چنبیلی — خوشبو کا دل، دھلے کپڑوں پر ٹھہرتی ہے۔", "alt": [["ہیکسائل سنامک الڈیہائیڈ", "Hexylcinnamal"], ["جیسمین الڈیہائیڈ", "Jasmine Aldehyde"]], "src": []}, {"n": "لینالول", "en": "Linalool", "g": 11, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "ہلکی پھولوں والی تازگی — چمبیلی اور تازگی کو آپس میں جوڑتا ہے۔", "alt": [["لینالول آئل", "Linalool Oil"]], "src": []}, {"n": "بینزائل سیلیسیلیٹ", "en": "Benzyl Salicylate", "g": 9, "fam": "خوشبو پکڑنے والا", "c": "#4F6FB0", "w": "چمبیلی کو پکڑ کر رکھتا ہے تاکہ خوشبو جلد نہ اڑے، ساتھ ہلکی پھولوں کی مٹھاس۔", "alt": [], "src": []}, {"n": "پی ای اے", "en": "Phenyl Ethyl Alcohol", "g": 8, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "نرم گلاب — چمبیلی کو گول اور بھرپور بناتا ہے۔", "alt": [["فینائل ایتھائل الکحل", "Phenylethyl Alcohol"], ["روز الکحل", "Rose Alcohol"]], "src": []}, {"n": "ڈائی ہائیڈرو مائرسینول", "en": "Dihydromyrcenol", "g": 8, "fam": "تازگی", "c": "#2FA58F", "w": "صاف لیموں جیسی تازگی — کم رکھا ہے تاکہ چمبیلی نمایاں رہے۔", "alt": [["ڈی ایچ ایم", "DHM"]], "src": []}, {"n": "گیلیکسولائیڈ 50٪", "en": "Galaxolide 50%", "g": 12, "fam": "مشک", "c": "#7A6BB0", "w": "صاف سفید مشک — دھلے کپڑوں پر کئی دن تک خوشبو رہتی ہے۔", "alt": [["ایچ ایچ سی بی", "HHCB"], ["مشک 50", "Musk 50"], ["سفید مشک", "White Musk"], ["ایبالائیڈ", "Abbalide"]], "src": []}, {"n": "آئسو ای سپر", "en": "Iso E Super", "g": 5, "fam": "لکڑی", "c": "#8A5A36", "w": "مخملی نرم لکڑی — خوشبو کو گہرا اور دیرپا بناتا ہے۔", "alt": [["او ٹی این ای", "OTNE"]], "src": []}, {"n": "سس-3-ہیکسینائل سیلیسیلیٹ", "en": "cis-3-Hexenyl Salicylate", "g": 2, "fam": "تازگی", "c": "#2FA58F", "w": "تازہ پتوں والی سبز خوشبو — چمبیلی کو زندہ پھول جیسا بناتا ہے۔", "alt": [], "src": []}, {"n": "ڈائی پروپائلین گلائیکول", "en": "Dipropylene Glycol (DPG)", "g": 5, "fam": "گھولنے والا", "c": "#6B7F7A", "w": "گھولنے والا — خوشبو کو پتلا اور یکساں کرتا ہے، اپنی خوشبو نہیں۔", "alt": [["ڈی پی جی", "DPG"]], "src": []}];
+const R=[{"n": "ڈائی پروپائلین گلائیکول", "en": "Dipropylene Glycol (DPG)", "g": 5, "fam": "گھولنے والا", "c": "#6B7F7A", "w": "گھولنے والا — خوشبو کو پتلا اور یکساں کرتا ہے، اپنی خوشبو نہیں۔", "alt": [["ڈی پی جی", "DPG"]], "src": [], "ph": 1}, {"n": "گیلیکسولائیڈ 50٪", "en": "Galaxolide 50%", "g": 12, "fam": "مشک", "c": "#7A6BB0", "w": "صاف سفید مشک — دھلے کپڑوں پر کئی دن تک خوشبو رہتی ہے۔", "alt": [["ایچ ایچ سی بی", "HHCB"], ["مشک 50", "Musk 50"], ["سفید مشک", "White Musk"], ["ایبالائیڈ", "Abbalide"]], "src": [], "ph": 1}, {"n": "آئسو ای سپر", "en": "Iso E Super", "g": 5, "fam": "لکڑی", "c": "#8A5A36", "w": "مخملی نرم لکڑی — خوشبو کو گہرا اور دیرپا بناتا ہے۔", "alt": [["او ٹی این ای", "OTNE"]], "src": [], "ph": 1}, {"n": "بینزائل سیلیسیلیٹ", "en": "Benzyl Salicylate", "g": 9, "fam": "خوشبو پکڑنے والا", "c": "#4F6FB0", "w": "چمبیلی کو پکڑ کر رکھتا ہے تاکہ خوشبو جلد نہ اڑے، ساتھ ہلکی پھولوں کی مٹھاس۔", "alt": [], "src": [], "ph": 1}, {"n": "ہیڈیون", "en": "Hedione", "g": 22, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "ہوا دار چنبیلی — خوشبو کو پورے کمرے میں پھیلاتا ہے۔ اس نسخے کی سب سے بڑی چیز۔", "alt": [["میتھائل ڈائی ہائیڈرو جیسمونیٹ", "Methyl Dihydrojasmonate"], ["ایم ڈی جے", "MDJ"]], "src": [], "ph": 2}, {"n": "ایچ سی اے", "en": "Hexyl Cinnamic Aldehyde", "g": 18, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "نرم بھرپور چنبیلی — خوشبو کا دل، دھلے کپڑوں پر ٹھہرتی ہے۔", "alt": [["ہیکسائل سنامک الڈیہائیڈ", "Hexylcinnamal"], ["جیسمین الڈیہائیڈ", "Jasmine Aldehyde"]], "src": [], "ph": 2}, {"n": "لینالول", "en": "Linalool", "g": 11, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "ہلکی پھولوں والی تازگی — چمبیلی اور تازگی کو آپس میں جوڑتا ہے۔", "alt": [["لینالول آئل", "Linalool Oil"]], "src": [], "ph": 2}, {"n": "پی ای اے", "en": "Phenyl Ethyl Alcohol", "g": 8, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "نرم گلاب — چمبیلی کو گول اور بھرپور بناتا ہے۔", "alt": [["فینائل ایتھائل الکحل", "Phenylethyl Alcohol"], ["روز الکحل", "Rose Alcohol"]], "src": [], "ph": 2}, {"n": "ڈائی ہائیڈرو مائرسینول", "en": "Dihydromyrcenol", "g": 8, "fam": "تازگی", "c": "#2FA58F", "w": "صاف لیموں جیسی تازگی — کم رکھا ہے تاکہ چمبیلی نمایاں رہے۔", "alt": [["ڈی ایچ ایم", "DHM"]], "src": [], "ph": 3}, {"n": "سس-3-ہیکسینائل سیلیسیلیٹ", "en": "cis-3-Hexenyl Salicylate", "g": 2, "fam": "تازگی", "c": "#2FA58F", "w": "تازہ پتوں والی سبز خوشبو — چمبیلی کو زندہ پھول جیسا بناتا ہے۔", "alt": [], "src": [], "ph": 3}];
 const BASE=R.reduce((a,r)=>a+r.g,0); // 100
 const $=id=>document.getElementById(id);
+const OLDORD=["Hedione", "Hexyl Cinnamic Aldehyde", "Linalool", "Benzyl Salicylate", "Phenyl Ethyl Alcohol", "Dihydromyrcenol", "Galaxolide 50%", "Iso E Super", "cis-3-Hexenyl Salicylate", "Dipropylene Glycol (DPG)"];
+const fromOld=a=>R.map(r=>a[OLDORD.indexOf(r.en)]);
+const toOld=g=>OLDORD.map(en=>g[R.findIndex(r=>r.en===en)]);
 const KEY='jasmine10-rates', WKEY='jasmine10-weights'; let RATE={}, G=R.map(r=>r.g);
 try{ RATE=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ RATE={}; }
-try{ const w=JSON.parse(localStorage.getItem(WKEY)||'null'); if(Array.isArray(w)&&w.length===R.length&&w.every(x=>typeof x==='number'&&x>=0)&&w.some(x=>x>0)) G=w; }catch(e){}
+try{ const w=JSON.parse(localStorage.getItem(WKEY)||'null'); if(Array.isArray(w)&&w.length===R.length&&w.every(x=>typeof x==='number'&&x>=0)&&w.some(x=>x>0)) G=fromOld(w); }catch(e){}
 let DOC=null, pushT=null, lastSent='';
-function push(){ if(!DOC) return; clearTimeout(pushT); pushT=setTimeout(async()=>{ const body={weights:G.slice(), rates:Object.assign({},RATE)}; const s=JSON.stringify(body); if(s===lastSent) return; lastSent=s; try{ await DOC.set(body); }catch(e){ lastSent=''; if(e&&e.code==='invalid_argument'){ setSync(false,'صرف دیکھنے کی اجازت — تبدیلی محفوظ نہیں ہوگی'); DOC=null; } } },700); }
+function push(){ if(!DOC) return; clearTimeout(pushT); pushT=setTimeout(async()=>{ const body={weights:toOld(G), rates:Object.assign({},RATE)}; const s=JSON.stringify(body); if(s===lastSent) return; lastSent=s; try{ await DOC.set(body); }catch(e){ lastSent=''; if(e&&e.code==='invalid_argument'){ setSync(false,'صرف دیکھنے کی اجازت — تبدیلی محفوظ نہیں ہوگی'); DOC=null; } } },700); }
 const saveR=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(RATE)); }catch(e){} push(); };
-const saveW=()=>{ try{ localStorage.setItem(WKEY,JSON.stringify(G)); }catch(e){} push(); };
+const saveW=()=>{ try{ localStorage.setItem(WKEY,JSON.stringify(toOld(G))); }catch(e){} push(); };
 function setSync(on,t){ const s=$('sync'); s.className='sync '+(on?'on':'off'); s.textContent=t; }
 function applyRemote(d){
   if(!d) return;
-  if(Array.isArray(d.weights)&&d.weights.length===R.length&&d.weights.every(x=>typeof x==='number'&&x>=0)&&d.weights.some(x=>x>0)) G=d.weights.slice();
+  if(Array.isArray(d.weights)&&d.weights.length===R.length&&d.weights.every(x=>typeof x==='number'&&x>=0)&&d.weights.some(x=>x>0)) G=fromOld(d.weights);
   if(d.rates&&typeof d.rates==='object'){ RATE={}; Object.keys(d.rates).forEach(k=>{ const v=Number(d.rates[k]); if(v>0) RATE[k]=v; }); }
-  lastSent=JSON.stringify({weights:G, rates:RATE});
-  try{ localStorage.setItem(KEY,JSON.stringify(RATE)); localStorage.setItem(WKEY,JSON.stringify(G)); }catch(e){}
+  lastSent=JSON.stringify({weights:toOld(G), rates:RATE});
+  try{ localStorage.setItem(KEY,JSON.stringify(RATE)); localStorage.setItem(WKEY,JSON.stringify(toOld(G))); }catch(e){}
   const act=document.activeElement, ai=act&&act.id&&/^w\d+$/.test(act.id)?Number(act.id.slice(1)):undefined;
   document.querySelectorAll('.rate input').forEach(x=>{ if(x!==act) x.value=RATE[x.dataset.k]||''; });
   update(ai);
@@ -267,18 +291,20 @@ const PRE=[[100,'g','100 گرام'],[500,'g','500 گرام'],[1,'kg','1 کلو']
 $('chips').innerHTML=PRE.map(p=>'<button type="button" data-v="'+p[0]+'" data-u="'+p[1]+'">'+p[2]+'</button>').join('');
 $('chips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; $('batch').value=b.dataset.v; $('unit').value=b.dataset.u; update(); };
 const LV=[
+[0,10,'مکسچر گاڑھا ہوگا اور کیمیکل آپس میں مشکل سے گھلیں گے۔','خوشبو پتلی ہو جائے گی (یہ خود خوشبو نہیں دیتا)، پیسے ضائع ہوں گے۔'],
+[8,20,'دھلے کپڑوں پر خوشبو ایک دو دن میں ختم ہو جائے گی۔','مشک غالب آ جائے گی، چمبیلی پیچھے رہ جائے گی اور خرچہ بڑھے گا۔'],
+[2,10,'خوشبو میں گہرائی کم ہوگی، ہلکی سی لگے گی۔','لکڑی والی خشک خوشبو آئے گی، چمبیلی دب جائے گی۔'],
+[4,15,'خوشبو جلد اڑ جائے گی، کپڑوں پر دیر تک نہیں رہے گی۔','خوشبو دبی دبی اور بے جان لگے گی، شروع کی تازگی چھپ جائے گی۔'],
 [10,30,'چمبیلی پھیکی لگے گی اور خوشبو کمرے میں کم پھیلے گی۔','خوشبو پانی جیسی پتلی اور ہلکی لگے گی، اور خرچہ بڑھے گا۔'],
 [8,25,'چمبیلی کمزور ہوگی اور دھلے کپڑوں پر خوشبو کم ٹھہرے گی۔','خوشبو بھاری اور چکنی سی لگے گی، تازگی دب جائے گی۔'],
 [5,15,'پھولوں اور تازگی کا جوڑ ٹوٹے گا، شروع کی ہلکی تازگی کم ہوگی۔','خوشبو لیونڈر جیسی تیز ہو جائے گی، اور پرانی ہو کر اس کی بو بدل سکتی ہے۔'],
-[4,15,'خوشبو جلد اڑ جائے گی، کپڑوں پر دیر تک نہیں رہے گی۔','خوشبو دبی دبی اور بے جان لگے گی، شروع کی تازگی چھپ جائے گی۔'],
 [3,12,'چمبیلی پتلی اور ادھوری لگے گی، گولائی نہیں آئے گی۔','گلاب کی خوشبو چمبیلی پر غالب آ جائے گی، شہد جیسی میٹھی ہوگی۔'],
 [4,15,'پیکٹ کھولتے وقت تازگی کم محسوس ہوگی۔','لیموں والی تیز تازگی چمبیلی کو ڈھک دے گی، خوشبو "سرف ایکسل" جیسی ہو جائے گی۔'],
-[8,20,'دھلے کپڑوں پر خوشبو ایک دو دن میں ختم ہو جائے گی۔','مشک غالب آ جائے گی، چمبیلی پیچھے رہ جائے گی اور خرچہ بڑھے گا۔'],
-[2,10,'خوشبو میں گہرائی کم ہوگی، ہلکی سی لگے گی۔','لکڑی والی خشک خوشبو آئے گی، چمبیلی دب جائے گی۔'],
-[0.5,3,'چمبیلی میں تازہ پتوں والی قدرتی جان کم ہوگی۔','گھاس جیسی تیز سبز بو آئے گی جو چبھتی ہے۔'],
-[0,10,'مکسچر گاڑھا ہوگا اور کیمیکل آپس میں مشکل سے گھلیں گے۔','خوشبو پتلی ہو جائے گی (یہ خود خوشبو نہیں دیتا)، پیسے ضائع ہوں گے۔']];
+[0.5,3,'چمبیلی میں تازہ پتوں والی قدرتی جان کم ہوگی۔','گھاس جیسی تیز سبز بو آئے گی جو چبھتی ہے۔']
+];
 function build(){
-  $('list').innerHTML=R.map((r,i)=>'<div class="item" id="it'+i+'" style="--c:'+r.c+'"><span class="no">'+(i+1)+'</span><span class="name">'+esc(r.n)+'<span class="en">'+esc(r.en)+'</span></span>'+
+  const PHH={1:['1','بیس — پہلے یہ 4 ڈالیں','10 سے 15 منٹ آہستہ ہلائیں۔ گیلیکسولائیڈ گاڑھا ہو تو پہلے اس کا ڈبہ گرم پانی میں رکھیں۔'],2:['2','چمبیلی اور پھول','بیس کے بعد یہ 4 ڈالیں، 10 منٹ ہلائیں۔'],3:['3','تازگی — سب سے آخر میں','یہ جلد اڑتے ہیں، اس لیے آخر میں ڈالیں، 10 منٹ ہلائیں۔']};
+  $('list').innerHTML=R.map((r,i)=>(i===0||R[i-1].ph!==r.ph?'<div class="phh"><span class="phn">مرحلہ '+PHH[r.ph][0]+'</span><b>'+PHH[r.ph][1]+'</b><span class="phs">'+PHH[r.ph][2]+'</span></div>':'')+'<div class="item" id="it'+i+'" style="--c:'+r.c+'"><span class="no">'+(i+1)+'</span><span class="name">'+esc(r.n)+'<span class="en">'+esc(r.en)+'</span></span>'+
     '<span class="wt"><span class="wrow"><input id="w'+i+'" data-i="'+i+'" type="number" min="0" step="any" inputmode="decimal" aria-label="'+esc(r.n)+' کا وزن گرام میں"><span>گرام</span></span><span class="wk" id="wk'+i+'"></span></span>'+
     '<div class="why"><span>'+esc(r.w)+'</span><span class="tags"><span class="fam">'+esc(r.fam)+'</span><span class="pct" id="p'+i+'"></span></span></div>'+
     '<div class="rate"><label for="r'+i+'">ریٹ فی کلو</label><input id="r'+i+'" data-k="'+esc(r.en)+'" type="number" min="0" step="any" inputmode="decimal" placeholder="0" value="'+(RATE[r.en]||'')+'"><span>روپے</span><span class="cost" id="c'+i+'"></span></div>'+
