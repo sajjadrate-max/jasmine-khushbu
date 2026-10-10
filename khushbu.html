@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>[hidden]{display:none!important}</style>
 <title>چمبیلی خوشبو نسخہ</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1F6E52">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="خوشبو نسخہ">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600&display=swap">
@@ -212,6 +219,9 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .tin::-webkit-outer-spin-button,.tin::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
 .tin{-moz-appearance:textfield; appearance:textfield}
 @media (max-width:380px){ .trow{grid-template-columns:minmax(0,2.1fr) minmax(0,1.15fr) minmax(0,1fr) minmax(0,.75fr) minmax(0,.85fr); gap:3px; padding:9px 4px} .tn{font-size:12.5px} .tno{width:22px; height:22px; font-size:12px} .tname{gap:2px 5px} .tin{font-size:14px} .tw,.ta{font-size:12.5px} .thead{font-size:13px} .thead small{font-size:10.5px} }
+.instbtn{font:inherit; font-weight:700; font-size:17px; border:0; background:#1F6E52; color:#fff; border-radius:12px; padding:12px 16px; cursor:pointer; width:100%; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 3px 10px rgba(31,110,82,.3)}
+.insthint{margin:0; background:var(--accent-soft); color:var(--ink); border:1px solid var(--accent); border-radius:12px; padding:10px 12px; font-size:14px}
+.insthint b{color:var(--accent)}
 .note{font-size:13.5px; color:var(--muted); margin:0}
 #toast{position:fixed; inset-inline:0; bottom:calc(18px + env(safe-area-inset-bottom,0px)); margin:auto; width:max-content; max-width:calc(100% - 32px); background:var(--accent); color:var(--accent-ink); padding:10px 18px; border-radius:12px; font-weight:700; opacity:0; transition:opacity .2s; pointer-events:none}
 #toast.show{opacity:1}
@@ -224,6 +234,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <div class="wrap">
   <header>
     <h1>چمبیلی خوشبو — 9 کیمیکل نسخہ</h1>
+    <button type="button" class="instbtn" id="instBtn" hidden>📲 ایپ انسٹال کریں</button>
+    <p class="insthint" id="instHint" hidden></p>
     <p class="sync off" id="sync">محفوظ: صرف اس ڈیوائس میں</p>
     <p class="sub">بیچ کا وزن لکھیں — ہر جزو کی مقدار خود بخود نکل آئے گی۔</p>
     <button type="button" class="libbtn spbtn" id="spBtn">⭐ اسپیشل کیمیکل — ZHF فارمولے کے 18 کیمیکل</button>
@@ -244,9 +256,11 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   <details class="stepsbox"><summary><span class="tri" aria-hidden="true">▼</span>🧪 بنانے کے مرحلے دیکھیں (مرحلہ 1، 2، 3)</summary><div class="sb" id="steps"></div></details>
   <section class="list" id="list"></section>
 
-  <section class="panel how" aria-labelledby="howT">
-    <h2 id="howT">🧪 ملانے کا طریقہ (مختصر)</h2>
-    <ol>
+  <section class="extra">
+    <details>
+      <summary>🧪 ملانے کا طریقہ (مختصر)<span class="tri" aria-hidden="true">▼</span></summary>
+      <div class="xb how">
+        <ol>
       <li><b>تیاری:</b> صاف، خشک سٹین لیس سٹیل یا سخت پلاسٹک کا ڈھکن والا ڈبہ، ڈیجیٹل ترازو، دستانے اور ماسک۔ جگہ ہوادار ہو، آگ سے دور۔</li>
       <li><b>تولنا:</b> ڈبہ ترازو پر رکھ کر زیرو کریں، پھر اوپر کی ترتیب سے (مرحلہ 1، پھر 2، پھر 3) ایک ایک کیمیکل تول کر ڈالیں۔ ہر کیمیکل کے لیے الگ صاف کپ یا چمچ۔</li>
       <li><b>ہلانا:</b> ہر مرحلے کے بعد 10 منٹ آہستہ ہلائیں۔ آخر میں ترازو پر کل وزن چیک کریں۔</li>
@@ -255,6 +269,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
       <li><b>پاؤڈر میں:</b> پاؤڈر بالکل ٹھنڈا ہو — 100 کلو پاؤڈر میں 300 گرام (کم کے لیے 200، تیز کے لیے 500 گرام)۔ مکسر چلتے ہوئے اسپرے کریں، 10–15 منٹ ملائیں، فوراً ہوا بند پیکنگ۔</li>
       <li><b>جانچ:</b> پہلے 1 کلو پاؤڈر میں 3 گرام ڈال کر کپڑے دھوئیں — پیکٹ کھولنے پر، دھلائی میں اور اگلے دن سوکھے کپڑوں پر سونگھیں۔</li>
     </ol>
+      </div>
+    </details>
   </section>
 
   <section class="extra">
@@ -569,5 +585,25 @@ const ZHF=[["Dihydromyrcenol", 1800, "top", "3", "فارمولے کی سب سے 
 })();
 </script>
 
+<script>
+(function(){
+  var b=document.getElementById('instBtn'), hint=document.getElementById('instHint'), dp=null;
+  var standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+  if(standalone) return;
+  window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); dp=e; b.hidden=false; hint.hidden=true; });
+  b.onclick=function(){ if(!dp) return; dp.prompt(); var p=dp.userChoice; dp=null; if(p&&p.then) p.then(function(c){ if(c&&c.outcome==='accepted') b.hidden=true; else b.hidden=true; }); };
+  window.addEventListener('appinstalled',function(){ b.hidden=true; hint.hidden=false; hint.innerHTML='✓ ایپ انسٹال ہو گئی — ہوم اسکرین پر <b>خوشبو نسخہ</b> کا آئیکن دیکھیں۔'; });
+  if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost')){
+    navigator.serviceWorker.register('sw.js').then(function(){
+      var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+      setTimeout(function(){
+        if(dp||!b.hidden) return;
+        hint.hidden=false;
+        hint.innerHTML=ios?'📲 <b>ایپ انسٹال کرنے کے لیے:</b> نیچے شیئر کا نشان (⬆️) دبائیں، پھر <b>Add to Home Screen</b> دبائیں۔':'📲 <b>ایپ انسٹال کرنے کے لیے:</b> براؤزر کے اوپر تین نقطوں (⋮) والے مینو میں <b>Install app</b> یا <b>Add to Home screen</b> دبائیں۔';
+      },3500);
+    }).catch(function(){});
+  }
+})();
+</script>
 </body>
 </html>
