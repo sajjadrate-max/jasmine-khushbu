@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>[hidden]{display:none!important} html.locked body>.wrap,html.locked #toast,html.locked .lib{visibility:hidden!important}</style>
-<script>try{if((location.protocol==='https:'||location.hostname==='localhost')&&window.top===window)document.documentElement.classList.add('locked');}catch(e){}</script>
+<script>document.documentElement.classList.add('locked');</script>
 <title>چمبیلی خوشبو نسخہ</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1F6E52">
@@ -227,7 +227,16 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .lock[hidden]{display:none!important}
 .lkbox{width:100%; max-width:340px; display:grid; gap:14px; text-align:center}
 .lkbox>*{min-width:0}
-.lkicon{width:92px; height:92px; margin:0 auto; border-radius:24px; background:#fff url(icon-192.png) center/cover no-repeat; box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.lkicon{width:84px; height:84px; margin:0 auto; border-radius:24px; background:rgba(255,255,255,.14); display:flex; align-items:center; justify-content:center; font-size:40px; box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.lkhid{position:absolute; opacity:0; width:1px; height:1px; pointer-events:none}
+.lkdots{display:flex; justify-content:center; gap:18px; direction:ltr}
+.lkdots i{width:18px; height:18px; border-radius:50%; border:2px solid rgba(255,255,255,.75); transition:background .15s}
+.lkdots i.on{background:#F2C44C; border-color:#F2C44C}
+.lkpad{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; direction:ltr; justify-items:center}
+.lkpad button{font:inherit; font-family:"IBM Plex Sans",sans-serif; font-size:28px; width:74px; height:74px; border-radius:50%; border:0; background:rgba(255,255,255,.14); color:#fff; cursor:pointer; -webkit-tap-highlight-color:transparent}
+.lkpad button:active{background:rgba(255,255,255,.32)}
+.lkpad button:focus-visible{outline:2px solid #F2C44C; outline-offset:2px}
+.lkpad .lkfn{background:none; font-size:24px}
 .lkbox h2{margin:0; font-family:"Noto Nastaliq Urdu","Noto Naskh Arabic",serif; font-size:26px; line-height:2}
 .lkbox p{margin:0; font-size:15.5px; opacity:.95}
 .lkcode{font:inherit; width:100%; min-height:58px; border-radius:14px; border:2px solid rgba(255,255,255,.55); background:rgba(255,255,255,.12); color:#fff; text-align:center; font-size:28px; letter-spacing:12px; direction:ltr; font-family:"IBM Plex Sans",sans-serif}
@@ -251,12 +260,18 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <body>
 <div class="lock" id="lock" hidden role="dialog" aria-modal="true" aria-labelledby="lkT">
   <form class="lkbox" id="lkForm" autocomplete="off">
-    <div class="lkicon" aria-hidden="true"></div>
+    <div class="lkicon" aria-hidden="true">🔒</div>
     <h2 id="lkT">خوشبو نسخہ</h2>
-    <p>🔒 کھولنے کے لیے کوڈ لکھیں</p>
-    <input class="lkcode" id="lkCode" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="8" size="4" placeholder="کوڈ" aria-label="کوڈ" autocomplete="off">
-    <button type="submit" class="lkgo">کھولیں</button>
+    <p>کھولنے کے لیے 4 ہندسوں کا کوڈ لکھیں</p>
+    <input class="lkhid" id="lkCode" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" aria-label="کوڈ" autocomplete="off">
+    <div class="lkdots" id="lkDots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <p class="lkmsg" id="lkMsg" role="status" aria-live="polite"></p>
+    <div class="lkpad" id="lkPad">
+      <button type="button" data-n="1">1</button><button type="button" data-n="2">2</button><button type="button" data-n="3">3</button>
+      <button type="button" data-n="4">4</button><button type="button" data-n="5">5</button><button type="button" data-n="6">6</button>
+      <button type="button" data-n="7">7</button><button type="button" data-n="8">8</button><button type="button" data-n="9">9</button>
+      <button type="button" class="lkfn" data-a="clr" aria-label="سب مٹائیں">C</button><button type="button" data-n="0">0</button><button type="button" class="lkfn" data-a="del" aria-label="ایک ہندسہ مٹائیں">⌫</button>
+    </div>
   </form>
 </div>
 <div class="wrap">
@@ -402,7 +417,8 @@ const KEY='jasmine10-rates', WKEY='jasmine9pct-weights'; let RATE={}, G=R.map(r=
 try{ RATE=Object.assign({},DEFRATE,JSON.parse(localStorage.getItem(KEY)||'{}')||{}); }catch(e){ RATE=Object.assign({},DEFRATE); }
 try{ const w=JSON.parse(localStorage.getItem(WKEY)||'null'); if(Array.isArray(w)&&w.length===R.length&&w.every(x=>typeof x==='number'&&x>=0)&&w.some(x=>x>0)) G=fromOld(w); }catch(e){}
 let DOC=null, pushT=null, lastSent='';
-function push(){ if(!DOC) return; clearTimeout(pushT); pushT=setTimeout(async()=>{ const body={weights:toOld(G), rates:Object.assign({},RATE)}; const s=JSON.stringify(body); if(s===lastSent) return; lastSent=s; try{ await DOC.set(body); }catch(e){ lastSent=''; if(e&&e.code==='invalid_argument'){ setSync(false,'صرف دیکھنے کی اجازت — تبدیلی محفوظ نہیں ہوگی'); DOC=null; } } },700); }
+function state(){ return {weights:toOld(G), rates:Object.assign({},RATE), batch:Math.max(0,Number(document.getElementById('batch').value)||0), unit:document.getElementById('unit').value==='g'?'g':'kg'}; }
+function push(){ if(!DOC) return; clearTimeout(pushT); pushT=setTimeout(async()=>{ const body=state(); const s=JSON.stringify(body); if(s===lastSent) return; lastSent=s; try{ await DOC.set(body); }catch(e){ lastSent=''; if(e&&(e.code==='invalid_argument'||e.code==='permission-denied')){ setSync(false,'صرف دیکھنے کی اجازت — تبدیلی محفوظ نہیں ہوگی'); DOC=null; } } },700); }
 const saveR=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(RATE)); }catch(e){} push(); };
 const saveW=()=>{ try{ localStorage.setItem(WKEY,JSON.stringify(toOld(G))); }catch(e){} push(); };
 function setSync(on,t){ const s=$('sync'); s.className='sync '+(on?'on':'off'); s.textContent=t; }
@@ -410,16 +426,29 @@ function applyRemote(d){
   if(!d) return;
   if(Array.isArray(d.weights)&&d.weights.length===R.length&&d.weights.every(x=>typeof x==='number'&&x>=0)&&d.weights.some(x=>x>0)) G=fromOld(d.weights);
   if(d.rates&&typeof d.rates==='object'){ RATE=Object.assign({},DEFRATE); Object.keys(d.rates).forEach(k=>{ const v=Number(d.rates[k]); if(v>=0) RATE[k]=v; }); }
-  lastSent=JSON.stringify({weights:toOld(G), rates:RATE});
+  const act0=document.activeElement;
+  if(typeof d.batch==='number'&&d.batch>=0&&act0!==$('batch')) $('batch').value=d.batch;
+  if(d.unit==='g'||d.unit==='kg') $('unit').value=d.unit;
+  try{ localStorage.setItem('jasmine9-batch',JSON.stringify({batch:Number($('batch').value)||0,unit:$('unit').value})); }catch(e){}
+  lastSent=JSON.stringify(state());
   try{ localStorage.setItem(KEY,JSON.stringify(RATE)); localStorage.setItem(WKEY,JSON.stringify(toOld(G))); }catch(e){}
   const act=document.activeElement, ai=act&&act.id&&/^p\d+$/.test(act.id)?Number(act.id.slice(1)):undefined;
   document.querySelectorAll('.rin').forEach(x=>{ if(x!==act) x.value=RATE[x.dataset.k]||''; });
   update(ai);
 }
+function loadJs(src){ return new Promise((ok,no)=>{ const e=document.createElement('script'); e.src=src; e.onload=ok; e.onerror=no; document.head.appendChild(e); }); }
+// Best Excel والا Firebase — خوشبو نسخے کا الگ خانہ: localSync/jasmine_khushbu_nuskha
+async function fireDoc(){
+  const V='https://www.gstatic.com/firebasejs/9.23.0/';
+  await loadJs(V+'firebase-app-compat.js'); await loadJs(V+'firebase-firestore-compat.js');
+  const cfg={apiKey:"AIzaSyAW9tWG0o6bCBwPTkoymInLpvM5T7idvxg",authDomain:"best-excel.firebaseapp.com",projectId:"best-excel",storageBucket:"best-excel.firebasestorage.app",messagingSenderId:"895860622346",appId:"1:895860622346:web:01bd79b9459f4e70e10bf3"};
+  const app=firebase.apps.find(a=>a.name==='khushbu')||firebase.initializeApp(cfg,'khushbu');
+  const d=app.firestore().collection('localSync').doc('jasmine_khushbu_nuskha');
+  return { set:body=>d.set(Object.assign({},body,{updatedAt:Date.now()})), onSnapshot:(f,err)=>d.onSnapshot(f,err) };
+}
 async function initDb(){
   let db=null; try{ db=window.claude&&typeof claude.use==='function'?await claude.use('db'):null; }catch(e){ db=null; }
-  if(!db) return;
-  try{ DOC=db.doc('nuskha/main'); }catch(e){ return; }
+  try{ DOC=db?db.doc('nuskha/main'):await fireDoc(); }catch(e){ DOC=null; return; }
   let first=true;
   DOC.onSnapshot(snap=>{
     setSync(true,'🟢 لائیو — ہر موبائل اور کمپیوٹر پر ایک جیسا');
@@ -438,7 +467,10 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 function grams(){ const v=Math.max(0,Number($('batch').value)||0); return $('unit').value==='kg'?v*1000:v; }
 const PRE=[[100,'g','100 گرام'],[500,'g','500 گرام'],[1,'kg','1 کلو'],[5,'kg','5 کلو'],[10,'kg','10 کلو']];
 $('chips').innerHTML=PRE.map(p=>'<button type="button" data-v="'+p[0]+'" data-u="'+p[1]+'">'+p[2]+'</button>').join('');
-$('chips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; $('batch').value=b.dataset.v; $('unit').value=b.dataset.u; update(); };
+const BKEY='jasmine9-batch';
+const saveB=()=>{ try{ localStorage.setItem(BKEY,JSON.stringify({batch:Number($('batch').value)||0,unit:$('unit').value})); }catch(e){} push(); };
+try{ const b=JSON.parse(localStorage.getItem(BKEY)||'null'); if(b&&typeof b.batch==='number'&&b.batch>=0){ $('batch').value=b.batch; if(b.unit==='g'||b.unit==='kg') $('unit').value=b.unit; } }catch(e){}
+$('chips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; $('batch').value=b.dataset.v; $('unit').value=b.dataset.u; update(); saveB(); };
 const LV=[
 [0,10,'مکسچر گاڑھا ہوگا اور کیمیکل آپس میں مشکل سے گھلیں گے۔','خوشبو پتلی ہو جائے گی (یہ خود خوشبو نہیں دیتا)، پیسے ضائع ہوں گے۔'],
 [8,20,'دھلے کپڑوں پر خوشبو ایک دو دن میں ختم ہو جائے گی۔','مشک غالب آ جائے گی، چمبیلی پیچھے رہ جائے گی اور خرچہ بڑھے گا۔'],
@@ -509,7 +541,7 @@ $('list').addEventListener('change',e=>{ if(e.target.matches('.pin')) update(); 
 $('list').addEventListener('click',e=>{ const b=e.target.closest('.tdet'); if(!b) return; const d=$('dt'+b.dataset.i), open=d.hidden; d.hidden=!open; b.setAttribute('aria-expanded',String(open)); });
 $('reset').onclick=()=>{ G=R.map(r=>r.g); saveW(); update(); toast('اصل فارمولا واپس آ گیا'); };
 $('clr').onclick=()=>{ RATE={}; R.forEach(r=>RATE[r.en]=0); saveR(); document.querySelectorAll('.rin').forEach(x=>x.value=''); costs(); toast('ریٹ صاف ہو گئے'); };
-$('batch').oninput=()=>update(); $('unit').onchange=()=>update();
+$('batch').oninput=()=>{ update(); saveB(); }; $('unit').onchange=()=>{ update(); saveB(); };
 function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800); }
 $('copy').onclick=()=>{
   const T=grams(), S=sumG()||1;
@@ -636,15 +668,25 @@ const ZHF=[["Dihydromyrcenol", 1800, "top", "3", "فارمولے کی سب سے 
 </script>
 <script>
 (function(){
-  var H=document.documentElement; if(!H.classList.contains('locked')) return;
+  var H=document.documentElement;
   var CODE='ff0e7fee02ebc45b75f9afd138c81820c8dfb92a81aa76c97fa070024f2f5eb0';
-  var $=function(i){return document.getElementById(i)}, L=$('lock'), F=$('lkForm'), inp=$('lkCode'), msg=$('lkMsg');
+  var $=function(i){return document.getElementById(i)}, L=$('lock'), F=$('lkForm'), inp=$('lkCode'), msg=$('lkMsg'), dots=$('lkDots').children;
+  var v='', busy=false;
   function sha(t){ return crypto.subtle.digest('SHA-256',new TextEncoder().encode('khb:'+t)).then(function(b){ return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0')}).join(''); }); }
-  function unlock(){ H.classList.remove('locked'); L.hidden=true; msg.textContent=''; inp.value=''; $('lockTools').hidden=false; }
-  function lock(){ H.classList.add('locked'); L.hidden=false; msg.textContent=''; inp.value=''; setTimeout(function(){ inp.focus(); },150); }
-  F.addEventListener('submit',function(e){ e.preventDefault(); var v=inp.value.trim(); if(!v) return;
-    sha(v).then(function(h){ if(h===CODE){ unlock(); } else { msg.textContent='غلط کوڈ — دوبارہ لکھیں'; inp.value=''; F.classList.remove('shake'); void F.offsetWidth; F.classList.add('shake'); inp.focus(); } }); });
-  inp.addEventListener('input',function(){ msg.textContent=''; if(inp.value.length===4) F.requestSubmit?F.requestSubmit():F.dispatchEvent(new Event('submit',{cancelable:true})); });
+  function draw(){ for(var i=0;i<dots.length;i++) dots[i].classList.toggle('on',i<v.length); inp.value=v; }
+  function unlock(){ H.classList.remove('locked'); L.hidden=true; msg.textContent=''; v=''; draw(); $('lockTools').hidden=false; }
+  function lock(){ H.classList.add('locked'); L.hidden=false; msg.textContent=''; v=''; draw(); $('lockTools').hidden=true; setTimeout(function(){ try{ inp.focus({preventScroll:true}); }catch(e){} },150); }
+  function check(){ if(busy||v.length<4) return; busy=true;
+    sha(v).then(function(h){ busy=false;
+      if(h===CODE){ unlock(); }
+      else { msg.textContent='غلط کوڈ — دوبارہ لکھیں'; v=''; draw(); F.classList.remove('shake'); void F.offsetWidth; F.classList.add('shake'); if(navigator.vibrate) try{navigator.vibrate(150);}catch(e){} }
+    }, function(){ busy=false; msg.textContent='یہ براؤزر کوڈ نہیں جانچ سکتا'; }); }
+  function key(n){ if(busy) return; msg.textContent=''; if(v.length<4){ v+=n; draw(); } if(v.length===4) setTimeout(check,120); }
+  function del(){ if(busy) return; v=v.slice(0,-1); draw(); }
+  $('lkPad').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; if(b.dataset.n!=null) key(b.dataset.n); else if(b.dataset.a==='del') del(); else { v=''; draw(); } });
+  inp.addEventListener('input',function(){ v=inp.value.replace(/\D/g,'').slice(0,4); msg.textContent=''; draw(); if(v.length===4) check(); });
+  document.addEventListener('keydown',function(e){ if(L.hidden||e.target===inp) return; if(/^[0-9]$/.test(e.key)) key(e.key); else if(e.key==='Backspace') del(); });
+  F.addEventListener('submit',function(e){ e.preventDefault(); check(); });
   $('lkNow').onclick=lock;
   var hiddenAt=0;
   document.addEventListener('visibilitychange',function(){ if(document.hidden) hiddenAt=Date.now(); else if(hiddenAt&&Date.now()-hiddenAt>60000&&!H.classList.contains('locked')) lock(); });

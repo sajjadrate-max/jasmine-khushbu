@@ -1,5 +1,5 @@
 // چمبیلی خوشبو ایپ — آف لائن اور انسٹال کے لیے
-const C = 'khushbu-v1';
+const C = 'khushbu-v2';
 const CORE = ['khushbu.html', 'manifest.json', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(C).then(c => c.addAll(CORE)).catch(() => {}));
