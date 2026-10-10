@@ -159,6 +159,59 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 .how h2{margin:0; font-size:18px}
 .how ol{margin:0; padding-inline-start:22px; display:grid; gap:6px; font-size:14.5px}
 .how li b{color:var(--accent)}
+.extra{display:grid; gap:8px}
+.extra details{background:var(--surface); border:1px solid var(--line); border-radius:14px}
+.extra summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px; padding:12px 14px; font-weight:700; font-size:16px}
+.extra summary::-webkit-details-marker{display:none}
+.extra summary .tri{display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; flex:none; border-radius:50%; background:var(--accent); color:var(--accent-ink); font-size:13px; transition:transform .2s; margin-inline-start:auto}
+.extra details[open] summary .tri{transform:rotate(180deg)}
+.extra .xb{padding:0 14px 14px; display:grid; gap:8px; font-size:14.5px}
+.extra .xb p{margin:0}
+.extra ol,.extra ul{margin:0; padding-inline-start:22px; display:grid; gap:8px}
+.ien2{font-family:"IBM Plex Sans",sans-serif; font-size:12.5px; color:var(--muted); direction:ltr; unicode-bidi:isolate}
+.ok{color:var(--accent); font-weight:700}
+.bad{color:#B3261E; font-weight:700}
+@media (prefers-reduced-motion: reduce){ .extra summary .tri{transition:none} }
+.stepsbox{background:var(--accent-soft); border:2px solid var(--accent); border-radius:14px}
+.stepsbox summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px; padding:10px 14px; font-weight:700; color:var(--accent); font-size:16px}
+.stepsbox summary::-webkit-details-marker{display:none}
+.stepsbox summary .tri{display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; flex:none; border-radius:50%; background:var(--accent); color:var(--accent-ink); font-size:14px; transition:transform .2s}
+.stepsbox[open] summary .tri{transform:rotate(180deg)}
+.stepsbox .sb{padding:0 14px 12px; display:grid; gap:8px}
+.stepsbox .sbp{background:var(--surface); border-radius:10px; padding:8px 10px; font-size:14px}
+.stepsbox .sbp b{color:var(--accent)}
+.tbl{background:var(--surface); border:1px solid var(--line); border-radius:4px; overflow:hidden}
+.trow{display:grid; grid-template-columns:minmax(0,1.9fr) minmax(0,1.2fr) minmax(0,1.05fr) minmax(0,.8fr) minmax(0,.9fr); gap:6px; align-items:center; padding:10px 8px; border-bottom:1px solid var(--line)}
+.thead{background:#1F6E52; color:#fff; font-weight:700; font-size:16px; padding:12px 8px}
+.thead span{display:flex; flex-direction:column; align-items:center; line-height:1.4; text-align:center}
+.thead span:first-child{align-items:flex-start}
+.thead small{font-weight:400; font-size:12px; opacity:.9}
+.tbody .trow:nth-of-type(4n+3){background:var(--surface2)}
+.tname{display:grid; grid-template-columns:auto minmax(0,1fr); gap:2px 8px; align-items:center}
+.tno{grid-row:span 2; width:26px; height:26px; border-radius:50%; background:#1F6E52; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; font-family:"IBM Plex Sans",sans-serif}
+.tn{font-weight:700; font-size:15px; line-height:1.5; min-width:0}
+.ten{font-family:"IBM Plex Sans",sans-serif; font-size:12.5px; color:var(--muted); direction:ltr; text-align:right; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.tdet{grid-column:1; justify-self:center; width:24px; height:24px; border-radius:50%; border:1.5px solid #C0392B; color:#C0392B; background:none; font-size:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; transition:transform .2s}
+.tdet[aria-expanded="true"]{transform:rotate(180deg)}
+.tin{font:inherit; width:100%; min-width:0; min-height:44px; text-align:center; direction:ltr; font-weight:700; font-size:17px; color:#1F4FA0; background:#FFF6DC; border:1.5px solid #E8D28E; border-radius:10px; padding:0 4px; font-variant-numeric:tabular-nums}
+.tpct{display:flex; align-items:center; gap:1px; direction:ltr}
+.tpct .tin{padding:0 1px}
+.tpct i{font-style:normal; color:var(--muted); font-size:11px}
+.tw,.ta{text-align:center; font-variant-numeric:tabular-nums; font-family:"IBM Plex Sans",sans-serif; font-size:15px}
+.ta{font-weight:700; font-size:15.5px}
+.trow.chg .tin.pin{border-color:var(--amber); background:var(--amber-soft)}
+.tdetail{padding:6px 10px 12px; border-bottom:1px solid var(--line); background:var(--surface); display:grid; gap:6px; font-size:14px}
+.tdetail[hidden]{display:none!important}
+.tdetail .why{display:flex; flex-wrap:wrap; gap:8px; justify-content:space-between; color:var(--muted)}
+.tfoot{background:var(--accent-soft); font-weight:700}
+.tfoot .tw,.tfoot .ta,.tfoot .tp{font-size:15.5px; text-align:center; font-family:"IBM Plex Sans",sans-serif}
+.tfoot .tp.bad{color:#B3261E}
+.twarn{margin:0; padding:8px 12px; background:var(--amber-soft); color:var(--amber); font-weight:700; font-size:14px}
+@media (max-width:420px){ .trow{gap:4px; padding:9px 5px} .tin{font-size:15px; min-height:42px} .tn{font-size:12.8px} .tw,.ta{font-size:13.5px} .thead{font-size:14.5px} }
+@media (prefers-reduced-motion: reduce){ .tdet,.stepsbox summary .tri{transition:none} }
+.tin::-webkit-outer-spin-button,.tin::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
+.tin{-moz-appearance:textfield; appearance:textfield}
+@media (max-width:380px){ .trow{grid-template-columns:minmax(0,2.1fr) minmax(0,1.15fr) minmax(0,1fr) minmax(0,.75fr) minmax(0,.85fr); gap:3px; padding:9px 4px} .tn{font-size:12.5px} .tno{width:22px; height:22px; font-size:12px} .tname{gap:2px 5px} .tin{font-size:14px} .tw,.ta{font-size:12.5px} .thead{font-size:13px} .thead small{font-size:10.5px} }
 .note{font-size:13.5px; color:var(--muted); margin:0}
 #toast{position:fixed; inset-inline:0; bottom:calc(18px + env(safe-area-inset-bottom,0px)); margin:auto; width:max-content; max-width:calc(100% - 32px); background:var(--accent); color:var(--accent-ink); padding:10px 18px; border-radius:12px; font-weight:700; opacity:0; transition:opacity .2s; pointer-events:none}
 #toast.show{opacity:1}
@@ -188,6 +241,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     <div class="modrow" id="modrow" hidden><span class="mn">⚠ آپ نے فارمولا بدلا ہے</span><button type="button" class="reset" id="reset">اصل فارمولا واپس لائیں</button></div>
   </section>
 
+  <details class="stepsbox"><summary><span class="tri" aria-hidden="true">▼</span>🧪 بنانے کے مرحلے دیکھیں (مرحلہ 1، 2، 3)</summary><div class="sb" id="steps"></div></details>
   <section class="list" id="list"></section>
 
   <section class="panel how" aria-labelledby="howT">
@@ -201,6 +255,36 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
       <li><b>پاؤڈر میں:</b> پاؤڈر بالکل ٹھنڈا ہو — 100 کلو پاؤڈر میں 300 گرام (کم کے لیے 200، تیز کے لیے 500 گرام)۔ مکسر چلتے ہوئے اسپرے کریں، 10–15 منٹ ملائیں، فوراً ہوا بند پیکنگ۔</li>
       <li><b>جانچ:</b> پہلے 1 کلو پاؤڈر میں 3 گرام ڈال کر کپڑے دھوئیں — پیکٹ کھولنے پر، دھلائی میں اور اگلے دن سوکھے کپڑوں پر سونگھیں۔</li>
     </ol>
+  </section>
+
+  <section class="extra">
+    <details>
+      <summary>📦 پیکنگ اور خریداری<span class="tri" aria-hidden="true">▼</span></summary>
+      <div class="xb">
+        <p>عام طور پر 3 طرح ملتے ہیں: <b>کمپنی کی اصل پیکنگ</b> (180–215 کلو ڈرم یا 25 کلو کین)، <b>ڈیلر کا کھلا مال</b> (1، 5، 10، 25 کلو پلاسٹک کین — جوڑیا بازار وغیرہ)، اور <b>پرچون</b> (30 ملی لیٹر سے 1 لیٹر — بہت مہنگا)۔</p>
+        <ol><li><b>ڈائی پروپائلین گلائیکول</b> <span class="ien2">(Dipropylene Glycol (DPG))</span><br>کمپنی پیکنگ: 215 کلو ڈرم، 25 کلو کین — ڈیلر سے: 1 سے 25 کلو کین<br>10 کلو بیچ میں لگے گا: <b>500 گرام</b> — لیں: <b>5 کلو (تقریباً 10 بیچ)</b></li><li><b>گیلیکسولائیڈ 50٪</b> <span class="ien2">(Galaxolide 50%)</span><br>کمپنی پیکنگ: 200 کلو ڈرم، 25 کلو کین — ڈیلر سے: 1 سے 25 کلو کین<br>10 کلو بیچ میں لگے گا: <b>1.2 کلو</b> — لیں: <b>5 یا 10 کلو</b></li><li><b>آئسو ای سپر</b> <span class="ien2">(Iso E Super)</span><br>کمپنی پیکنگ: 195–200 کلو ڈرم، 25 کلو کین — ڈیلر سے: 1 سے 25 کلو کین<br>10 کلو بیچ میں لگے گا: <b>500 گرام</b> — لیں: <b>5 کلو</b></li><li><b>بینزائل سیلیسیلیٹ</b> <span class="ien2">(Benzyl Salicylate)</span><br>کمپنی پیکنگ: 200 کلو ڈرم، 25 کلو کین — ڈیلر سے: 1 سے 25 کلو کین<br>10 کلو بیچ میں لگے گا: <b>600 گرام</b> — لیں: <b>5 کلو</b></li><li><b>ہیڈیون</b> <span class="ien2">(Hedione)</span><br>کمپنی پیکنگ: 180–200 کلو ڈرم، 25 کلو کین — ڈیلر سے: 1 سے 25 کلو کین<br>10 کلو بیچ میں لگے گا: <b>1.8 کلو</b> — لیں: <b>10 یا 25 کلو (سب سے زیادہ لگتا ہے)</b></li><li><b>ایچ سی اے</b> <span class="ien2">(Hexyl Cinnamic Aldehyde)</span><br>کمپنی پیکنگ: 200 کلو ڈرم، 25 کلو کین — ڈیلر سے: 1 سے 25 کلو کین<br>10 کلو بیچ میں لگے گا: <b>1.2 کلو</b> — لیں: <b>10 یا 25 کلو</b></li><li><b>لینالول</b> <span class="ien2">(Linalool)</span><br>کمپنی پیکنگ: 180–200 کلو ڈرم، 25 کلو کین — ڈیلر سے: 1 سے 25 کلو کین<br>10 کلو بیچ میں لگے گا: <b>1.5 کلو</b> — لیں: <b>5 یا 10 کلو</b></li><li><b>پی ای اے</b> <span class="ien2">(Phenyl Ethyl Alcohol)</span><br>کمپنی پیکنگ: 200 کلو / 200 لیٹر ڈرم، 25 کلو کین — ڈیلر سے: 1 سے 25 کلو کین<br>10 کلو بیچ میں لگے گا: <b>1.2 کلو</b> — لیں: <b>5 کلو</b></li><li><b>ڈائی ہائیڈرو مائرسینول</b> <span class="ien2">(Dihydromyrcenol)</span><br>کمپنی پیکنگ: 175–200 کلو ڈرم، 25 کلو کین — ڈیلر سے: 1 سے 25 کلو کین<br>10 کلو بیچ میں لگے گا: <b>1.5 کلو</b> — لیں: <b>5 کلو</b></li></ol>
+        <p><b>مشورے:</b></p>
+        <ul>
+          <li>پہلی بار ہر کیمیکل <b>1 کلو</b> لیں، نمونہ بنا کر آزمائیں، پھر بڑا لیں۔</li>
+          <li><b>25 کلو سیل بند کین</b> کھلے مال سے سستا اور ملاوٹ سے محفوظ — خاص طور پر ہیڈیون اور ایچ سی اے۔</li>
+          <li>کھلا مال لیں تو کمپنی کا نام اور <b>CAS نمبر</b> پوچھیں، اور نیچے والی جانچ ضرور کریں۔</li>
+          <li>بند ڈبے میں ٹھنڈی جگہ 1–2 سال ٹھیک رہتے ہیں۔ لینالول اور ڈائی ہائیڈرو مائرسینول کھلنے کے بعد جلد استعمال کریں۔ ڈبہ آدھا خالی ہو تو چھوٹے ڈبے میں اوپر تک بھر دیں۔</li>
+        </ul>
+        <p class="ien2" style="direction:rtl">یہ عالمی اور تھوک منڈی کے عام سائز ہیں — پاکستان میں ہر ڈیلر کے پاس تھوڑے الگ ہو سکتے ہیں۔</p>
+      </div>
+    </details>
+    <details>
+      <summary>✅ مال کی جانچ (اصلی ہے یا نہیں)<span class="tri" aria-hidden="true">▼</span></summary>
+      <div class="xb">
+        <ol>
+          <li><b>رنگ:</b> زیادہ تر کیمیکل بے رنگ یا ہلکے پیلے اور صاف ہوتے ہیں۔ گہرا پیلا، بھورا یا گدلا = پرانا یا خراب۔</li>
+          <li><b>پانی والا ٹیسٹ:</b> گلاس پانی میں 2–3 قطرے ڈالیں۔ ایچ سی اے، لینالول، ڈائی ہائیڈرو مائرسینول، ہیڈیون — <span class="ok">اوپر تیرنے چاہئیں</span>۔ ایچ سی اے کے قطرے <span class="bad">نیچے بیٹھ جائیں</span> تو وہ دار چینی والا <b>سنامک الڈیہائیڈ</b> ہے — غلط مال۔ (بینزائل سیلیسیلیٹ اور گیلیکسولائیڈ پانی سے بھاری ہیں، وہ نیچے بیٹھتے ہیں — یہ ٹھیک ہے۔)</li>
+          <li><b>خوشبو والا ٹیسٹ:</b> 1 قطرہ کیمیکل + 10 قطرے ڈی پی جی ملا کر کاغذ کی پٹی پر لگائیں، 15–30 منٹ بعد سونگھیں۔ صاف، اپنی پہچان والی خوشبو = ٹھیک۔ مٹی کے تیل یا سستے تیل جیسی بو، یا کاغذ پر کبھی نہ سوکھنے والا چکنا داغ = ملاوٹ۔</li>
+          <li><b>ایچ سی اے کی عام بات:</b> بوتل سے سیدھا سونگھیں تو چکنی، موم جیسی، عجیب سی بو آتی ہے — یہ عام ہے۔ باقی کیمیکلز کے ساتھ مل کر یہی چمبیلی بنتی ہے۔ CAS نمبر: <b class="ien2">101-86-0</b> (سنامک الڈیہائیڈ کا 104-55-2 ہوتا ہے)۔</li>
+          <li><b>وزن والا ٹیسٹ (ایچ سی اے):</b> 100 ملی لیٹر تولیں — تقریباً 95–96 گرام = ٹھیک؛ تقریباً 105 گرام = سنامک الڈیہائیڈ۔</li>
+        </ol>
+      </div>
+    </details>
   </section>
 
   <section class="panel" style="display:grid;gap:10px">
@@ -222,7 +306,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     <button type="button" class="btn" id="copy">نسخہ کاپی کریں</button>
   </section>
 
-  <p class="note">نسخہ 100 گرام خوشبو کے حساب سے ہے — ZHF والے کیمیکلز میں سے صرف 9 سب سے ضروری، چمبیلی کو نمایاں رکھ کر (چمبیلی و پھول تقریباً 69٪)۔ بینزائل ایسیٹیٹ مل جائے تو 5 گرام ڈالیں اور ڈی پی جی 5 گرام کم کریں (یعنی ڈی پی جی نکال دیں) — چمبیلی اور تیز ہو جائے گی۔ پاؤڈر میں 0.20 سے 0.50٪ ڈالیں (100 کلو پاؤڈر میں تقریباً 300 گرام)۔ پہلے چھوٹا نمونہ بنا کر پرکھیں، پھر بڑا بیچ بنائیں۔ کیمیکل کے ساتھ دستانے استعمال کریں۔</p>
+  <p class="note">فیصد اور ریٹ کے خانوں میں لکھ کر بدل سکتے ہیں — وزن اور رقم خود نکلیں گے۔ کل فیصد 100 ہونا چاہیے۔ اوپر "کتنی خوشبو بنانی ہے" میں بیچ کا وزن لکھیں (100٪ = اتنا وزن)۔ ہر نام کے نیچے تکون دبائیں تو اس کیمیکل کی تفصیل، لیول اور دوسرے نام کھلیں گے۔ پاؤڈر میں 0.30 سے 0.50٪ ڈالیں (100 کلو پاؤڈر میں 300–500 گرام)۔ پہلے چھوٹا نمونہ بنا کر پرکھیں۔ کیمیکل کے ساتھ دستانے استعمال کریں۔</p>
 </div>
 <div class="lib" id="lib" hidden role="dialog" aria-modal="true" aria-labelledby="libT">
   <div class="libtop">
@@ -243,14 +327,15 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 
 <script>
 (function(){
-const R=[{"n": "ڈائی پروپائلین گلائیکول", "en": "Dipropylene Glycol (DPG)", "g": 5, "fam": "گھولنے والا", "c": "#6B7F7A", "w": "گھولنے والا — خوشبو کو پتلا اور یکساں کرتا ہے، اپنی خوشبو نہیں۔", "alt": [["ڈی پی جی", "DPG"]], "src": [], "ph": 1}, {"n": "گیلیکسولائیڈ 50٪", "en": "Galaxolide 50%", "g": 12, "fam": "مشک", "c": "#7A6BB0", "w": "صاف سفید مشک — دھلے کپڑوں پر کئی دن تک خوشبو رہتی ہے۔", "alt": [["ایچ ایچ سی بی", "HHCB"], ["مشک 50", "Musk 50"], ["سفید مشک", "White Musk"], ["ایبالائیڈ", "Abbalide"]], "src": [], "ph": 1}, {"n": "آئسو ای سپر", "en": "Iso E Super", "g": 5, "fam": "لکڑی", "c": "#8A5A36", "w": "مخملی نرم لکڑی — خوشبو کو گہرا اور دیرپا بناتا ہے۔", "alt": [["او ٹی این ای", "OTNE"]], "src": [], "ph": 1}, {"n": "بینزائل سیلیسیلیٹ", "en": "Benzyl Salicylate", "g": 9, "fam": "خوشبو پکڑنے والا", "c": "#4F6FB0", "w": "چمبیلی کو پکڑ کر رکھتا ہے تاکہ خوشبو جلد نہ اڑے، ساتھ ہلکی پھولوں کی مٹھاس۔", "alt": [], "src": [], "ph": 1}, {"n": "ہیڈیون", "en": "Hedione", "g": 22, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "ہوا دار چنبیلی — خوشبو کو پورے کمرے میں پھیلاتا ہے۔ اس نسخے کی سب سے بڑی چیز۔", "alt": [["میتھائل ڈائی ہائیڈرو جیسمونیٹ", "Methyl Dihydrojasmonate"], ["ایم ڈی جے", "MDJ"]], "src": [], "ph": 2}, {"n": "ایچ سی اے", "en": "Hexyl Cinnamic Aldehyde", "g": 18, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "نرم بھرپور چنبیلی — خوشبو کا دل، دھلے کپڑوں پر ٹھہرتی ہے۔", "alt": [["ہیکسائل سنامک الڈیہائیڈ", "Hexylcinnamal"], ["جیسمین الڈیہائیڈ", "Jasmine Aldehyde"]], "src": [], "ph": 2}, {"n": "لینالول", "en": "Linalool", "g": 12, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "ہلکی پھولوں والی تازگی — چمبیلی اور تازگی کو آپس میں جوڑتا ہے۔", "alt": [["لینالول آئل", "Linalool Oil"]], "src": [], "ph": 2}, {"n": "پی ای اے", "en": "Phenyl Ethyl Alcohol", "g": 8, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "نرم گلاب — چمبیلی کو گول اور بھرپور بناتا ہے۔", "alt": [["فینائل ایتھائل الکحل", "Phenylethyl Alcohol"], ["روز الکحل", "Rose Alcohol"]], "src": [], "ph": 2}, {"n": "ڈائی ہائیڈرو مائرسینول", "en": "Dihydromyrcenol", "g": 9, "fam": "تازگی", "c": "#2FA58F", "w": "صاف لیموں جیسی تازگی — کم رکھا ہے تاکہ چمبیلی نمایاں رہے۔", "alt": [["ڈی ایچ ایم", "DHM"]], "src": [], "ph": 3}];
+const R=[{"n": "ڈائی پروپائلین گلائیکول", "en": "Dipropylene Glycol (DPG)", "g": 5, "fam": "گھولنے والا", "c": "#6B7F7A", "w": "گھولنے والا — خوشبو کو پتلا اور یکساں کرتا ہے، اپنی خوشبو نہیں۔", "alt": [["ڈی پی جی", "DPG"]], "src": [], "ph": 1, "sh": "DPG", "nm": "ڈی پی جی"}, {"n": "گیلیکسولائیڈ 50٪", "en": "Galaxolide 50%", "g": 12, "fam": "مشک", "c": "#7A6BB0", "w": "صاف سفید مشک — دھلے کپڑوں پر کئی دن تک خوشبو رہتی ہے۔", "alt": [["ایچ ایچ سی بی", "HHCB"], ["مشک 50", "Musk 50"], ["سفید مشک", "White Musk"], ["ایبالائیڈ", "Abbalide"]], "src": [], "ph": 1, "sh": "Galaxolide 50%", "nm": "گیلیکسولائیڈ 50٪"}, {"n": "آئسو ای سپر", "en": "Iso E Super", "g": 5, "fam": "لکڑی", "c": "#8A5A36", "w": "مخملی نرم لکڑی — خوشبو کو گہرا اور دیرپا بناتا ہے۔", "alt": [["او ٹی این ای", "OTNE"]], "src": [], "ph": 1, "sh": "Iso E Super", "nm": "آئسو ای سپر"}, {"n": "بینزائل سیلیسیلیٹ", "en": "Benzyl Salicylate", "g": 6, "fam": "خوشبو پکڑنے والا", "c": "#4F6FB0", "w": "چمبیلی کو پکڑ کر رکھتا ہے تاکہ خوشبو جلد نہ اڑے، ساتھ ہلکی پھولوں کی مٹھاس۔", "alt": [], "src": [], "ph": 1, "sh": "Benzyl Salicylate", "nm": "بینزائل سیلیسیلیٹ"}, {"n": "ہیڈیون", "en": "Hedione", "g": 18, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "ہوا دار چنبیلی — خوشبو کو پورے کمرے میں پھیلاتا ہے۔ اس نسخے کی سب سے بڑی چیز۔", "alt": [["میتھائل ڈائی ہائیڈرو جیسمونیٹ", "Methyl Dihydrojasmonate"], ["ایم ڈی جے", "MDJ"]], "src": [], "ph": 2, "sh": "Hedione", "nm": "ہیڈیون"}, {"n": "ایچ سی اے", "en": "Hexyl Cinnamic Aldehyde", "g": 12, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "نرم بھرپور چنبیلی — خوشبو کا دل، دھلے کپڑوں پر ٹھہرتی ہے۔", "alt": [["ہیکسائل سنامک الڈیہائیڈ", "Hexylcinnamal"], ["جیسمین الڈیہائیڈ", "Jasmine Aldehyde"]], "src": [], "ph": 2, "sh": "HCA", "nm": "ایچ سی اے"}, {"n": "لینالول", "en": "Linalool", "g": 15, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "ہلکی پھولوں والی تیز تازگی — چمبیلی اور تازگی کو آپس میں جوڑتا ہے۔", "alt": [["لینالول آئل", "Linalool Oil"]], "src": [], "ph": 2, "sh": "Linalool", "nm": "لینالول"}, {"n": "پی ای اے", "en": "Phenyl Ethyl Alcohol", "g": 12, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "نرم گلاب — چمبیلی کو گول، بھرپور اور میٹھا بناتا ہے۔", "alt": [["فینائل ایتھائل الکحل", "Phenylethyl Alcohol"], ["روز الکحل", "Rose Alcohol"]], "src": [], "ph": 2, "sh": "PEA", "nm": "پی ای اے"}, {"n": "ڈائی ہائیڈرو مائرسینول", "en": "Dihydromyrcenol", "g": 15, "fam": "تازگی", "c": "#2FA58F", "w": "صاف لیموں جیسی تیز تازگی — پیکٹ کھولتے ہی خوشبو کو اٹھاتا ہے، پاؤڈر میں خراب نہیں ہوتا۔", "alt": [["ڈی ایچ ایم", "DHM"]], "src": [], "ph": 3, "sh": "Dihydromyrcenol", "nm": "ڈائی ہائیڈرو مائرسینول"}];
 const BASE=R.reduce((a,r)=>a+r.g,0); // 100
 const $=id=>document.getElementById(id);
 const OLDORD=["Hedione", "Hexyl Cinnamic Aldehyde", "Linalool", "Benzyl Salicylate", "Phenyl Ethyl Alcohol", "Dihydromyrcenol", "Galaxolide 50%", "Iso E Super", "cis-3-Hexenyl Salicylate", "Dipropylene Glycol (DPG)"];
 const fromOld=a=>a.slice();
 const toOld=g=>g.slice();
-const KEY='jasmine10-rates', WKEY='jasmine9-weights'; let RATE={}, G=R.map(r=>r.g);
-try{ RATE=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ RATE={}; }
+const DEFRATE={"Dipropylene Glycol (DPG)": 1450, "Galaxolide 50%": 4000, "Iso E Super": 6000, "Benzyl Salicylate": 2800, "Hedione": 7000, "Hexyl Cinnamic Aldehyde": 4000, "Linalool": 4000, "Phenyl Ethyl Alcohol": 2500, "Dihydromyrcenol": 5000};
+const KEY='jasmine10-rates', WKEY='jasmine9pct-weights'; let RATE={}, G=R.map(r=>r.g);
+try{ RATE=Object.assign({},DEFRATE,JSON.parse(localStorage.getItem(KEY)||'{}')||{}); }catch(e){ RATE=Object.assign({},DEFRATE); }
 try{ const w=JSON.parse(localStorage.getItem(WKEY)||'null'); if(Array.isArray(w)&&w.length===R.length&&w.every(x=>typeof x==='number'&&x>=0)&&w.some(x=>x>0)) G=fromOld(w); }catch(e){}
 let DOC=null, pushT=null, lastSent='';
 function push(){ if(!DOC) return; clearTimeout(pushT); pushT=setTimeout(async()=>{ const body={weights:toOld(G), rates:Object.assign({},RATE)}; const s=JSON.stringify(body); if(s===lastSent) return; lastSent=s; try{ await DOC.set(body); }catch(e){ lastSent=''; if(e&&e.code==='invalid_argument'){ setSync(false,'صرف دیکھنے کی اجازت — تبدیلی محفوظ نہیں ہوگی'); DOC=null; } } },700); }
@@ -260,11 +345,11 @@ function setSync(on,t){ const s=$('sync'); s.className='sync '+(on?'on':'off'); 
 function applyRemote(d){
   if(!d) return;
   if(Array.isArray(d.weights)&&d.weights.length===R.length&&d.weights.every(x=>typeof x==='number'&&x>=0)&&d.weights.some(x=>x>0)) G=fromOld(d.weights);
-  if(d.rates&&typeof d.rates==='object'){ RATE={}; Object.keys(d.rates).forEach(k=>{ const v=Number(d.rates[k]); if(v>0) RATE[k]=v; }); }
+  if(d.rates&&typeof d.rates==='object'){ RATE=Object.assign({},DEFRATE); Object.keys(d.rates).forEach(k=>{ const v=Number(d.rates[k]); if(v>=0) RATE[k]=v; }); }
   lastSent=JSON.stringify({weights:toOld(G), rates:RATE});
   try{ localStorage.setItem(KEY,JSON.stringify(RATE)); localStorage.setItem(WKEY,JSON.stringify(toOld(G))); }catch(e){}
-  const act=document.activeElement, ai=act&&act.id&&/^w\d+$/.test(act.id)?Number(act.id.slice(1)):undefined;
-  document.querySelectorAll('.rate input').forEach(x=>{ if(x!==act) x.value=RATE[x.dataset.k]||''; });
+  const act=document.activeElement, ai=act&&act.id&&/^p\d+$/.test(act.id)?Number(act.id.slice(1)):undefined;
+  document.querySelectorAll('.rin').forEach(x=>{ if(x!==act) x.value=RATE[x.dataset.k]||''; });
   update(ai);
 }
 async function initDb(){
@@ -302,64 +387,69 @@ const LV=[
 [4,15,'پیکٹ کھولتے وقت تازگی کم محسوس ہوگی۔','لیموں والی تیز تازگی چمبیلی کو ڈھک دے گی، خوشبو "سرف ایکسل" جیسی ہو جائے گی۔']
 ];
 function build(){
-  const PHH={1:['1','بیس — پہلے یہ 4 ڈالیں','10 سے 15 منٹ آہستہ ہلائیں۔ گیلیکسولائیڈ گاڑھا ہو تو پہلے اس کا ڈبہ گرم پانی میں رکھیں۔'],2:['2','چمبیلی اور پھول','بیس کے بعد یہ 4 ڈالیں، 10 منٹ ہلائیں۔'],3:['3','تازگی — سب سے آخر میں','یہ جلد اڑتا ہے، اس لیے آخر میں ڈالیں، 10 منٹ ہلائیں۔']};
-  $('list').innerHTML=R.map((r,i)=>(i===0||R[i-1].ph!==r.ph?'<div class="phh"><span class="phn">مرحلہ '+PHH[r.ph][0]+'</span><b>'+PHH[r.ph][1]+'</b><span class="phs">'+PHH[r.ph][2]+'</span></div>':'')+'<div class="item" id="it'+i+'" style="--c:'+r.c+'"><span class="no">'+(i+1)+'</span><span class="name">'+esc(r.n)+'<span class="en">'+esc(r.en)+'</span></span>'+
-    '<span class="wt"><span class="wrow"><input id="w'+i+'" data-i="'+i+'" type="number" min="0" step="any" inputmode="decimal" aria-label="'+esc(r.n)+' کا وزن گرام میں"><span>گرام</span></span><span class="wk" id="wk'+i+'"></span></span>'+
-    '<div class="why"><span>'+esc(r.w)+'</span><span class="tags"><span class="fam">'+esc(r.fam)+'</span><span class="pct" id="p'+i+'"></span></span></div>'+
-    '<div class="rate"><label for="r'+i+'">ریٹ فی کلو</label><input id="r'+i+'" data-k="'+esc(r.en)+'" type="number" min="0" step="any" inputmode="decimal" placeholder="0" value="'+(RATE[r.en]||'')+'"><span>روپے</span><span class="cost" id="c'+i+'"></span></div>'+
+  const PHH={1:['بیس — پہلے یہ ڈالیں','10 سے 15 منٹ آہستہ ہلائیں۔ گیلیکسولائیڈ گاڑھا ہو تو پہلے اس کا ڈبہ گرم پانی میں رکھیں۔'],2:['چمبیلی اور پھول','بیس کے بعد یہ ڈالیں، 10 منٹ ہلائیں۔'],3:['تازگی — سب سے آخر میں','یہ جلد اڑتا ہے، اس لیے آخر میں ڈالیں، 10 منٹ ہلائیں۔']};
+  $('steps').innerHTML=[1,2,3].map(ph=>'<div class="sbp"><b>مرحلہ '+ph+': '+PHH[ph][0]+'</b><br>'+R.map((r,i)=>r.ph===ph?(i+1)+'. '+esc(r.nm):'').filter(Boolean).join('، ')+'<br>'+PHH[ph][1]+'</div>').join('')+'<div class="sbp">آخر میں ڈبہ بند کر کے 3–7 دن پکنے دیں، پھر چھان کر استعمال کریں۔</div>';
+  $('list').innerHTML='<div class="tbl" role="table" aria-label="خوشبو کا فارمولا"><div class="trow thead" role="row"><span role="columnheader">چیز کا نام</span><span role="columnheader">ریٹ<small>روپے فی کلو</small></span><span role="columnheader">فیصد</span><span role="columnheader">وزن<small>گرام</small></span><span role="columnheader">رقم<small>روپے</small></span></div><div class="tbody">'+
+  R.map((r,i)=>'<div class="trow" role="row" id="it'+i+'"><span class="tname" role="cell"><span class="tno">'+(i+1)+'</span><span class="tn">'+esc(r.nm)+'</span><button type="button" class="tdet" data-i="'+i+'" aria-expanded="false" aria-controls="dt'+i+'" aria-label="'+esc(r.nm)+' کی تفصیل">▼</button><span class="ten">'+esc(r.sh)+'</span></span>'+
+    '<span role="cell"><input class="tin rin" id="r'+i+'" data-k="'+esc(r.en)+'" type="number" min="0" step="any" inputmode="decimal" placeholder="0" aria-label="'+esc(r.nm)+' کا ریٹ فی کلو" value="'+(RATE[r.en]||'')+'"></span>'+
+    '<span class="tpct" role="cell"><input class="tin pin" id="p'+i+'" data-i="'+i+'" type="number" min="0" step="any" inputmode="decimal" aria-label="'+esc(r.nm)+' فیصد"><i>%</i></span>'+
+    '<span class="tw" role="cell" id="w'+i+'"></span><span class="ta" role="cell" id="c'+i+'"></span></div>'+
+    '<div class="tdetail" id="dt'+i+'" hidden><b>'+esc(r.n)+' <span class="ien2">('+esc(r.en)+')</span></b><div class="why"><span>'+esc(r.w)+'</span><span class="fam" style="--c:'+r.c+'">'+esc(r.fam)+'</span></div>'+
     '<div class="lv"><div class="lvtop"><span>مناسب لیول: <b>'+LV[i][0]+'٪ تا '+LV[i][1]+'٪</b></span><span class="lst" id="ls'+i+'"></span></div><p class="lmsg" id="lm'+i+'" hidden></p><details><summary>کم یا زیادہ ہو تو کیا ہوگا؟</summary><dl><dt>⬇ '+LV[i][0]+'٪ سے کم ہو تو:</dt><dd>'+esc(LV[i][2])+'</dd><dt>⬆ '+LV[i][1]+'٪ سے زیادہ ہو تو:</dt><dd>'+esc(LV[i][3])+'</dd></dl></details></div>'+
     '<p class="cnote" id="cn'+i+'" hidden>⚠ مقدار بہت کم ہے — 0.01 گرام والا ڈیجیٹل ترازو استعمال کریں</p>'+
     (r.alt.length?'<div class="names"><details class="inside"><summary><span class="tri">▼</span><span>دوسرے نام ('+(r.alt.length+1)+') — دیکھنے کے لیے دبائیں</span></summary><ol class="ilist">'+[[r.n,r.en]].concat(r.alt).map(x=>'<li><span class="iur">'+esc(x[0])+'</span><span class="ien">'+esc(x[1])+'</span></li>').join('')+'</ol></details></div>':'')+
-    '</div>').join('');
+    '</div>').join('')+'</div><div class="trow tfoot" role="row"><span role="cell">کل</span><span role="cell"></span><span class="tp" role="cell" id="tP"></span><span class="tw" role="cell" id="tW"></span><span class="ta" role="cell" id="tA"></span></div><p class="twarn" id="tWarn" hidden></p></div>';
 }
+const n0=v=>Math.round(v).toLocaleString('en-US');
 function update(skip){
   const T=grams(), S=sumG()||1;
-  R.forEach((r,i)=>{ const a=G[i]*T/S;
-    if(i!==skip) $('w'+i).value=r2(a);
-    $('wk'+i).textContent=a>=1000?'= '+fmt(a):'';
-    $('p'+i).textContent=(Math.round(G[i]/S*1000)/10)+'%';
+  R.forEach((r,i)=>{ const a=G[i]*T/100;
+    if(i!==skip) $('p'+i).value=r2(G[i]);
+    $('w'+i).textContent=a>=10?n0(a):r2(a);
     $('cn'+i).hidden=!(a>0&&a<1);
-    const pc=G[i]/S*100, lo=pc<LV[i][0]-0.05, hi=pc>LV[i][1]+0.05, ls=$('ls'+i), lm=$('lm'+i);
+    const pc=G[i], lo=pc<LV[i][0]-0.05, hi=pc>LV[i][1]+0.05, ls=$('ls'+i), lm=$('lm'+i);
     ls.className='lst '+(lo||hi?'bad':'ok'); ls.textContent=lo?'⬇ کم ہے':hi?'⬆ زیادہ ہے':'✓ ٹھیک ہے';
     lm.hidden=!(lo||hi); lm.textContent=lo?'⚠ '+LV[i][2]:hi?'⚠ '+LV[i][3]:'';
     $('it'+i).classList.toggle('chg',Math.abs(G[i]-r.g)>0.001);
+    $('it'+i).querySelector('.tdet').style.borderColor=(lo||hi)?'#B3261E':'';
   });
-  $('bar').innerHTML=R.map((r,i)=>'<span style="width:'+(G[i]/S*100)+'%;background:'+r.c+'" title="'+esc(r.n)+'"></span>').join('');
-  $('total').textContent=fmt(T);
+  const sp=sumG(), tp=$('tP');
+  tp.textContent=r2(sp)+'%'; tp.className='tp'+(Math.abs(sp-100)>0.01?' bad':'');
+  $('tW').textContent=n0(T*sp/100);
+  $('tWarn').hidden=Math.abs(sp-100)<=0.01; $('tWarn').textContent='⚠ کل فیصد '+r2(sp)+' ہے — 100 ہونا چاہیے ('+(sp>100?'زیادہ':'کم')+' ہے: '+r2(Math.abs(sp-100))+'٪)';
+  $('bar').innerHTML=R.map((r,i)=>'<span style="width:'+(G[i]/S*100)+'%;background:'+r.c+'" title="'+esc(r.nm)+'"></span>').join('');
+  $('total').textContent=fmt(T*sp/100);
   $('modrow').hidden=!R.some((r,i)=>Math.abs(G[i]-r.g)>0.001);
   costs();
   document.querySelectorAll('#chips button').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.v)===Number($('batch').value)&&b.dataset.u===$('unit').value)));
 }
 function costs(){
   const T=grams(), S=sumG()||1; let sum=0, miss=0, kg=0;
-  R.forEach((r,i)=>{ const rt=Number(RATE[r.en])||0, a=G[i]*T/S, c=rt*a/1000;
-    if(rt>0){ sum+=c; kg+=rt*G[i]/S; $('c'+i).textContent='= '+rs(c); } else { miss++; $('c'+i).textContent=''; } });
+  R.forEach((r,i)=>{ const rt=Number(RATE[r.en])||0, a=G[i]*T/100, c=rt*a/1000;
+    if(rt>0){ sum+=c; kg+=rt*G[i]/S; $('c'+i).textContent=n0(c); } else { miss++; $('c'+i).textContent='—'; } });
   const any=miss<R.length;
+  $('tA').textContent=any?n0(sum):'—';
   $('mTot').textContent=any?rs(sum):'—';
   $('mKg').textContent=any?rs(kg):'—';
   $('mPow').textContent=any?rs(kg*0.3):'—';
   $('mPer').textContent=any?rs(kg*0.3/100):'—';
-  $('mWarn').textContent=miss&&any?'⚠ '+miss+' کیمیکل کا ریٹ ابھی نہیں لکھا — ٹوٹل ادھورا ہے':(!any?'ہر کیمیکل کے نیچے اس کا 1 کلو کا ریٹ لکھیں':'');
+  $('mWarn').textContent=miss&&any?'⚠ '+miss+' کیمیکل کا ریٹ ابھی نہیں لکھا — ٹوٹل ادھورا ہے':(!any?'ہر کیمیکل کا 1 کلو کا ریٹ لکھیں':'');
 }
 $('list').addEventListener('input',e=>{ const t=e.target;
-  if(t.matches('.rate input')){ const v=Number(t.value); if(v>0) RATE[t.dataset.k]=v; else delete RATE[t.dataset.k]; saveR(); costs(); return; }
-  if(t.matches('.wt input')){ const i=Number(t.dataset.i), v=Number(t.value);
+  if(t.matches('.rin')){ const v=Number(t.value); RATE[t.dataset.k]=v>0?v:0; saveR(); costs(); return; }
+  if(t.matches('.pin')){ const i=Number(t.dataset.i), v=Number(t.value);
     if(t.value===''||!(v>=0)) return;
-    let T=grams(); const S=sumG();
-    if(!(T>0)||!(S>0)){ G=G.map(()=>0); G[i]=v; T=v; }
-    else { const f=T/S; G[i]=v/f; T=f*sumG(); }
-    if(!(sumG()>0)){ G[i]=0; }
-    $('batch').value=$('unit').value==='kg'?String(Math.round(T/1000*100000)/100000):r2(T);
-    saveW(); update(i); }
+    G[i]=v; saveW(); update(i); }
 });
-$('list').addEventListener('change',e=>{ if(e.target.matches('.wt input')) update(); });
+$('list').addEventListener('change',e=>{ if(e.target.matches('.pin')) update(); });
+$('list').addEventListener('click',e=>{ const b=e.target.closest('.tdet'); if(!b) return; const d=$('dt'+b.dataset.i), open=d.hidden; d.hidden=!open; b.setAttribute('aria-expanded',String(open)); });
 $('reset').onclick=()=>{ G=R.map(r=>r.g); saveW(); update(); toast('اصل فارمولا واپس آ گیا'); };
-$('clr').onclick=()=>{ RATE={}; saveR(); document.querySelectorAll('.rate input').forEach(x=>x.value=''); costs(); toast('ریٹ صاف ہو گئے'); };
+$('clr').onclick=()=>{ RATE={}; R.forEach(r=>RATE[r.en]=0); saveR(); document.querySelectorAll('.rin').forEach(x=>x.value=''); costs(); toast('ریٹ صاف ہو گئے'); };
 $('batch').oninput=()=>update(); $('unit').onchange=()=>update();
 function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800); }
 $('copy').onclick=()=>{
   const T=grams(), S=sumG()||1;
-  const t='نسخہ: '+fmt(T)+' خوشبو\n'+R.map((r,i)=>{ const a=G[i]*T/S, rt=Number(RATE[r.en])||0; return (i+1)+'. '+r.n+' ('+r.en+'): '+fmt(a)+(rt?' — '+rs(rt*a/1000):''); }).join('\n')+($('mTot').textContent!=='—'?'\nکل خرچہ: '+$('mTot').textContent+'\n1 کلو خوشبو کی لاگت: '+$('mKg').textContent:'');
+  const t='نسخہ: '+fmt(T)+' خوشبو\n'+R.map((r,i)=>{ const a=G[i]*T/100, rt=Number(RATE[r.en])||0; return (i+1)+'. '+r.nm+' — '+r2(G[i])+'٪'+' ('+r.en+'): '+fmt(a)+(rt?' — '+rs(rt*a/1000):''); }).join('\n')+($('mTot').textContent!=='—'?'\nکل خرچہ: '+$('mTot').textContent+'\n1 کلو خوشبو کی لاگت: '+$('mKg').textContent:'');
   const done=()=>toast('✓ نسخہ کاپی ہو گیا');
   const fb=()=>{ const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); done();}catch(e){} ta.remove(); };
   try{ navigator.clipboard.writeText(t).then(done,fb); }catch(e){ fb(); }
