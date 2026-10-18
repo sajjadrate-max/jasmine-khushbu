@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>[hidden]{display:none!important}</style>
+<script>try{if(sessionStorage.getItem('khb-open')!=='1')location.replace('khushbu.html');}catch(e){}</script>
+<title>جسم کی خوشبو نسخہ</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1F6E52">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#EDF2F0; --surface:#FFFFFF; --surface2:#F5F8F7; --ink:#10231F; --muted:#586C67; --line:#D2DDD9;
+  --accent:#0B7A6A; --accent-soft:#D5EEE8; --accent-ink:#FFFFFF; --amber:#A96A12; --amber-soft:#F7EACF; --track:#E1E9E6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0D1614; --surface:#15211E; --surface2:#1A2825; --ink:#E3EEEA; --muted:#98ADA7; --line:#27362F;
+    --accent:#3CC2AA; --accent-soft:#163B34; --accent-ink:#07201B; --amber:#E4AA4B; --amber-soft:#3A2D14; --track:#22302C;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0D1614; --surface:#15211E; --surface2:#1A2825; --ink:#E3EEEA; --muted:#98ADA7; --line:#27362F;
+  --accent:#3CC2AA; --accent-soft:#163B34; --accent-ink:#07201B; --amber:#E4AA4B; --amber-soft:#3A2D14; --track:#22302C;
+}
+*{box-sizing:border-box}
+body{background:var(--bg); color:var(--ink); direction:rtl; font-family:"Noto Naskh Arabic","IBM Plex Sans",system-ui,sans-serif; font-size:16px; line-height:1.8; margin:0}
+.wrap{max-width:720px; margin:0 auto; padding-inline:16px; padding-block:20px 60px; display:grid; gap:16px}
+h1{font-family:"Noto Nastaliq Urdu","Noto Naskh Arabic",serif; font-size:28px; line-height:2.1; margin:0; font-weight:700}
+.sub{color:var(--muted); margin:0; font-size:14px}
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px 16px}
+.batch{display:grid; gap:10px}
+.batch label{font-weight:700}
+.brow{display:flex; flex-wrap:wrap; align-items:center; gap:8px}
+.brow input{font:inherit; width:130px; min-height:44px; text-align:center; direction:ltr; font-variant-numeric:tabular-nums; font-weight:700; font-size:18px; color:var(--ink); background:var(--surface2); border:2px solid var(--accent); border-radius:10px}
+.brow select{font:inherit; min-height:44px; padding:0 10px; color:var(--ink); background:var(--surface2); border:1px solid var(--line); border-radius:10px}
+.chips{display:flex; flex-wrap:wrap; gap:6px}
+.chips button{font:inherit; font-size:14px; border:1px solid var(--line); background:var(--surface2); color:var(--ink); border-radius:99px; padding:3px 14px; cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--accent-soft); border-color:var(--accent); color:var(--accent); font-weight:700}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.list{display:grid; gap:10px}
+.item{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:12px 14px; display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:4px 12px; align-items:center; border-inline-start:6px solid var(--c)}
+.no{width:32px; height:32px; border-radius:50%; background:var(--c); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-family:"IBM Plex Sans",sans-serif; grid-row:span 2}
+.name{font-size:17px; font-weight:700}
+.qty{text-align:left; font-weight:700; font-size:20px; color:var(--accent); font-variant-numeric:tabular-nums; white-space:nowrap}
+.why{grid-column:2 / 4; color:var(--muted); font-size:14.5px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap}
+.pct{font-family:"IBM Plex Sans",sans-serif; font-size:13px; background:var(--surface2); border-radius:99px; padding:0 10px; color:var(--ink); white-space:nowrap}
+.en{display:block; font-family:"IBM Plex Sans",sans-serif; font-size:12.5px; font-weight:400; color:var(--muted); direction:ltr; text-align:right}
+.tags{display:flex; gap:6px; align-items:center}
+.fam{font-size:12px; font-weight:700; color:var(--c); border:1px solid var(--c); border-radius:99px; padding:0 8px}
+.item .cnote{grid-column:1 / 4}
+.src{grid-column:1 / 4; margin:4px 0 0; font-size:13px; background:var(--amber-soft); color:var(--ink); border-radius:8px; padding:5px 10px}
+.src b{color:var(--accent)}
+.names{grid-column:1 / 4; display:grid; gap:5px; border-top:1px dashed var(--line); margin-top:6px; padding-top:8px}
+.names div{display:flex; flex-wrap:wrap; gap:5px; align-items:baseline}
+.names .k{font-size:12.5px; color:var(--muted); min-width:92px; font-weight:600}
+.chip{font-size:13px; background:var(--surface2); border:1px solid var(--line); border-radius:6px; padding:0 8px}
+.ltr{direction:ltr; unicode-bidi:isolate}
+.inside{display:block!important; margin-top:6px}
+.inside summary{list-style:none; cursor:pointer; display:flex; align-items:center; gap:10px; background:var(--accent-soft); color:var(--accent); font-weight:700; font-size:14.5px; border-radius:10px; padding:8px 10px}
+.inside summary::-webkit-details-marker{display:none}
+.inside .tri{display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; flex:none; border-radius:50%; background:var(--accent); color:var(--accent-ink); font-size:13px; transition:transform .2s}
+.inside[open] .tri{transform:rotate(180deg)}
+.inside[open] summary span:last-child::after{content:''}
+@media (prefers-reduced-motion: reduce){ .inside .tri{transition:none} }
+.ilist{margin:6px 0 0; padding:0; list-style:none; counter-reset:c; display:grid; gap:4px}
+.ilist li{counter-increment:c; display:grid; grid-template-columns:26px minmax(0,1fr) minmax(0,1fr); gap:8px; align-items:center; background:var(--accent-soft); border-radius:8px; padding:5px 8px; font-size:14px}
+.ilist li::before{content:counter(c); width:22px; height:22px; border-radius:50%; background:var(--accent); color:var(--accent-ink); font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; font-family:"IBM Plex Sans",sans-serif}
+.iur{font-weight:700}
+.ien{direction:ltr; text-align:left; font-family:"IBM Plex Sans",sans-serif; font-size:13px; color:var(--muted)}
+.inside .k{color:var(--accent)!important}
+.chip.ic{background:var(--accent-soft); border-color:transparent; color:var(--ink)}
+.cnote{margin:2px 0 0; font-size:12.5px; color:var(--amber)}
+.bar{display:flex; height:22px; border-radius:8px; overflow:hidden; margin-top:4px}
+.bar span{display:block; height:100%}
+.total{display:flex; justify-content:space-between; align-items:center; font-weight:700; font-size:18px}
+.total b{color:var(--accent); font-size:22px}
+.btn{font:inherit; font-weight:700; border:0; background:var(--accent); color:var(--accent-ink); border-radius:10px; padding:10px 18px; cursor:pointer; width:100%}
+.rate{grid-column:1 / 4; display:flex; align-items:center; gap:8px; flex-wrap:wrap; background:var(--surface2); border:1px solid var(--line); border-radius:10px; padding:6px 10px; margin-top:6px; font-size:14px}
+.rate label{font-weight:700}
+.rate input{font:inherit; width:110px; min-height:38px; text-align:center; direction:ltr; font-variant-numeric:tabular-nums; font-weight:700; color:var(--ink); background:var(--surface); border:1px solid var(--line); border-radius:8px}
+.rate .cost{margin-inline-start:auto; font-weight:700; color:var(--amber); font-variant-numeric:tabular-nums; white-space:nowrap}
+.money h2{margin:0 0 6px; font-size:18px}
+.mrow{display:flex; justify-content:space-between; align-items:center; gap:10px; padding:6px 0; border-bottom:1px dashed var(--line); font-size:15px}
+.mrow:last-of-type{border-bottom:0}
+.mrow b{font-variant-numeric:tabular-nums; white-space:nowrap}
+.mrow.big b{color:var(--amber); font-size:22px}
+.mwarn{margin:6px 0 0; font-size:13px; color:var(--amber)}
+.clr{font:inherit; font-size:13.5px; background:none; border:1px solid var(--line); color:var(--muted); border-radius:8px; padding:4px 12px; cursor:pointer; margin-top:8px}
+.wt{display:flex; flex-direction:column; align-items:flex-end; gap:2px}
+.wt .wrow{display:flex; align-items:center; gap:5px; font-size:13px; color:var(--muted)}
+.wt input{font:inherit; width:104px; min-height:42px; text-align:center; direction:ltr; font-variant-numeric:tabular-nums; font-weight:700; font-size:18px; color:var(--accent); background:var(--surface2); border:2px solid var(--accent); border-radius:10px}
+.wt .wk{font-size:12.5px; color:var(--muted); font-variant-numeric:tabular-nums}
+.item.chg .wt input{border-color:var(--amber); color:var(--amber)}
+.modrow{display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-size:13.5px}
+.modrow .mn{color:var(--amber); font-weight:700}
+.reset{font:inherit; font-size:13.5px; font-weight:700; background:var(--amber-soft); border:1px solid var(--amber); color:var(--amber); border-radius:8px; padding:4px 12px; cursor:pointer}
+.hint{font-size:13px; color:var(--muted); margin:0}
+.lv{grid-column:1 / 4; margin-top:6px; border:1px solid var(--line); border-radius:10px; padding:6px 10px; font-size:14px; display:grid; gap:4px}
+.lvtop{display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px; align-items:center}
+.lvtop b{font-variant-numeric:tabular-nums}
+.lst{font-size:13px; font-weight:700; border-radius:99px; padding:0 10px; white-space:nowrap}
+.lst.ok{background:var(--accent-soft); color:var(--accent)}
+.lst.bad{background:var(--amber-soft); color:var(--amber)}
+.lmsg{margin:0; font-size:13px; color:var(--amber)}
+.lv details summary{cursor:pointer; color:var(--accent); font-weight:700; font-size:13.5px}
+.lv dl{margin:4px 0 0; display:grid; gap:4px}
+.lv dt{font-weight:700; font-size:13px}
+.lv dd{margin:0 0 2px; font-size:13.5px; color:var(--muted)}
+.sync{font-size:13px; font-weight:700; border-radius:99px; padding:2px 12px; width:max-content; max-width:100%}
+.sync.on{background:var(--accent-soft); color:var(--accent)}
+.sync.off{background:var(--surface2); color:var(--muted)}
+.libbtn{font:inherit; font-weight:700; font-size:16px; border:0; background:linear-gradient(135deg,#7A6BB0,#D0587E); color:#fff; border-radius:12px; padding:12px 16px; cursor:pointer; width:100%; text-align:center; margin-top:8px}
+.lib{position:fixed; inset:0; z-index:50; background:var(--bg); overflow-y:auto; -webkit-overflow-scrolling:touch}
+.lib[hidden]{display:none!important}
+.libtop{position:sticky; top:0; z-index:2; background:var(--surface); border-bottom:1px solid var(--line); padding:10px 16px; display:grid; gap:8px}
+.libhead{display:flex; justify-content:space-between; align-items:center; gap:10px}
+.libhead h2{margin:0; font-size:19px}
+.libx{font:inherit; font-weight:700; border:1px solid var(--line); background:var(--surface2); color:var(--ink); border-radius:10px; min-width:44px; min-height:44px; cursor:pointer; font-size:18px}
+.libsearch{font:inherit; width:100%; min-height:42px; padding:0 12px; border:1px solid var(--line); border-radius:10px; background:var(--surface2); color:var(--ink)}
+.az{display:flex; flex-wrap:wrap; gap:4px; direction:ltr; justify-content:center}
+.az a{font-family:"IBM Plex Sans",sans-serif; font-weight:700; font-size:14px; text-decoration:none; color:var(--accent); background:var(--accent-soft); border-radius:6px; min-width:30px; text-align:center; padding:2px 0}
+.libbody{max-width:720px; margin:0 auto; padding:12px 16px 60px; display:grid; gap:10px}
+.libintro{font-size:13.5px; color:var(--muted); background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:10px 12px; margin:0}
+.letter{font-family:"IBM Plex Sans",sans-serif; font-size:22px; font-weight:700; color:#fff; background:var(--accent); width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-top:10px; scroll-margin-top:190px}
+.lc{background:var(--surface); border:1px solid var(--line); border-radius:12px; border-inline-start:6px solid var(--fc,#6B7F7A)}
+.lc summary{list-style:none; cursor:pointer; padding:10px 12px; display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 10px}
+.lc summary::-webkit-details-marker{display:none}
+.lcn{display:flex; justify-content:space-between; align-items:baseline; gap:8px; flex-wrap:wrap}
+.lno{display:inline-flex; align-items:center; justify-content:center; min-width:30px; height:30px; padding:0 6px; border-radius:99px; background:var(--fc,#6B7F7A); color:#fff; font-family:"IBM Plex Sans",sans-serif; font-weight:700; font-size:13.5px; grid-row:1 / 3; align-self:center; min-width:36px; height:36px; font-size:15px}
+.lcen{font-family:"IBM Plex Sans",sans-serif; font-weight:700; direction:ltr; font-size:15.5px}
+.lcur{font-weight:700; font-size:16px}
+.lcm{display:flex; flex-wrap:wrap; gap:6px; align-items:center; font-size:12.5px}
+.lcm span{border-radius:99px; padding:0 9px; background:var(--surface2); border:1px solid var(--line)}
+.lcm .in{background:var(--accent-soft); color:var(--accent); border-color:var(--accent); font-weight:700}
+.lcm .ban{background:#F9DCDC; color:#A12626; border-color:#A12626; font-weight:700}
+.lcm .wr{background:var(--amber-soft); color:var(--amber); border-color:var(--amber); font-weight:700}
+.lcm .tr{margin-inline-start:auto; border:0; background:none; color:var(--accent); font-weight:700; transition:transform .2s}
+.lc[open] .lcm .tr{transform:rotate(180deg)}
+.lcb{padding:0 12px 12px; display:grid; gap:6px; font-size:14.5px}
+.lcb .row{display:grid; grid-template-columns:110px minmax(0,1fr); gap:8px; border-top:1px dashed var(--line); padding-top:6px}
+.lcb .row b{font-size:13.5px}
+.lcb .lvl{background:var(--accent-soft); border-radius:8px; padding:6px 10px; font-weight:700}
+@media (max-width:420px){ .lcb .row{grid-template-columns:1fr; gap:2px} }
+@media (prefers-reduced-motion: reduce){ .lcm .tr{transition:none} }
+.spbtn{background:linear-gradient(135deg,#C98A12,#D0587E)}
+.sptop{background:var(--amber-soft); border:1px solid var(--amber); border-radius:12px; padding:10px 12px; font-size:14px; display:grid; gap:6px}
+.sptop h3{margin:0; font-size:16px}
+.sptop .lay{display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 10px}
+.qbig{display:flex; flex-wrap:wrap; gap:6px}
+.qbig span{background:var(--amber-soft); color:var(--ink); border:1px solid var(--amber); border-radius:8px; padding:2px 10px; font-weight:700; font-size:13.5px; font-variant-numeric:tabular-nums}
+.phh{display:grid; grid-template-columns:auto minmax(0,1fr); gap:2px 10px; align-items:center; background:var(--accent); color:var(--accent-ink); border-radius:12px; padding:8px 12px; margin-top:6px}
+.phh .phn{grid-row:span 2; background:var(--accent-ink); color:var(--accent); border-radius:8px; padding:2px 10px; font-weight:700; font-size:14px; white-space:nowrap}
+.phh b{font-size:16px}
+.phh .phs{font-size:13px; opacity:.95}
+.how{display:grid; gap:6px}
+.how h2{margin:0; font-size:18px}
+.how ol{margin:0; padding-inline-start:22px; display:grid; gap:6px; font-size:14.5px}
+.how li b{color:var(--accent)}
+.note{font-size:13.5px; color:var(--muted); margin:0}
+.back{display:inline-flex; align-items:center; gap:6px; font-weight:700; font-size:15px; color:var(--accent); background:var(--accent-soft); border-radius:99px; padding:4px 14px; text-decoration:none; width:max-content}
+#toast{position:fixed; inset-inline:0; bottom:calc(18px + env(safe-area-inset-bottom,0px)); margin:auto; width:max-content; max-width:calc(100% - 32px); background:var(--accent); color:var(--accent-ink); padding:10px 18px; border-radius:12px; font-weight:700; opacity:0; transition:opacity .2s; pointer-events:none}
+#toast.show{opacity:1}
+@media (prefers-reduced-motion: reduce){ #toast{transition:none} }
+@media (max-width:420px){ .qty{font-size:18px} }
+
+.tgl{color:var(--ink)}
+.lvtop.skin{border-top:1px dashed var(--line); padding-top:4px}
+.full{grid-column:1 / 4}
+.dgrid{display:grid; gap:6px; margin-top:6px}
+.drow{border-radius:8px; padding:6px 10px; border-inline-start:4px solid var(--line); background:var(--surface2)}
+.drow h4{margin:0 0 2px; font-size:13.5px}
+.drow p{margin:0; font-size:13.5px; line-height:1.85}
+.drow.sm{border-color:#9B6FB5} .drow.sm h4{color:#9B6FB5}
+.drow.ben{border-color:var(--accent)} .drow.ben h4{color:var(--accent)}
+.drow.add{border-color:#2F7D32} .drow.add h4{color:#2F7D32}
+.drow.skip{border-color:var(--amber)} .drow.skip h4{color:var(--amber)}
+.drow.harm{border-color:#C0392B; background:#FBE6E3} .drow.harm h4,.drow.harm p{color:#A12626}
+.drow.safe{border-color:#3E6FB0} .drow.safe h4{color:#3E6FB0}
+.drow.sk{border-color:#B07A2A} .drow.sk h4{color:#B07A2A}
+:root[data-theme="dark"] .drow.harm{background:#3A1A18} :root[data-theme="dark"] .drow.harm h4,:root[data-theme="dark"] .drow.harm p{color:#F2A49A}
+:root[data-theme="dark"] .drow.safe h4{color:#8FB5EA} :root[data-theme="dark"] .drow.add h4{color:#7FCB83}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .drow.harm{background:#3A1A18} :root:not([data-theme="light"]) .drow.harm h4,:root:not([data-theme="light"]) .drow.harm p{color:#F2A49A} :root:not([data-theme="light"]) .drow.safe h4{color:#8FB5EA} :root:not([data-theme="light"]) .drow.add h4{color:#7FCB83} }
+.mk{display:grid; gap:10px}
+.mk h2,.money h2{margin:0; font-size:18px}
+.types{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.types button{font:inherit; text-align:start; border:1px solid var(--line); background:var(--surface2); color:var(--ink); border-radius:12px; padding:8px 10px; cursor:pointer; display:grid; gap:0}
+.types button b{font-size:15px}
+.types button span{font-size:12.5px; color:var(--muted)}
+.types button[aria-pressed="true"]{background:var(--accent-soft); border:2px solid var(--accent)}
+.types button[aria-pressed="true"] b{color:var(--accent)}
+.mkrow,.xr{display:flex; flex-wrap:wrap; align-items:center; gap:6px 8px; font-size:14px}
+.mkrow label,.xr label{font-weight:700}
+.mkrow input,.xr input{font:inherit; width:96px; min-height:42px; text-align:center; direction:ltr; font-variant-numeric:tabular-nums; font-weight:700; color:var(--ink); background:var(--surface2); border:2px solid var(--accent); border-radius:10px}
+.xr{display:grid; grid-template-columns:minmax(0,1fr) 110px auto; margin:6px 0; background:var(--surface2); border-radius:10px; padding:8px 10px}
+.xr input{width:100%; border-width:1px; border-color:var(--line); background:var(--surface)}
+.mkout{display:grid; gap:4px; background:var(--surface2); border-radius:12px; padding:10px 12px}
+.mo{display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:15px; border-bottom:1px dashed var(--line); padding:4px 0}
+.mo i{display:inline-block; width:12px; height:12px; border-radius:3px; margin-inline-end:6px; vertical-align:middle}
+.mo b{font-variant-numeric:tabular-nums; text-align:left}
+.mo small{font-weight:400; color:var(--muted); font-size:12.5px}
+.mo.big b{color:var(--accent); font-size:19px}
+.mbar{display:flex; height:16px; border-radius:6px; overflow:hidden; margin-top:6px}
+.mbar span{display:block; height:100%}
+.btn.alt{background:var(--amber-soft); color:var(--amber); border:1px solid var(--amber)}
+@media (max-width:420px){ .types{grid-template-columns:1fr} .xr{grid-template-columns:1fr 100px auto} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="back" href="khushbu.html">→ واپس: چمبیلی خوشبو</a>
+    <h1>جسم کی خوشبو — 12 کیمیکل پرفیوم نسخہ</h1>
+    <p class="sync off" id="sync">محفوظ: صرف اس ڈیوائس میں</p>
+    <p class="sub">انسان کے لگانے کے لیے "تازہ لکڑی اور مشک" پرفیوم۔ مرد اور عورت دونوں کے لیے ہے۔ پہلے کنسنٹریٹ (خوشبو کا تیل) بنائیں، پھر نیچے والے حصے سے پرفیوم بنائیں۔</p>
+  </header>
+
+  <section class="panel batch">
+    <label for="batch">کتنا کنسنٹریٹ (خوشبو کا تیل) بنانا ہے؟</label>
+    <div class="brow">
+      <input type="number" id="batch" min="0" step="any" value="100" inputmode="decimal">
+      <select id="unit" aria-label="اکائی"><option value="g" selected>گرام</option><option value="kg">کلو</option></select>
+    </div>
+    <div class="chips" id="chips"></div>
+    <p class="hint">ہر کیمیکل کا وزن (گرام) بھی خود بدل سکتے ہیں۔ باقی سب حساب ساتھ بدل جائے گا۔</p>
+    <div class="modrow" id="modrow" hidden><span class="mn">⚠ آپ نے فارمولا بدلا ہے</span><button type="button" class="reset" id="reset">اصل فارمولا واپس لائیں</button></div>
+  </section>
+
+  <section class="list" id="list"></section>
+
+  <section class="panel" style="display:grid;gap:10px">
+    <div class="bar" id="bar"></div>
+    <div class="total"><span>کل کنسنٹریٹ</span><b id="total"></b></div>
+  </section>
+
+  <section class="panel mk" aria-labelledby="mkT">
+    <h2 id="mkT">🧴 پرفیوم بنائیں — بوتل کے حساب سے</h2>
+    <div class="types" id="types"></div>
+    <div class="mkrow">
+      <label for="ml">ایک بوتل</label><input type="number" id="ml" min="0" step="any" value="100" inputmode="decimal"><span>ملی لیٹر</span>
+      <label for="cnt">کتنی بوتلیں</label><input type="number" id="cnt" min="0" step="1" value="1" inputmode="numeric">
+    </div>
+    <div class="chips" id="mlchips"></div>
+    <div class="mkout" id="mkout"></div>
+    <p class="mwarn" id="mkwarn"></p>
+    <button type="button" class="btn alt" id="fit">اوپر والا کنسنٹریٹ اتنی بوتلوں کے برابر کر دیں</button>
+  </section>
+
+  <section class="panel how" aria-labelledby="howT">
+    <h2 id="howT">🧪 بنانے کا طریقہ</h2>
+    <ol>
+      <li><b>تیاری:</b> صاف خشک شیشے کا برتن، 0.01 گرام والا ڈیجیٹل ترازو، شیشے کی سلاخ، دستانے۔ جگہ ہوادار ہو۔ الکحل جلتی ہے، اس لیے آگ، چولہے اور سگریٹ سے دور رہیں۔</li>
+      <li><b>ٹھوس چیزیں پہلے گھولیں:</b> ایمبروکسان اور ایتھائل وینلن کا 10٪ محلول بنائیں، یعنی 1 گرام پاؤڈر میں 9 گرام الکحل۔ کشمیران گاڑھا ہو تو اس کی شیشی گرم پانی میں رکھ کر پتلا کریں۔</li>
+      <li><b>کنسنٹریٹ تولیں:</b> برتن ترازو پر رکھ کر زیرو کریں۔ پھر اوپر کی ترتیب سے کیمیکل ڈالیں: پہلے مرحلہ 1، پھر 2، پھر 3۔ ہر کیمیکل کے لیے الگ ڈراپر رکھیں۔ ہر مرحلے کے بعد آہستہ ہلائیں۔</li>
+      <li><b>کنسنٹریٹ کو آرام:</b> ڈھکن بند کر کے 2 سے 3 دن ٹھنڈی اندھیری جگہ رکھیں۔</li>
+      <li><b>الکحل ملائیں:</b> اوپر "پرفیوم بنائیں" والے حساب سے کنسنٹریٹ میں الکحل ڈالیں۔ پھر پانی قطرہ قطرہ ملائیں۔ اگر مکسچر دھندلا ہو جائے تو پانی روک دیں۔</li>
+      <li><b>پکانا:</b> بند بوتل کو 3 سے 4 ہفتے اندھیرے میں رکھیں اور روز ایک بار ہلکا ہلا دیں۔ جتنا زیادہ پکے گا، خوشبو اتنی نرم ہوگی۔</li>
+      <li><b>ٹھنڈا کر کے چھاننا:</b> 24 سے 48 گھنٹے فریج میں رکھیں۔ پھر فلٹر پیپر یا کافی فلٹر سے چھان لیں، دھندلاہٹ نکل جائے گی۔</li>
+      <li><b>بوتل:</b> گہرے رنگ کی شیشے کی اسپرے بوتل استعمال کریں۔ دھوپ اور گرمی سے بچا کر رکھیں۔</li>
+      <li><b>جانچ (لازمی):</b> کلائی یا کہنی کے اندر لگا کر 24 گھنٹے دیکھیں۔ سرخی یا خارش ہو تو استعمال نہ کریں۔ آنکھ، زخم اور چھوٹے بچوں پر نہ لگائیں۔</li>
+    </ol>
+  </section>
+
+  <section class="panel money" aria-live="polite">
+    <h2>ریٹ کا حساب</h2>
+    <div class="mrow big"><span>اس کنسنٹریٹ بیچ کا کل خرچہ</span><b id="mTot">—</b></div>
+    <div class="mrow"><span>1 کلو کنسنٹریٹ کی لاگت</span><b id="mKg">—</b></div>
+    <div class="xr">
+      <label for="rAlc">الکحل ریٹ فی لیٹر</label><input id="rAlc" data-x="__alc" type="number" min="0" step="any" inputmode="decimal" placeholder="0"><span>روپے</span>
+      <label for="rDpg">ڈی پی جی / آئی پی ایم فی کلو (عطر کے لیے)</label><input id="rDpg" data-x="__dpg" type="number" min="0" step="any" inputmode="decimal" placeholder="0"><span>روپے</span>
+      <label for="rBot">خالی بوتل + اسپرے کی قیمت</label><input id="rBot" data-x="__bot" type="number" min="0" step="any" inputmode="decimal" placeholder="0"><span>روپے</span>
+    </div>
+    <div class="mrow big"><span>ایک بوتل کی کل لاگت</span><b id="mBot">—</b></div>
+    <div class="mrow"><span id="mAllL">سب بوتلوں کی لاگت</span><b id="mAll">—</b></div>
+    <p class="mwarn" id="mWarn"></p>
+    <button type="button" class="clr" id="clr">سب ریٹ صاف کریں</button>
+  </section>
+
+  <section class="panel" style="display:grid;gap:10px">
+    <button type="button" class="btn" id="copy">نسخہ کاپی کریں</button>
+  </section>
+
+  <p class="note">یہ نسخہ 100 گرام کنسنٹریٹ کے حساب سے ہے۔ <b>مردانہ</b> بنانا ہو تو ڈائی ہائیڈرو مائرسینول 8 اور آئسو ای سپر 20 کر دیں، اور اتنا ہی پی ای اے کم کر دیں۔ <b>زنانہ</b> بنانا ہو تو پی ای اے 10 اور ایتھائل وینلن 5 کر دیں، اور ڈائی ہائیڈرو مائرسینول 2 کر دیں۔ ڈی پی جی اسپرے پرفیوم میں نہیں ڈالا جاتا، وہ صرف عطر (تیل والی خوشبو) میں الکحل کی جگہ آتا ہے۔ "محفوظ حد" والے فیصد احتیاطی اندازے ہیں۔ بڑے پیمانے پر بیچنے سے پہلے ہر کیمیکل کی تازہ IFRA حد اپنے سپلائر سے ضرور پوچھیں۔ للیال اور لائرال جسم والی خوشبو میں ممنوع ہیں، ان کا استعمال نہ کریں۔</p>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+/* n=اردو نام, en, g=گرام فی 100, fam, c=رنگ, w=مقصد, sm=خوشبو کیسی, alt=دوسرے نام, ph=مرحلہ,
+   lv=[کم، زیادہ٪ کنسنٹریٹ میں], lo/hi=کم یا زیادہ ہو تو, add/skip/harm/care, sk=تیار پرفیوم میں محفوظ حد٪, skn=حد کا نوٹ */
+const R=[
+{n:'گیلیکسولائیڈ 50٪',en:'Galaxolide 50%',g:14,fam:'مشک',c:'#7A6BB0',ph:1,
+ w:'صاف سفید مشک۔ جلد پر گھنٹوں رہنے والی "نہا کر نکلے" جیسی نرم خوشبو دیتی ہے۔',
+ sm:'نرم، صاف، ہلکی پاؤڈری سفید مشک۔',
+ alt:[['ایچ ایچ سی بی','HHCB'],['مشک 50','Musk 50'],['سفید مشک','White Musk'],['ایبالائیڈ','Abbalide']],
+ lv:[6,20],lo:'خوشبو جلد پر جلدی ختم ہو جائے گی اور آخر میں کچھ نہیں بچے گا۔',hi:'مشک غالب آ جائے گی، باقی خوشبو دب جائے گی اور ناک تھک جائے گی۔',
+ add:'خوشبو جلد اور کپڑوں پر 8 سے 10 گھنٹے تک رہے گی، اور قریب آنے پر نرم صاف احساس دے گی۔',
+ skip:'خوشبو 2 سے 3 گھنٹے میں اڑ جائے گی۔ یہ سب سے بڑی کمی ہوگی۔',
+ harm:'بہت زیادہ ہو تو اپنی ناک کو خوشبو محسوس ہونا بند ہو جاتی ہے۔ ماحول اور پانی میں دیر تک رہتی ہے۔',
+ care:'گاڑھی ہو تو ڈبہ گرم پانی میں رکھ کر پتلا کریں، براہ راست آگ پر نہیں۔ بچا ہوا نالی میں نہ بہائیں۔',sk:6,skn:'عام استعمال میں کوئی خاص پابندی نہیں۔'},
+{n:'آئسو ای سپر',en:'Iso E Super',g:18,fam:'لکڑی',c:'#8A6A3A',ph:1,
+ w:'مخملی صاف لکڑی۔ خوشبو کو جسم کے گرد پھیلاتا ہے اور دیر تک رکھتا ہے۔',
+ sm:'مخملی، صاف لکڑی، ہلکا عنبر۔ بہت نرم اور مہنگی سی۔',
+ alt:[['او ٹی این ای','OTNE'],['آئسو ای','Iso E'],['آئسو ای سپر پلس','Iso E Super Plus']],
+ lv:[8,25],lo:'خوشبو میں گہرائی کم ہوگی اور ٹکاؤ کم رہے گا۔',hi:'خشک کڑوی لکڑی کی بو آئے گی اور باقی خوشبو دب جائے گی۔',
+ add:'خوشبو جسم کے گرد "ہالہ" بنائے گی، یعنی پھیلاؤ اور ٹکاؤ دونوں بڑھیں گے، اور مہنگے پرفیوم والا احساس آئے گا۔',
+ skip:'لکڑی کی گہرائی نہیں ہوگی اور خوشبو سستی سی اور جلد ختم ہونے والی لگے گی۔',
+ harm:'جلد پر الرجی کی عالمی حد مقرر ہے۔ بہت زیادہ ہو تو خود کو خوشبو محسوس ہونا بند ہو جاتی ہے۔ آبی جانوروں کے لیے نقصان دہ ہے۔',
+ care:'حد سے زیادہ نہ ڈالیں۔ بچا ہوا نالی میں نہ بہائیں۔',sk:10,skn:'حد مقرر ہے۔ تیار پرفیوم میں 10٪ سے کم رکھنا محفوظ ہے۔'},
+{n:'کشمیران',en:'Cashmeran',g:3,fam:'لکڑی و مشک',c:'#9A5B3C',ph:1,
+ w:'گرم، مخملی "کمبل" جیسی گہرائی۔ سردیوں اور شام کے لیے بہترین۔',
+ sm:'گرم، مخملی، کستوری اور لکڑی، ہلکی مٹی جیسی۔',
+ alt:[['ڈی پی ایم آئی','DPMI'],['بلونڈ ووڈ','Blond Wood']],
+ lv:[1,5],lo:'گرمائش اور مخملی پن محسوس نہیں ہوگا۔',hi:'مٹی اور گیلی لکڑی جیسی بھاری بو آئے گی اور خوشبو دھندلی لگے گی۔',
+ add:'خوشبو میں گرم اور نرم گہرائی آئے گی، جیسے نرم کپڑا یا گرم جلد۔',
+ skip:'کوئی بڑا نقصان نہیں ہوگا۔ بس گرمائش کچھ کم ہوگی اور خوشبو زیادہ تازہ لگے گی۔',
+ harm:'مہنگا ہے اور نیم ٹھوس ہوتا ہے۔ زیادہ ہو تو مٹی جیسی بو۔ جلد کی حد مقرر ہے۔ آبی جانوروں کے لیے نقصان دہ ہے۔',
+ care:'شیشی ہلکے گرم پانی میں رکھ کر پگھلائیں، پھر تولیں۔',sk:1,skn:'حد مقرر ہے۔ تیار پرفیوم میں 1٪ سے کم رکھیں۔'},
+{n:'ایمبروکسان (10٪ محلول)',en:'Ambroxan 10%',g:5,fam:'عنبر',c:'#B07A2A',ph:1,
+ w:'صاف عنبر۔ بہت تھوڑی مقدار سے خوشبو گھنٹوں رہتی ہے اور "برانڈڈ" پرفیوم جیسا تاثر دیتی ہے۔',
+ sm:'صاف، ہلکی نمکین، گرم عنبر، جلد جیسی خوشبو۔',
+ alt:[['ایمبروکس','Ambrox'],['ایمبروکسائیڈ','Ambroxide'],['سیٹالوکس','Cetalox'],['ایمبروفکس','Ambrofix'],['عنبر','Amber']],
+ lv:[2,10],lo:'ٹکاؤ اور مہنگے پرفیوم والا احساس کم ہوگا۔',hi:'خوشبو خشک، نمکین اور تیز ہو جائے گی، اور خرچہ بہت بڑھے گا۔',
+ add:'جلد پر گرم صاف عنبر آئے گا، خوشبو بہت دیر تک رہے گی اور لوگ پوچھیں گے کہ کون سا پرفیوم ہے۔',
+ skip:'خوشبو کا آخری حصہ کمزور ہوگا اور پرفیوم عام سا لگے گا۔',
+ harm:'سب سے مہنگا کیمیکل ہے۔ ٹھوس دانے ہیں جو بغیر گھولے تہہ میں بیٹھ جاتے ہیں۔',
+ care:'پہلے 1 گرام پاؤڈر کو 9 گرام الکحل میں گھول کر 10٪ محلول بنائیں، پھر اسے تولیں۔',sk:3,skn:'کوئی خاص پابندی نہیں۔ 10٪ محلول تیار پرفیوم میں 3٪ تک کافی ہے۔'},
+{n:'بینزائل سیلیسیلیٹ',en:'Benzyl Salicylate',g:4,fam:'ٹھہراؤ',c:'#6B7F7A',ph:1,
+ w:'باقی خوشبو کو پکڑ کر رکھتا ہے اور پھولوں کو نرم کرتا ہے۔',
+ sm:'بہت ہلکی، تقریباً بے بو، ہلکی پھولوں جیسی۔',
+ alt:[['بینزائل سیلیسیلیٹ','Benzyl Salicylate'],['بی ایس','BS']],
+ lv:[1,6],lo:'خوشبو کچھ جلدی اڑ جائے گی۔',hi:'الرجی کا خطرہ بڑھ جائے گا اور خوشبو بھاری اور دبی دبی لگے گی۔',
+ add:'خوشبو جلد پر زیادہ دیر ٹھہرے گی اور پھول نرم اور گول ہو جائیں گے۔',
+ skip:'کوئی بڑا نقصان نہیں ہوگا، بس خوشبو کچھ کم دیر رہے گی۔',
+ harm:'الرجی والا کیمیکل ہے، پیکنگ پر اس کا نام لکھنا پڑتا ہے۔ حساس جلد پر خارش کر سکتا ہے۔',
+ care:'تھوڑی مقدار میں ڈالیں اور الرجی ٹیسٹ ضرور کریں۔',sk:2,skn:'الرجی والا ہے۔ تیار پرفیوم میں 2٪ سے کم رکھیں۔'},
+{n:'ایتھائل وینلن (10٪ محلول)',en:'Ethyl Vanillin 10%',g:3,fam:'مٹھاس',c:'#A0522D',ph:1,
+ w:'گرم ونیلا والی مٹھاس۔ خوشبو کو پرکشش اور "گلے لگنے" جیسی بناتی ہے۔',
+ sm:'میٹھی، کریمی ونیلا۔',
+ alt:[['ایتھائل وینلن','Ethyl Vanillin'],['بوربونال','Bourbonal'],['ونیلا','Vanilla']],
+ lv:[1,6],lo:'مٹھاس محسوس نہیں ہوگی، خوشبو صاف اور تازہ رہے گی۔',hi:'خوشبو کیک یا مٹھائی جیسی ہو جائے گی اور پرفیوم کا رنگ بھورا ہوگا۔',
+ add:'خوشبو میں گرم میٹھا پن آئے گا جو زنانہ اور شام کے پرفیوم کے لیے بہت پسند کیا جاتا ہے۔',
+ skip:'کوئی نقصان نہیں ہوگا۔ خوشبو زیادہ تازہ اور مردانہ لگے گی۔',
+ harm:'وقت کے ساتھ پرفیوم پیلا یا بھورا ہو جاتا ہے اور سفید کپڑوں پر داغ لگ سکتا ہے۔',
+ care:'10٪ محلول بنا کر ڈالیں۔ پرفیوم گہرے رنگ کی بوتل میں دھوپ سے بچا کر رکھیں۔',sk:1,skn:'رنگ بدلتا ہے۔ 10٪ محلول تیار پرفیوم میں 1٪ تک رکھیں۔'},
+{n:'ہیڈیون',en:'Hedione',g:22,fam:'پھول',c:'#D0587E',ph:2,
+ w:'پرفیوم کی جان ہے۔ ہوا دار چمبیلی جو باقی خوشبو کو دور تک پھیلاتی ہے۔',
+ sm:'ہوا دار، نرم، تازہ چمبیلی۔',
+ alt:[['میتھائل ڈائی ہائیڈرو جیسمونیٹ','Methyl Dihydrojasmonate'],['ایم ڈی جے','MDJ'],['کرشمال','Kharismal']],
+ lv:[10,35],lo:'خوشبو جسم کے قریب بند رہے گی اور پھیلے گی نہیں۔',hi:'خوشبو پانی جیسی پتلی ہو جائے گی اور باقی کیمیکل دب جائیں گے۔',
+ add:'خوشبو روشن اور ہوا دار ہوگی اور کمرے میں دور تک محسوس ہوگی۔',
+ skip:'خوشبو بھاری اور بند لگے گی، اور پھیلاؤ بہت کم ہو جائے گا۔',
+ harm:'نقصان بہت کم ہے۔ بس اکیلا کمزور لگتا ہے، اس لیے دوسروں کے ساتھ ڈالا جاتا ہے۔',
+ care:'عام احتیاط کافی ہے۔',sk:10,skn:'کوئی خاص پابندی نہیں۔'},
+{n:'پی ای اے (فینائل ایتھائل الکحل)',en:'Phenyl Ethyl Alcohol (PEA)',g:7,fam:'گلاب',c:'#C0507A',ph:2,
+ w:'نرم گلاب۔ خوشبو کو گول اور بھرپور بناتا ہے۔',
+ sm:'نرم گلاب، ہلکا شہد جیسا۔',
+ alt:[['پی ای اے','PEA'],['فینیتھائل الکحل','Phenethyl Alcohol'],['2 فینائل ایتھانول','2-Phenylethanol'],['گلاب الکحل','Rose Alcohol']],
+ lv:[3,12],lo:'پھولوں کا دل کمزور ہوگا اور خوشبو سخت لگے گی۔',hi:'گلاب غالب آ جائے گا اور شہد یا خمیر جیسی بو آئے گی۔',
+ add:'گلاب کی نرمی آئے گی اور خوشبو زیادہ مکمل اور خوشگوار لگے گی۔',
+ skip:'خوشبو میں نرمی اور گولائی کم ہوگی۔',
+ harm:'آنکھ میں جلن کر سکتا ہے۔ زیادہ ہو تو شہد جیسی بو آتی ہے۔',
+ care:'آنکھ سے بچائیں، ڈبہ بند رکھیں۔',sk:4,skn:'کوئی خاص پابندی نہیں۔'},
+{n:'لینالول',en:'Linalool',g:7,fam:'پھول و تازگی',c:'#9B6FB5',ph:2,
+ w:'لیونڈر جیسی ہلکی تازگی۔ شروع کی تازگی کو درمیان کے پھولوں سے جوڑتا ہے۔',
+ sm:'ہلکا تازہ پھول، لیونڈر جیسا۔',
+ alt:[['لینالول','Linalol'],['کوریانڈرول','Coriandrol'],['لیونڈر الکحل','Lavender Alcohol']],
+ lv:[3,12],lo:'تازگی اور پھولوں کے بیچ خلا محسوس ہوگا۔',hi:'خوشبو لیونڈر جیسی تیز ہو جائے گی اور الرجی کا خطرہ بڑھے گا۔',
+ add:'تازگی اور پھول آپس میں جڑ جائیں گے اور خوشبو صاف اور نکھری ہوئی لگے گی۔',
+ skip:'لیموں والی تازگی کے بعد اچانک خالی پن آئے گا۔',
+ harm:'ہوا لگنے سے خراب ہو کر جلد پر الرجی کر سکتا ہے۔ پیکنگ پر نام لکھنا پڑتا ہے۔',
+ care:'ڈبہ بھرا ہوا اور مضبوطی سے بند رکھیں۔ پرانا مال استعمال نہ کریں۔',sk:3,skn:'الرجی والا ہے۔ تیار پرفیوم میں 3٪ سے کم رکھیں۔'},
+{n:'ایچ سی اے',en:'Hexyl Cinnamic Aldehyde (HCA)',g:2,fam:'پھول',c:'#D97A9A',ph:2,
+ w:'نرم چمبیلی۔ پھولوں کو بھرپور اور دیرپا بناتا ہے۔',
+ sm:'نرم چمبیلی، ہلکی کیمومائل جیسی۔',
+ alt:[['ہیکسائل سنامل','Hexyl Cinnamal'],['الفا ہیکسائل سنامک ایلڈیہائیڈ','Alpha-Hexylcinnamaldehyde'],['جیسمونال ایچ','Jasmonal H']],
+ lv:[0,5],lo:'جسم والے پرفیوم میں یہ اختیاری ہے۔ نہ بھی ڈالیں تو کوئی بڑا فرق نہیں پڑتا۔',hi:'"سرف اور دھلے کپڑوں" جیسی بو آئے گی اور الرجی کا خطرہ بڑھے گا۔',
+ add:'پھولوں کو بھرپوری ملے گی اور خوشبو جلد پر کچھ زیادہ دیر رہے گی۔',
+ skip:'کوئی خاص نقصان نہیں ہوگا۔ خوشبو کم "صابن والی" لگے گی۔',
+ harm:'الرجی والا کیمیکل ہے، پیکنگ پر نام لکھنا پڑتا ہے۔ زیادہ ہو تو ڈیٹرجنٹ جیسی بو۔',
+ care:'تھوڑی مقدار میں ڈالیں۔ بچا ہوا نالی میں نہ بہائیں۔',sk:2,skn:'الرجی والا ہے۔ تیار پرفیوم میں 2٪ سے کم رکھیں۔'},
+{n:'برگاموٹ آئل (FCF)',en:'Bergamot Oil FCF',g:10,fam:'لیموں',c:'#C9A21A',ph:3,
+ w:'لگاتے ہی پہلی تازہ چمک۔ یہ پرفیوم کا "پہلا تاثر" ہے۔',
+ sm:'تازہ لیموں اور سنگترہ، ہلکی چائے جیسی۔',
+ alt:[['برگاموٹ تیل','Bergamot Oil'],['برگاپٹین فری برگاموٹ','Bergapten-Free Bergamot'],['برگاموٹ ایف سی ایف','Bergamot FCF']],
+ lv:[5,15],lo:'شروع پھیکا ہوگا اور خوشبو سیدھی بھاری لگے گی۔',hi:'لیموں غالب آ جائے گا اور خوشبو جلد اڑ جائے گی۔',
+ add:'لگاتے ہی پہلے 15 سے 30 منٹ تازہ، خوشگوار لیموں کی چمک آئے گی۔',
+ skip:'پرفیوم لگاتے وقت تازگی نہیں ہوگی اور پہلا تاثر کمزور ہوگا۔',
+ harm:'عام (FCF کے بغیر) برگاموٹ دھوپ میں جلد پر کالے داغ اور جلن کر سکتا ہے۔ ہوا لگنے سے جلد خراب ہوتا ہے۔',
+ care:'صرف وہی خریدیں جس پر "FCF" یا "Bergapten Free" لکھا ہو۔ ٹھنڈی جگہ پر بھری ہوئی بند شیشی میں رکھیں۔',sk:5,skn:'صرف FCF والا استعمال کریں۔ عام برگاموٹ کی حد بہت کم ہے۔'},
+{n:'ڈائی ہائیڈرو مائرسینول',en:'Dihydromyrcenol',g:5,fam:'تازگی',c:'#2FA58F',ph:3,
+ w:'صاف تیز تازگی۔ مردانہ "کول" اور تازہ پرفیوم والی پہچان دیتا ہے۔',
+ sm:'تیز صاف لیموں اور لیونڈر، ہلکا دھاتی۔',
+ alt:[['ڈی ایچ ایم','DHM'],['ڈائی ہائیڈرو مائرسینول','Dihydromyrcenol']],
+ lv:[2,10],lo:'خوشبو نرم اور کم تازہ لگے گی (زنانہ پرفیوم میں یہ ٹھیک ہے)۔',hi:'خوشبو سرف اور صابن جیسی ہو جائے گی۔ یہ جسم کے پرفیوم کی سب سے عام غلطی ہے۔',
+ add:'صاف ٹھنڈی تازگی آئے گی جو گرمیوں اور دن کے وقت بہت اچھی لگتی ہے۔',
+ skip:'کوئی نقصان نہیں ہوگا، خوشبو زیادہ نرم اور پھولوں والی لگے گی۔',
+ harm:'زیادہ ہو تو "ڈیٹرجنٹ" جیسی بو آتی ہے۔ آنکھ اور جلد میں ہلکی جلن کر سکتا ہے۔',
+ care:'جلنے والا مائع ہے، آگ سے دور رکھیں۔',sk:3,skn:'کوئی خاص پابندی نہیں، مگر زیادہ ہو تو سرف جیسی بو آتی ہے۔'}
+];
+const BASE=R.reduce((a,r)=>a+r.g,0);
+const PHH={1:['1','بیس — پہلے یہ 6 ڈالیں','دیر تک رہنے والی خوشبو۔ ٹھوس چیزیں پہلے گھول لیں، پھر 5 منٹ آہستہ ہلائیں۔'],2:['2','دل — پھول','بیس کے بعد یہ 4 ڈالیں اور 5 منٹ ہلائیں۔'],3:['3','تازگی — سب سے آخر میں','یہ جلد اڑتے ہیں، اس لیے آخر میں ڈالیں اور ڈھکن فوراً بند کریں۔']};
+const TYPES=[
+ {k:'edp',t:'ای ڈی پی (تیز)',s:'6 سے 8 گھنٹے',c:20,w:3,att:false},
+ {k:'edt',t:'ای ڈی ٹی (درمیانہ)',s:'3 سے 5 گھنٹے',c:12,w:5,att:false},
+ {k:'edc',t:'کولون (ہلکا)',s:'1 سے 2 گھنٹے',c:6,w:10,att:false},
+ {k:'att',t:'عطر (تیل والا)',s:'8 گھنٹے سے زیادہ',c:25,w:0,att:true}
+];
+const $=id=>document.getElementById(id);
+const KEY='body-perfume-rates', WKEY='body-perfume-weights', MKEY='body-perfume-mk';
+let RATE={}, G=R.map(r=>r.g), MK={t:'edp',ml:100,cnt:1};
+try{ RATE=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ RATE={}; }
+try{ const w=JSON.parse(localStorage.getItem(WKEY)||'null'); if(okW(w)) G=w; }catch(e){}
+try{ const m=JSON.parse(localStorage.getItem(MKEY)||'null'); if(m&&typeof m==='object') MK=Object.assign(MK,m); }catch(e){}
+function okW(w){ return Array.isArray(w)&&w.length===R.length&&w.every(x=>typeof x==='number'&&x>=0)&&w.some(x=>x>0); }
+let DOC=null, pushT=null, lastSent='';
+function state(){ return {weights:G.slice(), rates:Object.assign({},RATE), mk:Object.assign({},MK), batch:Math.max(0,Number(document.getElementById('batch').value)||0), unit:document.getElementById('unit').value==='kg'?'kg':'g'}; }
+const BKEY='body-perfume-batch';
+const saveB=()=>{ try{ localStorage.setItem(BKEY,JSON.stringify({batch:Number($('batch').value)||0,unit:$('unit').value})); }catch(e){} push(); };
+function push(){ if(!DOC) return; clearTimeout(pushT); pushT=setTimeout(async()=>{ const body=state(); const s=JSON.stringify(body); if(s===lastSent) return; lastSent=s; try{ await DOC.set(body); }catch(e){ lastSent=''; if(e&&(e.code==='invalid_argument'||e.code==='permission_denied'||e.code==='permission-denied')){ setSync(false,'صرف دیکھنے کی اجازت — تبدیلی محفوظ نہیں ہوگی'); DOC=null; } } },700); }
+const saveR=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(RATE)); }catch(e){} push(); };
+const saveW=()=>{ try{ localStorage.setItem(WKEY,JSON.stringify(G)); }catch(e){} push(); };
+const saveM=()=>{ try{ localStorage.setItem(MKEY,JSON.stringify(MK)); }catch(e){} push(); };
+function setSync(on,t){ const s=$('sync'); s.className='sync '+(on?'on':'off'); s.textContent=t; }
+function applyRemote(d){
+  if(!d) return;
+  if(okW(d.weights)) G=d.weights.slice();
+  if(d.rates&&typeof d.rates==='object'){ RATE={}; Object.keys(d.rates).forEach(k=>{ const v=Number(d.rates[k]); if(v>0) RATE[k]=v; }); }
+  if(d.mk&&typeof d.mk==='object') MK=Object.assign({t:'edp',ml:100,cnt:1},d.mk);
+  if(typeof d.batch==='number'&&d.batch>=0&&document.activeElement!==$('batch')) $('batch').value=d.batch;
+  if(d.unit==='g'||d.unit==='kg') $('unit').value=d.unit;
+  try{ localStorage.setItem(BKEY,JSON.stringify({batch:Number($('batch').value)||0,unit:$('unit').value})); }catch(e){}
+  lastSent=JSON.stringify(state());
+  try{ localStorage.setItem(KEY,JSON.stringify(RATE)); localStorage.setItem(WKEY,JSON.stringify(G)); localStorage.setItem(MKEY,JSON.stringify(MK)); }catch(e){}
+  const act=document.activeElement, ai=act&&act.id&&/^w\d+$/.test(act.id)?Number(act.id.slice(1)):undefined;
+  document.querySelectorAll('input[data-k],input[data-x]').forEach(x=>{ if(x!==act) x.value=RATE[x.dataset.k||x.dataset.x]||''; });
+  if(act!==$('ml')) $('ml').value=MK.ml; if(act!==$('cnt')) $('cnt').value=MK.cnt;
+  update(ai);
+}
+function loadJs(src){ return new Promise((ok,no)=>{ const e=document.createElement('script'); e.src=src; e.onload=ok; e.onerror=no; document.head.appendChild(e); }); }
+// Best Excel والا Firebase — جسم کی خوشبو کا الگ خانہ: localSync/jism_khushbu_nuskha
+async function fireDoc(){
+  const V='https://www.gstatic.com/firebasejs/9.23.0/';
+  await loadJs(V+'firebase-app-compat.js'); await loadJs(V+'firebase-firestore-compat.js');
+  const cfg={apiKey:"AIzaSyAW9tWG0o6bCBwPTkoymInLpvM5T7idvxg",authDomain:"best-excel.firebaseapp.com",projectId:"best-excel",storageBucket:"best-excel.firebasestorage.app",messagingSenderId:"895860622346",appId:"1:895860622346:web:01bd79b9459f4e70e10bf3"};
+  const app=firebase.apps.find(a=>a.name==='khushbu')||firebase.initializeApp(cfg,'khushbu');
+  const d=app.firestore().collection('localSync').doc('jism_khushbu_nuskha');
+  return { set:body=>d.set(Object.assign({},body,{updatedAt:Date.now()})), onSnapshot:(f,err)=>d.onSnapshot(f,err) };
+}
+async function initDb(){
+  let db=null; try{ db=window.claude&&typeof claude.use==='function'?await claude.use('db'):null; }catch(e){ db=null; }
+  try{ DOC=db?db.doc('perfume/main'):await fireDoc(); }catch(e){ DOC=null; return; }
+  let first=true;
+  DOC.onSnapshot(snap=>{
+    setSync(true,'🟢 لائیو — ہر موبائل اور کمپیوٹر پر ایک جیسا');
+    if(snap.exists){ if(!snap.metadata||!snap.metadata.hasPendingWrites) applyRemote(snap.data()); }
+    else if(first){ lastSent=''; push(); }
+    first=false;
+  }, ()=>{ setSync(false,'محفوظ: صرف اس ڈیوائس میں'); DOC=null; });
+}
+const sumG=()=>G.reduce((a,x)=>a+x,0);
+const rs=v=>v.toLocaleString('en-US',{maximumFractionDigits:v<10?2:0})+' روپے';
+const fmt=g=>{ if(!(g>0)) return '0 گرام'; if(g>=1000) return (g/1000).toLocaleString('en-US',{maximumFractionDigits:3})+' کلو'; return g.toLocaleString('en-US',{maximumFractionDigits:g<100?2:1})+' گرام'; };
+const fml=m=>{ if(!(m>0)) return '0 ملی لیٹر'; if(m>=1000) return (m/1000).toLocaleString('en-US',{maximumFractionDigits:2})+' لیٹر'; return m.toLocaleString('en-US',{maximumFractionDigits:1})+' ملی لیٹر'; };
+const r2=v=>String(Math.round(v*100)/100);
+const pc1=v=>String(Math.round(v*100)/100);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function grams(){ const v=Math.max(0,Number($('batch').value)||0); return $('unit').value==='kg'?v*1000:v; }
+const curT=()=>TYPES.find(t=>t.k===MK.t)||TYPES[0];
+const PRE=[[10,'g','10 گرام'],[50,'g','50 گرام'],[100,'g','100 گرام'],[500,'g','500 گرام'],[1,'kg','1 کلو']];
+$('chips').innerHTML=PRE.map(p=>'<button type="button" data-v="'+p[0]+'" data-u="'+p[1]+'">'+p[2]+'</button>').join('');
+try{ const b=JSON.parse(localStorage.getItem(BKEY)||'null'); if(b&&typeof b.batch==='number'&&b.batch>=0){ $('batch').value=b.batch; if(b.unit==='g'||b.unit==='kg') $('unit').value=b.unit; } }catch(e){}
+$('chips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; $('batch').value=b.dataset.v; $('unit').value=b.dataset.u; update(); saveB(); };
+const GLOVES='دستانے پہن کر کام کریں، جگہ ہوادار ہو، بچوں کی پہنچ سے دور رکھیں، اور ٹھنڈی سایہ دار جگہ پر بند ڈبے میں رکھیں۔';
+function build(){
+  $('list').innerHTML=R.map((r,i)=>(i===0||R[i-1].ph!==r.ph?'<div class="phh"><span class="phn">مرحلہ '+PHH[r.ph][0]+'</span><b>'+PHH[r.ph][1]+'</b><span class="phs">'+PHH[r.ph][2]+'</span></div>':'')+
+    '<div class="item" id="it'+i+'" style="--c:'+r.c+'"><span class="no">'+(i+1)+'</span><span class="name">'+esc(r.n)+'<span class="en">'+esc(r.en)+'</span></span>'+
+    '<span class="wt"><span class="wrow"><input id="w'+i+'" data-i="'+i+'" type="number" min="0" step="any" inputmode="decimal" aria-label="'+esc(r.n)+' کا وزن گرام میں"><span>گرام</span></span><span class="wk" id="wk'+i+'"></span></span>'+
+    '<div class="why"><span><b class="tgl">🎯 مقصد:</b> '+esc(r.w)+'</span><span class="tags"><span class="fam">'+esc(r.fam)+'</span><span class="pct" id="p'+i+'"></span></span></div>'+
+    '<div class="rate"><label for="r'+i+'">ریٹ فی کلو</label><input id="r'+i+'" data-k="'+esc(r.en)+'" type="number" min="0" step="any" inputmode="decimal" placeholder="0" value="'+(RATE[r.en]||'')+'"><span>روپے</span><span class="cost" id="c'+i+'"></span></div>'+
+    '<div class="lv"><div class="lvtop"><span>مناسب لیول (کنسنٹریٹ میں): <b>'+r.lv[0]+'٪ تا '+r.lv[1]+'٪</b></span><span class="lst" id="ls'+i+'"></span></div><p class="lmsg" id="lm'+i+'" hidden></p>'+
+    '<div class="lvtop skin"><span>🧴 تیار پرفیوم میں: <b id="sp'+i+'"></b> — محفوظ حد: <b>'+r.sk+'٪ تک</b></span><span class="lst" id="ss'+i+'"></span></div>'+
+    '<details><summary>کم یا زیادہ ہو تو کیا ہوگا؟</summary><dl><dt>⬇ '+r.lv[0]+'٪ سے کم ہو تو:</dt><dd>'+esc(r.lo)+'</dd><dt>⬆ '+r.lv[1]+'٪ سے زیادہ ہو تو:</dt><dd>'+esc(r.hi)+'</dd></dl></details></div>'+
+    '<p class="cnote" id="cn'+i+'" hidden>⚠ مقدار بہت کم ہے۔ 0.01 گرام والا ڈیجیٹل ترازو استعمال کریں۔</p>'+
+    '<details class="inside full"><summary><span class="tri">▼</span><span>مکمل تفصیل — فوائد، نقصانات، احتیاط</span></summary><div class="dgrid">'+
+      row('🌸','خوشبو کیسی','sm',r.sm)+
+      row('✅','فوائد','ben',r.w)+
+      row('➕','ڈالیں تو کیا ہوگا','add',r.add)+
+      row('➖','نہ ڈالیں تو کیا ہوگا','skip',r.skip)+
+      row('⚠️','نقصانات','harm',r.harm)+
+      row('🧤','احتیاطی تدبیر','safe',r.care+' '+GLOVES)+
+      row('🧴','جلد پر حد','sk',r.skn)+
+    '</div></details>'+
+    '<div class="names"><details class="inside"><summary><span class="tri">▼</span><span>دوسرے نام ('+(r.alt.length+1)+') — دیکھنے کے لیے دبائیں</span></summary><ol class="ilist">'+[[r.n,r.en]].concat(r.alt).map(x=>'<li><span class="iur">'+esc(x[0])+'</span><span class="ien">'+esc(x[1])+'</span></li>').join('')+'</ol></details></div>'+
+    '</div>').join('');
+}
+function row(ic,t,c,x){ return '<div class="drow '+c+'"><h4>'+ic+' '+t+'</h4><p>'+esc(x)+'</p></div>'; }
+function buildMk(){
+  $('types').innerHTML=TYPES.map(t=>'<button type="button" data-t="'+t.k+'"><b>'+t.t+'</b><span>'+t.c+' فیصد خوشبو — '+t.s+'</span></button>').join('');
+  $('mlchips').innerHTML=[30,50,100].map(v=>'<button type="button" data-ml="'+v+'">'+v+' ملی لیٹر</button>').join('');
+  $('ml').value=MK.ml; $('cnt').value=MK.cnt;
+}
+function mkCalc(){
+  const t=curT(), ml=Math.max(0,Number(MK.ml)||0)*Math.max(0,Number(MK.cnt)||0);
+  const dens=t.att?0.98:0.83, tot=ml*dens, conc=tot*t.c/100, water=tot*t.w/100, carr=tot-conc-water;
+  return {t,ml,tot,conc,water,carr,carrMl:t.att?carr/0.98:carr/0.79};
+}
+function update(skip){
+  const T=grams(), S=sumG()||1, t=curT();
+  R.forEach((r,i)=>{ const a=G[i]*T/S, pc=G[i]/S*100;
+    if(i!==skip) $('w'+i).value=r2(a);
+    $('wk'+i).textContent=a>=1000?'= '+fmt(a):'';
+    $('p'+i).textContent=pc1(pc)+'%';
+    $('cn'+i).hidden=!(a>0&&a<1);
+    const lo=pc<r.lv[0]-0.05, hi=pc>r.lv[1]+0.05, ls=$('ls'+i), lm=$('lm'+i);
+    ls.className='lst '+(lo||hi?'bad':'ok'); ls.textContent=lo?'⬇ کم ہے':hi?'⬆ زیادہ ہے':'✓ ٹھیک ہے';
+    lm.hidden=!(lo||hi); lm.textContent=lo?'⚠ '+r.lo:hi?'⚠ '+r.hi:'';
+    const fin=pc*t.c/100, over=fin>r.sk+0.005;
+    $('sp'+i).textContent=pc1(fin)+'٪';
+    const ss=$('ss'+i); ss.className='lst '+(over?'bad':'ok'); ss.textContent=over?'⚠ حد سے زیادہ':'✓ محفوظ';
+    $('it'+i).classList.toggle('chg',Math.abs(G[i]/S*BASE-r.g)>0.001);
+  });
+  $('bar').innerHTML=R.map((r,i)=>'<span style="width:'+(G[i]/S*100)+'%;background:'+r.c+'" title="'+esc(r.n)+'"></span>').join('');
+  $('total').textContent=fmt(T);
+  $('modrow').hidden=!R.some((r,i)=>Math.abs(G[i]/S*BASE-r.g)>0.001);
+  document.querySelectorAll('#chips button').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.v)===Number($('batch').value)&&b.dataset.u===$('unit').value)));
+  mkRender(); costs();
+}
+function mkRender(){
+  const m=mkCalc(), t=m.t;
+  document.querySelectorAll('#types button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.t===t.k)));
+  document.querySelectorAll('#mlchips button').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.ml)===Number(MK.ml))));
+  const carrName=t.att?'ڈی پی جی یا آئی پی ایم':'پرفیومر الکحل (ایتھنول 96٪)';
+  $('mkout').innerHTML=
+    '<div class="mo big"><span>کل پرفیوم</span><b>'+fml(m.ml)+' <small>(تقریباً '+fmt(m.tot)+')</small></b></div>'+
+    '<div class="mo"><span><i style="background:var(--accent)"></i>کنسنٹریٹ ('+t.c+'٪)</span><b>'+fmt(m.conc)+'</b></div>'+
+    '<div class="mo"><span><i style="background:#8FA9C9"></i>'+carrName+' ('+(100-t.c-t.w)+'٪)</span><b>'+fmt(m.carr)+' <small>= '+fml(m.carrMl)+'</small></b></div>'+
+    (t.w?'<div class="mo"><span><i style="background:#BFD8E8"></i>ڈسٹلڈ پانی ('+t.w+'٪)</span><b>'+fmt(m.water)+'</b></div>':'')+
+    '<div class="mbar"><span style="width:'+t.c+'%;background:var(--accent)"></span><span style="width:'+(100-t.c-t.w)+'%;background:#8FA9C9"></span>'+(t.w?'<span style="width:'+t.w+'%;background:#BFD8E8"></span>':'')+'</div>'+
+    (t.att?'<p class="hint">عطر میں الکحل اور پانی نہیں ڈالے جاتے۔ کنسنٹریٹ کو ڈی پی جی یا آئی پی ایم میں ملائیں اور رول آن شیشی میں بھریں۔</p>':'');
+  const T=grams(), w=$('mkwarn');
+  w.textContent=m.conc>0&&T+0.01<m.conc?'⚠ اوپر بنایا گیا کنسنٹریٹ ('+fmt(T)+') ان بوتلوں کے لیے کم ہے۔ نیچے والا بٹن دبائیں۔':'';
+}
+function costs(){
+  const T=grams(), S=sumG()||1; let sum=0, miss=0, kg=0;
+  R.forEach((r,i)=>{ const rt=Number(RATE[r.en])||0, a=G[i]*T/S, c=rt*a/1000;
+    if(rt>0){ sum+=c; kg+=rt*G[i]/S; $('c'+i).textContent='= '+rs(c); } else { miss++; $('c'+i).textContent=''; } });
+  const any=miss<R.length;
+  $('mTot').textContent=any?rs(sum):'—';
+  $('mKg').textContent=any?rs(kg):'—';
+  const m=mkCalc(), n=Math.max(0,Number(MK.cnt)||0);
+  const carrRate=m.t.att?(Number(RATE.__dpg)||0)*m.carr/1000:(Number(RATE.__alc)||0)*m.carrMl/1000;
+  const all=(any?kg*m.conc/1000:0)+carrRate+(Number(RATE.__bot)||0)*n;
+  const has=any||carrRate>0||RATE.__bot;
+  $('mBot').textContent=has&&n>0?rs(all/n):'—';
+  $('mAllL').textContent=n+' بوتلوں کی لاگت';
+  $('mAll').textContent=has?rs(all):'—';
+  const notes=[];
+  if(miss&&any) notes.push(miss+' کیمیکل کا ریٹ ابھی نہیں لکھا، اس لیے ٹوٹل ادھورا ہے۔');
+  if(!any) notes.push('ہر کیمیکل کے نیچے اس کا 1 کلو کا ریٹ لکھیں۔');
+  if(m.t.att&&!RATE.__dpg) notes.push('ڈی پی جی کا ریٹ نہیں لکھا۔');
+  if(!m.t.att&&!RATE.__alc) notes.push('الکحل کا ریٹ نہیں لکھا۔');
+  $('mWarn').textContent=notes.length?'⚠ '+notes.join(' '):'';
+}
+$('list').addEventListener('input',e=>{ const t=e.target;
+  if(t.matches('.rate input')){ const v=Number(t.value); if(v>0) RATE[t.dataset.k]=v; else delete RATE[t.dataset.k]; saveR(); costs(); return; }
+  if(t.matches('.wt input')){ const i=Number(t.dataset.i), v=Number(t.value);
+    if(t.value===''||!(v>=0)) return;
+    let T=grams(); const S=sumG();
+    if(!(T>0)||!(S>0)){ G=G.map(()=>0); G[i]=v; T=v; }
+    else { const f=T/S; G[i]=v/f; T=f*sumG(); }
+    if(!(sumG()>0)) G[i]=0;
+    $('batch').value=$('unit').value==='kg'?String(Math.round(T/1000*100000)/100000):r2(T);
+    saveW(); saveB(); update(i); }
+});
+$('list').addEventListener('change',e=>{ if(e.target.matches('.wt input')) update(); });
+document.querySelectorAll('.xr input').forEach(x=>{ x.value=RATE[x.dataset.x]||''; x.oninput=()=>{ const v=Number(x.value); if(v>0) RATE[x.dataset.x]=v; else delete RATE[x.dataset.x]; saveR(); costs(); }; });
+$('types').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; MK.t=b.dataset.t; saveM(); update(); };
+$('mlchips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; MK.ml=Number(b.dataset.ml); $('ml').value=MK.ml; saveM(); update(); };
+$('ml').oninput=()=>{ MK.ml=Math.max(0,Number($('ml').value)||0); saveM(); update(); };
+$('cnt').oninput=()=>{ MK.cnt=Math.max(0,Math.round(Number($('cnt').value)||0)); saveM(); update(); };
+$('fit').onclick=()=>{ const m=mkCalc(); if(!(m.conc>0)) return; $('unit').value=m.conc>=1000?'kg':'g'; $('batch').value=m.conc>=1000?String(Math.round(m.conc)/1000):r2(m.conc); update(); saveB(); toast('✓ کنسنٹریٹ '+fmt(m.conc)+' کر دیا'); $('list').scrollIntoView({behavior:'smooth',block:'start'}); };
+$('reset').onclick=()=>{ G=R.map(r=>r.g); saveW(); update(); toast('اصل فارمولا واپس آ گیا'); };
+$('clr').onclick=()=>{ RATE={}; saveR(); document.querySelectorAll('input[data-k],input[data-x]').forEach(x=>x.value=''); costs(); toast('ریٹ صاف ہو گئے'); };
+$('batch').oninput=()=>{ update(); saveB(); }; $('unit').onchange=()=>{ update(); saveB(); };
+function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800); }
+$('copy').onclick=()=>{
+  const T=grams(), S=sumG()||1, m=mkCalc();
+  let t='جسم کی خوشبو — کنسنٹریٹ '+fmt(T)+'\n'+R.map((r,i)=>{ const a=G[i]*T/S, rt=Number(RATE[r.en])||0; return (i+1)+'. '+r.n+' ('+r.en+'): '+fmt(a)+(rt?' — '+rs(rt*a/1000):''); }).join('\n');
+  t+='\n\nپرفیوم: '+m.t.t+' — '+fml(m.ml)+' ('+MK.ml+' ملی لیٹر × '+MK.cnt+' بوتل)\nکنسنٹریٹ: '+fmt(m.conc)+'\n'+(m.t.att?'ڈی پی جی / آئی پی ایم: ':'الکحل: ')+fmt(m.carr)+(m.t.w?'\nپانی: '+fmt(m.water):'');
+  if($('mBot').textContent!=='—') t+='\nایک بوتل کی لاگت: '+$('mBot').textContent;
+  const done=()=>toast('✓ نسخہ کاپی ہو گیا');
+  const fb=()=>{ const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); done();}catch(e){} ta.remove(); };
+  try{ navigator.clipboard.writeText(t).then(done,fb); }catch(e){ fb(); }
+};
+build(); buildMk(); update(); initDb();
+})();
+</script>
+</body>
+</html>

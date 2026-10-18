@@ -154,6 +154,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 @media (max-width:420px){ .lcb .row{grid-template-columns:1fr; gap:2px} }
 @media (prefers-reduced-motion: reduce){ .lcm .tr{transition:none} }
 .spbtn{background:linear-gradient(135deg,#C98A12,#D0587E)}
+.jismbtn{display:block; text-decoration:none; background:linear-gradient(135deg,#1F6E52,#3E6FB0)}
 .sptop{background:var(--amber-soft); border:1px solid var(--amber); border-radius:12px; padding:10px 12px; font-size:14px; display:grid; gap:6px}
 .sptop h3{margin:0; font-size:16px}
 .sptop .lay{display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px 10px}
@@ -283,6 +284,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     <p class="sub">بیچ کا وزن لکھیں — ہر جزو کی مقدار خود بخود نکل آئے گی۔</p>
     <button type="button" class="libbtn spbtn" id="spBtn">⭐ اسپیشل کیمیکل — ZHF فارمولے کے 18 کیمیکل</button>
     <button type="button" class="libbtn" id="libBtn">📚 خوشبو کے تمام کیمیکل — مکمل تفصیل (A سے Z)</button>
+    <a class="libbtn jismbtn" href="jism-khushbu.html">🧴 جسم کی خوشبو — 12 کیمیکل پرفیوم نسخہ</a>
   </header>
 
   <section class="panel batch">
@@ -674,8 +676,8 @@ const ZHF=[["Dihydromyrcenol", 1800, "top", "3", "فارمولے کی سب سے 
   var v='', busy=false;
   function sha(t){ return crypto.subtle.digest('SHA-256',new TextEncoder().encode('khb:'+t)).then(function(b){ return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0')}).join(''); }); }
   function draw(){ for(var i=0;i<dots.length;i++) dots[i].classList.toggle('on',i<v.length); inp.value=v; }
-  function unlock(){ H.classList.remove('locked'); L.hidden=true; msg.textContent=''; v=''; draw(); $('lockTools').hidden=false; }
-  function lock(){ H.classList.add('locked'); L.hidden=false; msg.textContent=''; v=''; draw(); $('lockTools').hidden=true; setTimeout(function(){ try{ inp.focus({preventScroll:true}); }catch(e){} },150); }
+  function unlock(){ try{ sessionStorage.setItem('khb-open','1'); }catch(e){} H.classList.remove('locked'); L.hidden=true; msg.textContent=''; v=''; draw(); $('lockTools').hidden=false; }
+  function lock(){ try{ sessionStorage.removeItem('khb-open'); }catch(e){} H.classList.add('locked'); L.hidden=false; msg.textContent=''; v=''; draw(); $('lockTools').hidden=true; setTimeout(function(){ try{ inp.focus({preventScroll:true}); }catch(e){} },150); }
   function check(){ if(busy||v.length<4) return; busy=true;
     sha(v).then(function(h){ busy=false;
       if(h===CODE){ unlock(); }
@@ -690,6 +692,7 @@ const ZHF=[["Dihydromyrcenol", 1800, "top", "3", "فارمولے کی سب سے 
   $('lkNow').onclick=lock;
   var hiddenAt=0;
   document.addEventListener('visibilitychange',function(){ if(document.hidden) hiddenAt=Date.now(); else if(hiddenAt&&Date.now()-hiddenAt>60000&&!H.classList.contains('locked')) lock(); });
+  try{ if(sessionStorage.getItem('khb-open')==='1'){ unlock(); return; } }catch(e){}
   lock();
 })();
 </script>
