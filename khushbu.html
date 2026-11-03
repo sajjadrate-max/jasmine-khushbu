@@ -154,6 +154,23 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 @media (max-width:420px){ .lcb .row{grid-template-columns:1fr; gap:2px} }
 @media (prefers-reduced-motion: reduce){ .lcm .tr{transition:none} }
 .spbtn{background:linear-gradient(135deg,#C98A12,#D0587E)}
+.ftabsbox{display:grid; gap:8px; padding:10px}
+.ftabs{display:grid; grid-template-columns:repeat(5,1fr); gap:6px}
+.ftabs button{font:inherit; display:grid; justify-items:center; gap:0; line-height:1.3; border:1px solid var(--line); background:var(--surface2); color:var(--ink); border-radius:12px; padding:6px 2px; cursor:pointer; min-height:56px}
+.ftabs button small{font-size:11.5px; color:var(--muted)}
+.ftabs button b{font-family:"IBM Plex Sans",sans-serif; font-size:20px}
+.ftabs button[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.ftabs button[aria-pressed="true"] small{color:var(--accent-ink); opacity:.9}
+.ftitle{margin:0; text-align:center; font-weight:700; color:var(--accent)}
+.addbox{display:grid; gap:8px}
+.addbox h2{margin:0; font-size:17px}
+.addbox select,.addbox input[type=text]{font:inherit; width:100%; min-height:46px; padding:0 10px; color:var(--ink); background:var(--surface2); border:1px solid var(--line); border-radius:10px}
+.addrow{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.addrow label{font-weight:700}
+.addrow input{font:inherit; width:90px; min-height:44px; text-align:center; direction:ltr; font-weight:700; color:var(--ink); background:var(--surface2); border:2px solid var(--accent); border-radius:10px}
+.addrow .btn{width:auto; flex:1; min-height:44px}
+.trow.added .tno{background:#3E6FB0}
+.rmv{font:inherit; font-size:13.5px; justify-self:start; background:none; border:1px solid #C0392B; color:#B3261E; border-radius:8px; padding:3px 12px; cursor:pointer}
 .pswitch{position:sticky; top:0; z-index:20; display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:6px; margin:0 -4px; background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:0 4px 14px rgba(0,0,0,.08)}
 .pswitch a{display:flex; align-items:center; justify-content:center; gap:6px; min-height:52px; border-radius:12px; text-decoration:none; font-weight:700; font-size:16px; color:var(--muted); background:var(--surface2); text-align:center; line-height:1.4; padding:4px 6px}
 .pswitch a[aria-current="page"]{background:linear-gradient(135deg,#1F6E52,#0B7A6A); color:#fff; box-shadow:0 2px 8px rgba(31,110,82,.35)}
@@ -291,6 +308,11 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     <button type="button" class="libbtn" id="libBtn">📚 خوشبو کے تمام کیمیکل — مکمل تفصیل (A سے Z)</button>
   </header>
 
+  <section class="panel ftabsbox" aria-label="فارمولے">
+    <div class="ftabs" id="ftabs"></div>
+    <p class="ftitle" id="ftitle"></p>
+  </section>
+
   <section class="panel batch">
     <label for="batch">کتنی خوشبو بنانی ہے؟</label>
     <div class="brow">
@@ -299,11 +321,19 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
     </div>
     <div class="chips" id="chips"></div>
     <p class="hint">ہر کیمیکل کا وزن (گرام) بھی خود بدل سکتے ہیں — باقی سب حساب ساتھ بدل جائے گا۔</p>
-    <div class="modrow" id="modrow" hidden><span class="mn">⚠ آپ نے فارمولا بدلا ہے</span><button type="button" class="reset" id="reset">اصل فارمولا واپس لائیں</button></div>
+    <div class="modrow" id="modrow" hidden><span class="mn">⚠ یہ فارمولا اصل نسخے سے مختلف ہے</span><button type="button" class="reset" id="reset">اصل فارمولا واپس لائیں</button></div>
   </section>
 
   <details class="stepsbox"><summary><span class="tri" aria-hidden="true">▼</span>🧪 بنانے کے مرحلے دیکھیں (مرحلہ 1، 2، 3)</summary><div class="sb" id="steps"></div></details>
   <section class="list" id="list"></section>
+
+  <section class="panel addbox" aria-labelledby="addT">
+    <h2 id="addT">➕ اس فارمولے میں کیمیکل شامل کریں</h2>
+    <select id="addSel" aria-label="کیمیکل چنیں"></select>
+    <input id="addName" type="text" placeholder="کیمیکل کا نام لکھیں" aria-label="اپنے کیمیکل کا نام" hidden>
+    <div class="addrow"><label for="addPct">فیصد</label><input id="addPct" type="number" min="0" step="any" inputmode="decimal" placeholder="0"><span>%</span><button type="button" class="btn" id="addBtn">شامل کریں</button></div>
+    <p class="hint">A سے Z والی فہرست کے سب کیمیکل یہاں ہیں۔ شامل کرنے کے بعد باقی کیمیکل کا فیصد کم کریں تاکہ کل 100٪ رہے۔ کسی بھی کیمیکل کو ہٹانے کے لیے اس کے نام کے نیچے تکون دبائیں۔</p>
+  </section>
 
   <section class="extra">
     <details>
@@ -377,7 +407,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
   </section>
 
   <section class="panel money" aria-live="polite">
-    <h2>ریٹ کا حساب</h2>
+    <h2 id="mHead">ریٹ کا حساب</h2>
     <div class="mrow big"><span>اس بیچ کا کل خرچہ</span><b id="mTot">—</b></div>
     <div class="mrow"><span>1 کلو خوشبو کی لاگت</span><b id="mKg">—</b></div>
     <div class="mrow"><span>100 کلو پاؤڈر میں خوشبو (300 گرام) کا خرچہ</span><b id="mPow">—</b></div>
@@ -415,32 +445,37 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 const R=[{"n": "ڈائی پروپائلین گلائیکول", "en": "Dipropylene Glycol (DPG)", "g": 5, "fam": "گھولنے والا", "c": "#6B7F7A", "w": "گھولنے والا — خوشبو کو پتلا اور یکساں کرتا ہے، اپنی خوشبو نہیں۔", "alt": [["ڈی پی جی", "DPG"]], "src": [], "ph": 1, "sh": "DPG", "nm": "ڈی پی جی"}, {"n": "گیلیکسولائیڈ 50٪", "en": "Galaxolide 50%", "g": 12, "fam": "مشک", "c": "#7A6BB0", "w": "صاف سفید مشک — دھلے کپڑوں پر کئی دن تک خوشبو رہتی ہے۔", "alt": [["ایچ ایچ سی بی", "HHCB"], ["مشک 50", "Musk 50"], ["سفید مشک", "White Musk"], ["ایبالائیڈ", "Abbalide"]], "src": [], "ph": 1, "sh": "Galaxolide 50%", "nm": "گیلیکسولائیڈ 50٪"}, {"n": "آئسو ای سپر", "en": "Iso E Super", "g": 5, "fam": "لکڑی", "c": "#8A5A36", "w": "مخملی نرم لکڑی — خوشبو کو گہرا اور دیرپا بناتا ہے۔", "alt": [["او ٹی این ای", "OTNE"]], "src": [], "ph": 1, "sh": "Iso E Super", "nm": "آئسو ای سپر"}, {"n": "بینزائل سیلیسیلیٹ", "en": "Benzyl Salicylate", "g": 6, "fam": "خوشبو پکڑنے والا", "c": "#4F6FB0", "w": "چمبیلی کو پکڑ کر رکھتا ہے تاکہ خوشبو جلد نہ اڑے، ساتھ ہلکی پھولوں کی مٹھاس۔", "alt": [], "src": [], "ph": 1, "sh": "Benzyl Salicylate", "nm": "بینزائل سیلیسیلیٹ"}, {"n": "ہیڈیون", "en": "Hedione", "g": 18, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "ہوا دار چنبیلی — خوشبو کو پورے کمرے میں پھیلاتا ہے۔ اس نسخے کی سب سے بڑی چیز۔", "alt": [["میتھائل ڈائی ہائیڈرو جیسمونیٹ", "Methyl Dihydrojasmonate"], ["ایم ڈی جے", "MDJ"]], "src": [], "ph": 2, "sh": "Hedione", "nm": "ہیڈیون"}, {"n": "ایچ سی اے", "en": "Hexyl Cinnamic Aldehyde", "g": 12, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "نرم بھرپور چنبیلی — خوشبو کا دل، دھلے کپڑوں پر ٹھہرتی ہے۔", "alt": [["ہیکسائل سنامک الڈیہائیڈ", "Hexylcinnamal"], ["جیسمین الڈیہائیڈ", "Jasmine Aldehyde"]], "src": [], "ph": 2, "sh": "HCA", "nm": "ایچ سی اے"}, {"n": "لینالول", "en": "Linalool", "g": 15, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "ہلکی پھولوں والی تیز تازگی — چمبیلی اور تازگی کو آپس میں جوڑتا ہے۔", "alt": [["لینالول آئل", "Linalool Oil"]], "src": [], "ph": 2, "sh": "Linalool", "nm": "لینالول"}, {"n": "پی ای اے", "en": "Phenyl Ethyl Alcohol", "g": 12, "fam": "چنبیلی و پھول", "c": "#D0587E", "w": "نرم گلاب — چمبیلی کو گول، بھرپور اور میٹھا بناتا ہے۔", "alt": [["فینائل ایتھائل الکحل", "Phenylethyl Alcohol"], ["روز الکحل", "Rose Alcohol"]], "src": [], "ph": 2, "sh": "PEA", "nm": "پی ای اے"}, {"n": "ڈائی ہائیڈرو مائرسینول", "en": "Dihydromyrcenol", "g": 15, "fam": "تازگی", "c": "#2FA58F", "w": "صاف لیموں جیسی تیز تازگی — پیکٹ کھولتے ہی خوشبو کو اٹھاتا ہے، پاؤڈر میں خراب نہیں ہوتا۔", "alt": [["ڈی ایچ ایم", "DHM"]], "src": [], "ph": 3, "sh": "Dihydromyrcenol", "nm": "ڈائی ہائیڈرو مائرسینول"}];
 const BASE=R.reduce((a,r)=>a+r.g,0); // 100
 const $=id=>document.getElementById(id);
-const OLDORD=["Hedione", "Hexyl Cinnamic Aldehyde", "Linalool", "Benzyl Salicylate", "Phenyl Ethyl Alcohol", "Dihydromyrcenol", "Galaxolide 50%", "Iso E Super", "cis-3-Hexenyl Salicylate", "Dipropylene Glycol (DPG)"];
-const fromOld=a=>a.slice();
-const toOld=g=>g.slice();
 const DEFRATE={"Dipropylene Glycol (DPG)": 1450, "Galaxolide 50%": 4000, "Iso E Super": 6000, "Benzyl Salicylate": 2800, "Hedione": 7000, "Hexyl Cinnamic Aldehyde": 4000, "Linalool": 4000, "Phenyl Ethyl Alcohol": 2500, "Dihydromyrcenol": 5000};
-const KEY='jasmine10-rates', WKEY='jasmine9pct-weights'; let RATE={}, G=R.map(r=>r.g);
-try{ RATE=Object.assign({},DEFRATE,JSON.parse(localStorage.getItem(KEY)||'{}')||{}); }catch(e){ RATE=Object.assign({},DEFRATE); }
-try{ const w=JSON.parse(localStorage.getItem(WKEY)||'null'); if(Array.isArray(w)&&w.length===R.length&&w.every(x=>typeof x==='number'&&x>=0)&&w.some(x=>x>0)) G=fromOld(w); }catch(e){}
+const NF=5, SKEY='jasmine-formulas-v2';
+const baseF=()=>({k:R.map(r=>r.en), g:R.map(r=>r.g), batch:10, unit:'kg'});
+const okF=f=>f&&Array.isArray(f.k)&&Array.isArray(f.g)&&f.k.length===f.g.length&&f.k.length>0&&f.k.every(x=>typeof x==='string'&&x)&&f.g.every(x=>typeof x==='number'&&x>=0);
+const cleanF=f=>okF(f)?{k:f.k.slice(),g:f.g.slice(),batch:typeof f.batch==='number'&&f.batch>=0?f.batch:10,unit:f.unit==='g'?'g':'kg'}:baseF();
+let RATE=Object.assign({},DEFRATE), FS=[], CUR=0;
+for(let i=0;i<NF;i++) FS.push(baseF());
+// پرانا محفوظ ڈیٹا (ایک فارمولا والا) فارمولا 1 میں
+try{ const w=JSON.parse(localStorage.getItem('jasmine9pct-weights')||'null'); if(Array.isArray(w)&&w.length===R.length&&w.every(x=>typeof x==='number'&&x>=0)) FS[0].g=w.slice();
+  const b=JSON.parse(localStorage.getItem('jasmine9-batch')||'null'); if(b&&typeof b.batch==='number'){ FS[0].batch=b.batch; FS[0].unit=b.unit==='g'?'g':'kg'; }
+  RATE=Object.assign({},DEFRATE,JSON.parse(localStorage.getItem('jasmine10-rates')||'{}')||{}); }catch(e){}
+try{ const s=JSON.parse(localStorage.getItem(SKEY)||'null'); if(s&&Array.isArray(s.f)){ FS=s.f.slice(0,NF).map(cleanF); while(FS.length<NF) FS.push(baseF()); CUR=Math.min(NF-1,Math.max(0,s.cur|0)); if(s.rates&&typeof s.rates==='object') RATE=Object.assign({},DEFRATE,s.rates); } }catch(e){}
+const F=()=>FS[CUR];
 let DOC=null, pushT=null, lastSent='';
-function state(){ return {weights:toOld(G), rates:Object.assign({},RATE), batch:Math.max(0,Number(document.getElementById('batch').value)||0), unit:document.getElementById('unit').value==='g'?'g':'kg'}; }
-function push(){ if(!DOC) return; clearTimeout(pushT); pushT=setTimeout(async()=>{ const body=state(); const s=JSON.stringify(body); if(s===lastSent) return; lastSent=s; try{ await DOC.set(body); }catch(e){ lastSent=''; if(e&&(e.code==='invalid_argument'||e.code==='permission-denied')){ setSync(false,'صرف دیکھنے کی اجازت — تبدیلی محفوظ نہیں ہوگی'); DOC=null; } } },700); }
-const saveR=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(RATE)); }catch(e){} push(); };
-const saveW=()=>{ try{ localStorage.setItem(WKEY,JSON.stringify(toOld(G))); }catch(e){} push(); };
+function state(){ return {v:2, cur:CUR, rates:Object.assign({},RATE), f:FS.map(f=>({k:f.k.slice(),g:f.g.slice(),batch:f.batch,unit:f.unit}))}; }
+function saveL(){ try{ localStorage.setItem(SKEY,JSON.stringify(state())); }catch(e){} }
+function push(){ saveL(); if(!DOC) return; clearTimeout(pushT); pushT=setTimeout(async()=>{ const body=state(); const s=JSON.stringify(body); if(s===lastSent) return; lastSent=s; try{ await DOC.set(body); }catch(e){ lastSent=''; if(e&&(e.code==='invalid_argument'||e.code==='permission-denied')){ setSync(false,'صرف دیکھنے کی اجازت — تبدیلی محفوظ نہیں ہوگی'); DOC=null; } } },700); }
+const saveR=push, saveW=push, saveB=push;
 function setSync(on,t){ const s=$('sync'); s.className='sync '+(on?'on':'off'); s.textContent=t; }
 function applyRemote(d){
   if(!d) return;
-  if(Array.isArray(d.weights)&&d.weights.length===R.length&&d.weights.every(x=>typeof x==='number'&&x>=0)&&d.weights.some(x=>x>0)) G=fromOld(d.weights);
+  const act=document.activeElement, typing=act&&act.matches&&act.matches('#list input,#batch,#addName,#addPct');
   if(d.rates&&typeof d.rates==='object'){ RATE=Object.assign({},DEFRATE); Object.keys(d.rates).forEach(k=>{ const v=Number(d.rates[k]); if(v>=0) RATE[k]=v; }); }
-  const act0=document.activeElement;
-  if(typeof d.batch==='number'&&d.batch>=0&&act0!==$('batch')) $('batch').value=d.batch;
-  if(d.unit==='g'||d.unit==='kg') $('unit').value=d.unit;
-  try{ localStorage.setItem('jasmine9-batch',JSON.stringify({batch:Number($('batch').value)||0,unit:$('unit').value})); }catch(e){}
-  lastSent=JSON.stringify(state());
-  try{ localStorage.setItem(KEY,JSON.stringify(RATE)); localStorage.setItem(WKEY,JSON.stringify(toOld(G))); }catch(e){}
-  const act=document.activeElement, ai=act&&act.id&&/^p\d+$/.test(act.id)?Number(act.id.slice(1)):undefined;
-  document.querySelectorAll('.rin').forEach(x=>{ if(x!==act) x.value=RATE[x.dataset.k]||''; });
-  update(ai);
+  if(Array.isArray(d.f)){ const nf=d.f.slice(0,NF).map(cleanF); while(nf.length<NF) nf.push(baseF()); FS=nf; if(typeof d.cur==='number') CUR=Math.min(NF-1,Math.max(0,d.cur|0)); }
+  else { // پرانی شکل: ایک فارمولا
+    if(Array.isArray(d.weights)&&d.weights.length===R.length&&d.weights.every(x=>typeof x==='number'&&x>=0)){ FS[0].k=R.map(r=>r.en); FS[0].g=d.weights.slice(); }
+    if(typeof d.batch==='number'&&d.batch>=0) FS[0].batch=d.batch; if(d.unit==='g'||d.unit==='kg') FS[0].unit=d.unit;
+  }
+  lastSent=JSON.stringify(state()); saveL();
+  if(typing&&act.closest('#list')){ costs(); return; } // لکھتے وقت ٹیبل دوبارہ نہ بنائیں
+  render(typing&&act.id==='batch');
 }
 function loadJs(src){ return new Promise((ok,no)=>{ const e=document.createElement('script'); e.src=src; e.onload=ok; e.onerror=no; document.head.appendChild(e); }); }
 // Best Excel والا Firebase — خوشبو نسخے کا الگ خانہ: localSync/jasmine_khushbu_nuskha
@@ -458,12 +493,11 @@ async function initDb(){
   let first=true;
   DOC.onSnapshot(snap=>{
     setSync(true,'🟢 لائیو — ہر موبائل اور کمپیوٹر پر ایک جیسا');
-    if(snap.exists){ if(!snap.metadata.hasPendingWrites) applyRemote(snap.data()); }
+    if(snap.exists){ if(!snap.metadata.hasPendingWrites){ const d=snap.data(); if(Array.isArray(d.f)) applyRemote(d); else { applyRemote(d); lastSent=''; push(); } } }
     else if(first){ lastSent=''; push(); }
     first=false;
   }, ()=>{ setSync(false,'محفوظ: صرف اس ڈیوائس میں'); DOC=null; });
 }
-const sumG=()=>G.reduce((a,x)=>a+x,0);
 const rs=v=>v.toLocaleString('en-US',{maximumFractionDigits:v<10?2:0})+' روپے';
 const fmt=(g)=>{ if(!(g>0)) return '0 گرام';
   if(g>=1000){ const k=g/1000; return k.toLocaleString('en-US',{maximumFractionDigits:3})+' کلو'; }
@@ -473,10 +507,8 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 function grams(){ const v=Math.max(0,Number($('batch').value)||0); return $('unit').value==='kg'?v*1000:v; }
 const PRE=[[100,'g','100 گرام'],[500,'g','500 گرام'],[1,'kg','1 کلو'],[5,'kg','5 کلو'],[10,'kg','10 کلو']];
 $('chips').innerHTML=PRE.map(p=>'<button type="button" data-v="'+p[0]+'" data-u="'+p[1]+'">'+p[2]+'</button>').join('');
-const BKEY='jasmine9-batch';
-const saveB=()=>{ try{ localStorage.setItem(BKEY,JSON.stringify({batch:Number($('batch').value)||0,unit:$('unit').value})); }catch(e){} push(); };
-try{ const b=JSON.parse(localStorage.getItem(BKEY)||'null'); if(b&&typeof b.batch==='number'&&b.batch>=0){ $('batch').value=b.batch; if(b.unit==='g'||b.unit==='kg') $('unit').value=b.unit; } }catch(e){}
-$('chips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; $('batch').value=b.dataset.v; $('unit').value=b.dataset.u; update(); saveB(); };
+function setBatch(){ const f=F(); f.batch=Math.max(0,Number($('batch').value)||0); f.unit=$('unit').value==='g'?'g':'kg'; }
+$('chips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; $('batch').value=b.dataset.v; $('unit').value=b.dataset.u; setBatch(); update(); saveB(); };
 const LV=[
 [0,10,'مکسچر گاڑھا ہوگا اور کیمیکل آپس میں مشکل سے گھلیں گے۔','خوشبو پتلی ہو جائے گی (یہ خود خوشبو نہیں دیتا)، پیسے ضائع ہوں گے۔'],
 [8,20,'دھلے کپڑوں پر خوشبو ایک دو دن میں ختم ہو جائے گی۔','مشک غالب آ جائے گی، چمبیلی پیچھے رہ جائے گی اور خرچہ بڑھے گا۔'],
@@ -488,77 +520,122 @@ const LV=[
 [3,12,'چمبیلی پتلی اور ادھوری لگے گی، گولائی نہیں آئے گی۔','گلاب کی خوشبو چمبیلی پر غالب آ جائے گی، شہد جیسی میٹھی ہوگی۔'],
 [4,15,'پیکٹ کھولتے وقت تازگی کم محسوس ہوگی۔','لیموں والی تیز تازگی چمبیلی کو ڈھک دے گی، خوشبو "سرف ایکسل" جیسی ہو جائے گی۔']
 ];
+// ہر کیمیکل کی تفصیل: پہلے اصل 9، پھر A سے Z فہرست، ورنہ اپنا لکھا نام
+function phOf(fam){ const w=String(fam||'').split(' ')[0]; if(/گھولنے|مشک|لکڑی|پکڑنے|مٹھاس|ٹھہراؤ|عنبر/.test(w)) return 1; if(/تازگی|الڈیہائیڈ|سبز|پھل|لیموں/.test(w)) return 3; return 2; }
+function defOf(en){
+  const bi=R.findIndex(r=>r.en===en); if(bi>=0) return Object.assign({base:true,lv:LV[bi]},R[bi]);
+  const d=LIB.find(x=>x.en===en);
+  if(d) return {en:d.en,n:d.ur,nm:d.ur,sh:d.en,fam:d.fam,c:FAMC[d.fam]||'#6B7F7A',w:d.use,alt:d.alt||[],ph:phOf(d.fam),lv:d.fl==='ban'?null:[d.mn,d.mx,d.lo,d.hi],fl:d.fl,add:true};
+  return {en:en,n:en,nm:en,sh:'',fam:'اضافی',c:'#6B7F7A',w:'آپ کا شامل کیا ہوا کیمیکل۔',alt:[],ph:2,lv:null,add:true,custom:true};
+}
+let ROWS=[];
+const n0=v=>Math.round(v).toLocaleString('en-US');
+function buildTabs(){
+  $('ftabs').innerHTML=FS.map((f,i)=>'<button type="button" data-f="'+i+'" aria-pressed="'+(i===CUR)+'"><small>فارمولا</small><b>'+(i+1)+'</b></button>').join('');
+  $('ftitle').textContent='فارمولا نمبر '+(CUR+1)+' — '+F().k.length+' کیمیکل';
+}
 function build(){
+  ROWS=F().k.map(defOf);
   const PHH={1:['بیس — پہلے یہ ڈالیں','10 سے 15 منٹ آہستہ ہلائیں۔ گیلیکسولائیڈ گاڑھا ہو تو پہلے اس کا ڈبہ گرم پانی میں رکھیں۔'],2:['چمبیلی اور پھول','بیس کے بعد یہ ڈالیں، 10 منٹ ہلائیں۔'],3:['تازگی — سب سے آخر میں','یہ جلد اڑتا ہے، اس لیے آخر میں ڈالیں، 10 منٹ ہلائیں۔']};
-  $('steps').innerHTML=[1,2,3].map(ph=>'<div class="sbp"><b>مرحلہ '+ph+': '+PHH[ph][0]+'</b><br>'+R.map((r,i)=>r.ph===ph?(i+1)+'. '+esc(r.nm):'').filter(Boolean).join('، ')+'<br>'+PHH[ph][1]+'</div>').join('')+'<div class="sbp">آخر میں ڈبہ بند کر کے 3–7 دن پکنے دیں، پھر چھان کر استعمال کریں۔</div>';
-  $('list').innerHTML='<div class="tbl" role="table" aria-label="خوشبو کا فارمولا"><div class="trow thead" role="row"><span role="columnheader">چیز کا نام</span><span role="columnheader">ریٹ<small>روپے فی کلو</small></span><span role="columnheader">فیصد</span><span role="columnheader">وزن<small>گرام</small></span><span role="columnheader">رقم<small>روپے</small></span></div><div class="tbody">'+
-  R.map((r,i)=>'<div class="trow" role="row" id="it'+i+'"><span class="tname" role="cell"><span class="tno">'+(i+1)+'</span><span class="tn">'+esc(r.nm)+'</span><button type="button" class="tdet" data-i="'+i+'" aria-expanded="false" aria-controls="dt'+i+'" aria-label="'+esc(r.nm)+' کی تفصیل">▼</button><span class="ten">'+esc(r.sh)+'</span></span>'+
+  $('steps').innerHTML=[1,2,3].map(ph=>{ const l=ROWS.map((r,i)=>r.ph===ph?(i+1)+'. '+esc(r.nm):'').filter(Boolean); return l.length?'<div class="sbp"><b>مرحلہ '+ph+': '+PHH[ph][0]+'</b><br>'+l.join('، ')+'<br>'+PHH[ph][1]+'</div>':''; }).join('')+'<div class="sbp">آخر میں ڈبہ بند کر کے 3–7 دن پکنے دیں، پھر چھان کر استعمال کریں۔</div>';
+  $('list').innerHTML='<div class="tbl" role="table" aria-label="فارمولا نمبر '+(CUR+1)+'"><div class="trow thead" role="row"><span role="columnheader">چیز کا نام</span><span role="columnheader">ریٹ<small>روپے فی کلو</small></span><span role="columnheader">فیصد</span><span role="columnheader">وزن<small>گرام</small></span><span role="columnheader">رقم<small>روپے</small></span></div><div class="tbody">'+
+  ROWS.map((r,i)=>'<div class="trow'+(r.add?' added':'')+'" role="row" id="it'+i+'"><span class="tname" role="cell"><span class="tno">'+(i+1)+'</span><span class="tn">'+esc(r.nm)+'</span><button type="button" class="tdet" data-i="'+i+'" aria-expanded="false" aria-controls="dt'+i+'" aria-label="'+esc(r.nm)+' کی تفصیل">▼</button><span class="ten">'+esc(r.sh)+'</span></span>'+
     '<span role="cell"><input class="tin rin" id="r'+i+'" data-k="'+esc(r.en)+'" type="number" min="0" step="any" inputmode="decimal" placeholder="0" aria-label="'+esc(r.nm)+' کا ریٹ فی کلو" value="'+(RATE[r.en]||'')+'"></span>'+
     '<span class="tpct" role="cell"><input class="tin pin" id="p'+i+'" data-i="'+i+'" type="number" min="0" step="any" inputmode="decimal" aria-label="'+esc(r.nm)+' فیصد"><i>%</i></span>'+
     '<span class="tw" role="cell" id="w'+i+'"></span><span class="ta" role="cell" id="c'+i+'"></span></div>'+
-    '<div class="tdetail" id="dt'+i+'" hidden><b>'+esc(r.n)+' <span class="ien2">('+esc(r.en)+')</span></b><div class="why"><span>'+esc(r.w)+'</span><span class="fam" style="--c:'+r.c+'">'+esc(r.fam)+'</span></div>'+
-    '<div class="lv"><div class="lvtop"><span>مناسب لیول: <b>'+LV[i][0]+'٪ تا '+LV[i][1]+'٪</b></span><span class="lst" id="ls'+i+'"></span></div><p class="lmsg" id="lm'+i+'" hidden></p><details><summary>کم یا زیادہ ہو تو کیا ہوگا؟</summary><dl><dt>⬇ '+LV[i][0]+'٪ سے کم ہو تو:</dt><dd>'+esc(LV[i][2])+'</dd><dt>⬆ '+LV[i][1]+'٪ سے زیادہ ہو تو:</dt><dd>'+esc(LV[i][3])+'</dd></dl></details></div>'+
+    '<div class="tdetail" id="dt'+i+'" hidden><b>'+esc(r.n)+(r.custom?'':' <span class="ien2">('+esc(r.en)+')</span>')+'</b><div class="why"><span>'+esc(r.w)+'</span><span class="fam" style="--c:'+r.c+'">'+esc(r.fam)+'</span></div>'+
+    (r.fl==='ban'?'<p class="lmsg">⛔ یہ کیمیکل ممنوع ہے — استعمال نہ کریں۔</p>':'')+
+    (r.lv?'<div class="lv"><div class="lvtop"><span>مناسب لیول: <b>'+r.lv[0]+'٪ تا '+r.lv[1]+'٪</b></span><span class="lst" id="ls'+i+'"></span></div><p class="lmsg" id="lm'+i+'" hidden></p><details><summary>کم یا زیادہ ہو تو کیا ہوگا؟</summary><dl><dt>⬇ '+r.lv[0]+'٪ سے کم ہو تو:</dt><dd>'+esc(r.lv[2])+'</dd><dt>⬆ '+r.lv[1]+'٪ سے زیادہ ہو تو:</dt><dd>'+esc(r.lv[3])+'</dd></dl></details></div>':'')+
     '<p class="cnote" id="cn'+i+'" hidden>⚠ مقدار بہت کم ہے — 0.01 گرام والا ڈیجیٹل ترازو استعمال کریں</p>'+
     (r.alt.length?'<div class="names"><details class="inside"><summary><span class="tri">▼</span><span>دوسرے نام ('+(r.alt.length+1)+') — دیکھنے کے لیے دبائیں</span></summary><ol class="ilist">'+[[r.n,r.en]].concat(r.alt).map(x=>'<li><span class="iur">'+esc(x[0])+'</span><span class="ien">'+esc(x[1])+'</span></li>').join('')+'</ol></details></div>':'')+
+    '<button type="button" class="rmv" data-rm="'+i+'">🗑 فارمولا '+(CUR+1)+' سے ہٹائیں</button>'+
     '</div>').join('')+'</div><div class="trow tfoot" role="row"><span role="cell">کل</span><span role="cell"></span><span class="tp" role="cell" id="tP"></span><span class="tw" role="cell" id="tW"></span><span class="ta" role="cell" id="tA"></span></div><p class="twarn" id="tWarn" hidden></p></div>';
+  // شامل کرنے کی فہرست
+  const have=new Set(F().k);
+  $('addSel').innerHTML='<option value="">— کیمیکل چنیں —</option>'+
+    R.filter(r=>!have.has(r.en)).map(r=>'<option value="'+esc(r.en)+'">'+esc(r.nm)+' — '+esc(r.sh)+'</option>').join('')+
+    LIB.filter(d=>!have.has(d.en)&&!R.some(r=>r.en===d.en||r.en.replace(/ \(.*\)$/,'')===d.en)).map(d=>'<option value="'+esc(d.en)+'"'+(d.fl==='ban'?' disabled':'')+'>'+(d.fl==='ban'?'⛔ ':d.fl==='warn'?'⚠ ':'')+esc(d.ur)+' — '+esc(d.en)+'</option>').join('')+
+    '<option value="__own">✏️ اپنا کیمیکل (نام خود لکھیں)</option>';
+  $('addName').hidden=true; $('addName').value='';
 }
-const n0=v=>Math.round(v).toLocaleString('en-US');
+function render(keepBatch){
+  if(!keepBatch){ $('batch').value=F().batch; $('unit').value=F().unit; }
+  buildTabs(); build(); update();
+}
 function update(skip){
-  const T=grams(), S=sumG()||1;
-  R.forEach((r,i)=>{ const a=G[i]*T/100;
+  const G=F().g, T=grams(), S=G.reduce((a,x)=>a+x,0)||1, sp=G.reduce((a,x)=>a+x,0);
+  ROWS.forEach((r,i)=>{ const a=G[i]*T/100;
     if(i!==skip) $('p'+i).value=r2(G[i]);
     $('w'+i).textContent=a>=10?n0(a):r2(a);
     $('cn'+i).hidden=!(a>0&&a<1);
-    const pc=G[i], lo=pc<LV[i][0]-0.05, hi=pc>LV[i][1]+0.05, ls=$('ls'+i), lm=$('lm'+i);
-    ls.className='lst '+(lo||hi?'bad':'ok'); ls.textContent=lo?'⬇ کم ہے':hi?'⬆ زیادہ ہے':'✓ ٹھیک ہے';
-    lm.hidden=!(lo||hi); lm.textContent=lo?'⚠ '+LV[i][2]:hi?'⚠ '+LV[i][3]:'';
-    $('it'+i).classList.toggle('chg',Math.abs(G[i]-r.g)>0.001);
-    $('it'+i).querySelector('.tdet').style.borderColor=(lo||hi)?'#B3261E':'';
+    let bad=r.fl==='ban';
+    if(r.lv){ const pc=G[i], lo=pc<r.lv[0]-0.05, hi=pc>r.lv[1]+0.05, ls=$('ls'+i), lm=$('lm'+i);
+      ls.className='lst '+(lo||hi?'bad':'ok'); ls.textContent=lo?'⬇ کم ہے':hi?'⬆ زیادہ ہے':'✓ ٹھیک ہے';
+      lm.hidden=!(lo||hi); lm.textContent=lo?'⚠ '+r.lv[2]:hi?'⚠ '+r.lv[3]:''; bad=bad||lo||hi; }
+    $('it'+i).classList.toggle('chg',r.base?Math.abs(G[i]-r.g)>0.001:false);
+    $('it'+i).querySelector('.tdet').style.borderColor=bad?'#B3261E':'';
   });
-  const sp=sumG(), tp=$('tP');
+  const tp=$('tP');
   tp.textContent=r2(sp)+'%'; tp.className='tp'+(Math.abs(sp-100)>0.01?' bad':'');
   $('tW').textContent=n0(T*sp/100);
   $('tWarn').hidden=Math.abs(sp-100)<=0.01; $('tWarn').textContent='⚠ کل فیصد '+r2(sp)+' ہے — 100 ہونا چاہیے ('+(sp>100?'زیادہ':'کم')+' ہے: '+r2(Math.abs(sp-100))+'٪)';
-  $('bar').innerHTML=R.map((r,i)=>'<span style="width:'+(G[i]/S*100)+'%;background:'+r.c+'" title="'+esc(r.nm)+'"></span>').join('');
+  $('bar').innerHTML=ROWS.map((r,i)=>'<span style="width:'+(G[i]/S*100)+'%;background:'+r.c+'" title="'+esc(r.nm)+'"></span>').join('');
   $('total').textContent=fmt(T*sp/100);
-  $('modrow').hidden=!R.some((r,i)=>Math.abs(G[i]-r.g)>0.001);
+  const b=baseF(), f=F(); $('modrow').hidden=f.k.length===b.k.length&&f.k.every((k,i)=>k===b.k[i]&&Math.abs(f.g[i]-b.g[i])<=0.001);
   costs();
-  document.querySelectorAll('#chips button').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.v)===Number($('batch').value)&&b.dataset.u===$('unit').value)));
+  document.querySelectorAll('#chips button').forEach(x=>x.setAttribute('aria-pressed',String(Number(x.dataset.v)===Number($('batch').value)&&x.dataset.u===$('unit').value)));
 }
 function costs(){
-  const T=grams(), S=sumG()||1; let sum=0, miss=0, kg=0;
-  R.forEach((r,i)=>{ const rt=Number(RATE[r.en])||0, a=G[i]*T/100, c=rt*a/1000;
+  const G=F().g, T=grams(), S=G.reduce((a,x)=>a+x,0)||1; let sum=0, miss=0, kg=0;
+  ROWS.forEach((r,i)=>{ const rt=Number(RATE[r.en])||0, a=G[i]*T/100, c=rt*a/1000;
     if(rt>0){ sum+=c; kg+=rt*G[i]/S; $('c'+i).textContent=n0(c); } else { miss++; $('c'+i).textContent='—'; } });
-  const any=miss<R.length;
+  const any=miss<ROWS.length;
   $('tA').textContent=any?n0(sum):'—';
   $('mTot').textContent=any?rs(sum):'—';
   $('mKg').textContent=any?rs(kg):'—';
   $('mPow').textContent=any?rs(kg*0.3):'—';
   $('mPer').textContent=any?rs(kg*0.3/100):'—';
   $('mWarn').textContent=miss&&any?'⚠ '+miss+' کیمیکل کا ریٹ ابھی نہیں لکھا — ٹوٹل ادھورا ہے':(!any?'ہر کیمیکل کا 1 کلو کا ریٹ لکھیں':'');
+  $('mHead').textContent='ریٹ کا حساب — فارمولا نمبر '+(CUR+1);
 }
+$('ftabs').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; const i=Number(b.dataset.f); if(i===CUR) return; CUR=i; render(); push(); };
 $('list').addEventListener('input',e=>{ const t=e.target;
   if(t.matches('.rin')){ const v=Number(t.value); RATE[t.dataset.k]=v>0?v:0; saveR(); costs(); return; }
   if(t.matches('.pin')){ const i=Number(t.dataset.i), v=Number(t.value);
     if(t.value===''||!(v>=0)) return;
-    G[i]=v; saveW(); update(i); }
+    F().g[i]=v; saveW(); update(i); }
 });
 $('list').addEventListener('change',e=>{ if(e.target.matches('.pin')) update(); });
-$('list').addEventListener('click',e=>{ const b=e.target.closest('.tdet'); if(!b) return; const d=$('dt'+b.dataset.i), open=d.hidden; d.hidden=!open; b.setAttribute('aria-expanded',String(open)); });
-$('reset').onclick=()=>{ G=R.map(r=>r.g); saveW(); update(); toast('اصل فارمولا واپس آ گیا'); };
-$('clr').onclick=()=>{ RATE={}; R.forEach(r=>RATE[r.en]=0); saveR(); document.querySelectorAll('.rin').forEach(x=>x.value=''); costs(); toast('ریٹ صاف ہو گئے'); };
-$('batch').oninput=()=>{ update(); saveB(); }; $('unit').onchange=()=>{ update(); saveB(); };
+$('list').addEventListener('click',e=>{
+  const rm=e.target.closest('.rmv');
+  if(rm){ const i=Number(rm.dataset.rm), f=F(); if(f.k.length<=1){ toast('کم از کم ایک کیمیکل ضروری ہے'); return; }
+    if(!confirm(ROWS[i].nm+' کو فارمولا '+(CUR+1)+' سے ہٹا دیں؟')) return;
+    f.k.splice(i,1); f.g.splice(i,1); render(true); push(); toast('ہٹا دیا گیا'); return; }
+  const b=e.target.closest('.tdet'); if(!b) return; const d=$('dt'+b.dataset.i), open=d.hidden; d.hidden=!open; b.setAttribute('aria-expanded',String(open)); });
+$('addSel').onchange=()=>{ const own=$('addSel').value==='__own'; $('addName').hidden=!own; if(own) $('addName').focus(); };
+$('addBtn').onclick=()=>{
+  let en=$('addSel').value; const pc=Math.max(0,Number($('addPct').value)||0);
+  if(en==='__own') en=$('addName').value.trim().replace(/\s+/g,' ');
+  if(!en){ toast('پہلے کیمیکل چنیں'); return; }
+  if(F().k.some(k=>k.toLowerCase()===en.toLowerCase())){ toast('یہ کیمیکل پہلے سے فارمولے میں ہے'); return; }
+  F().k.push(en); F().g.push(pc); $('addSel').value=''; $('addPct').value='';
+  render(true); push(); toast('✓ فارمولا '+(CUR+1)+' میں شامل ہو گیا');
+  const last=$('it'+(ROWS.length-1)); if(last) last.scrollIntoView({behavior:'smooth',block:'center'});
+};
+$('reset').onclick=()=>{ if(!confirm('فارمولا '+(CUR+1)+' کو اصل 9 کیمیکل والے نسخے پر واپس لے آئیں؟ شامل کیے گئے کیمیکل ہٹ جائیں گے۔')) return; const b=baseF(); F().k=b.k; F().g=b.g; render(true); push(); toast('اصل فارمولا واپس آ گیا'); };
+$('clr').onclick=()=>{ RATE={}; ROWS.forEach(r=>RATE[r.en]=0); saveR(); document.querySelectorAll('.rin').forEach(x=>x.value=''); costs(); toast('ریٹ صاف ہو گئے'); };
+$('batch').oninput=()=>{ setBatch(); update(); saveB(); }; $('unit').onchange=()=>{ setBatch(); update(); saveB(); };
 function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('show'); clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove('show'),1800); }
 $('copy').onclick=()=>{
-  const T=grams(), S=sumG()||1;
-  const t='نسخہ: '+fmt(T)+' خوشبو\n'+R.map((r,i)=>{ const a=G[i]*T/100, rt=Number(RATE[r.en])||0; return (i+1)+'. '+r.nm+' — '+r2(G[i])+'٪'+' ('+r.en+'): '+fmt(a)+(rt?' — '+rs(rt*a/1000):''); }).join('\n')+($('mTot').textContent!=='—'?'\nکل خرچہ: '+$('mTot').textContent+'\n1 کلو خوشبو کی لاگت: '+$('mKg').textContent:'');
+  const G=F().g, T=grams();
+  const t='فارمولا نمبر '+(CUR+1)+' — نسخہ: '+fmt(T)+' خوشبو\n'+ROWS.map((r,i)=>{ const a=G[i]*T/100, rt=Number(RATE[r.en])||0; return (i+1)+'. '+r.nm+' — '+r2(G[i])+'٪'+(r.custom?'':' ('+r.en+')')+': '+fmt(a)+(rt?' — '+rs(rt*a/1000):''); }).join('\n')+($('mTot').textContent!=='—'?'\nکل خرچہ: '+$('mTot').textContent+'\n1 کلو خوشبو کی لاگت: '+$('mKg').textContent:'');
   const done=()=>toast('✓ نسخہ کاپی ہو گیا');
   const fb=()=>{ const ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy'); done();}catch(e){} ta.remove(); };
   try{ navigator.clipboard.writeText(t).then(done,fb); }catch(e){ fb(); }
 };
-build(); update(); initDb();
 const LIB=[{"en": "Aldehyde C-10", "ur": "الڈیہائیڈ سی-10", "alt": [["ڈیکانال", "Decanal"]], "fam": "الڈیہائیڈ", "sm": "تیز سنگترے کے چھلکے جیسی، صاف دھلے کپڑوں والی۔", "use": "شروع میں چمک اور صفائی کا احساس دیتا ہے، خوشبو کو 'تازہ دھلا' بناتا ہے۔", "harm": "زیادہ ہو تو بو چکنی اور کڑوی لگتی ہے؛ خالص حالت میں جلد پر جلن کر سکتا ہے۔", "care": "بہت تھوڑا ڈالیں — پہلے ڈی پی جی میں 10٪ گھول بنا کر تولیں۔ بوتل بند رکھیں، ہوا سے خراب ہوتا ہے۔", "mn": 0.05, "mx": 1, "lo": "تازہ دھلے کپڑوں والی چمک کم ہوگی۔", "hi": "موم بتی اور چکنائی جیسی بو، خوشبو سستی لگے گی۔", "fl": null}, {"en": "Aldehyde C-11 Undecylenic", "ur": "الڈیہائیڈ سی-11", "alt": [["انڈیسائلینک الڈیہائیڈ", "Undecylenic Aldehyde"], ["انڈیسینال", "10-Undecenal"]], "fam": "الڈیہائیڈ", "sm": "صاف، ہوا دار، دھوپ میں سوکھے کپڑوں جیسی۔", "use": "لانڈری والا صاف احساس اور خوشبو کا پھیلاؤ بڑھاتا ہے۔", "harm": "زیادہ مقدار میں تیز دھاتی بو دیتا ہے۔", "care": "0.01 گرام والے ترازو سے تولیں، یا پہلے پتلا کر لیں۔", "mn": 0.05, "mx": 0.5, "lo": "صفائی اور ہوا داری کم محسوس ہوگی۔", "hi": "ناک میں چبھنے والی دھاتی بو۔", "fl": null}, {"en": "Aldehyde C-12 Lauric", "ur": "الڈیہائیڈ سی-12 لورک", "alt": [["لورک الڈیہائیڈ", "Lauric Aldehyde"], ["ڈوڈیکانال", "Dodecanal"]], "fam": "الڈیہائیڈ", "sm": "بنفشے اور صابن جیسی صاف خوشبو۔", "use": "کلاسک صابن اور لانڈری والی صفائی دیتا ہے۔", "harm": "زیادہ ہو تو چکنی، موم جیسی بو۔", "care": "ہوا سے بچائیں، بوتل بھری اور بند رکھیں۔", "mn": 0.05, "mx": 0.5, "lo": "صابن والی صفائی کم ہوگی۔", "hi": "موم اور چکنائی جیسی بو۔", "fl": null}, {"en": "Aldehyde C-12 MNA", "ur": "الڈیہائیڈ سی-12 ایم این اے", "alt": [["میتھائل نونائل ایسیٹالڈیہائیڈ", "2-Methylundecanal"], ["ایم این اے", "MNA"]], "fam": "الڈیہائیڈ", "sm": "صاف دھلے کپڑے، ہلکی سی اگربتی جیسی۔", "use": "'ابھی دھلے کپڑے' والا خاص احساس — مشہور ڈیٹرجنٹ خوشبوؤں کی پہچان۔", "harm": "زیادہ ہو تو تیز اور کڑوا لگتا ہے۔", "care": "بہت طاقتور ہے — پتلا کر کے تولیں۔", "mn": 0.05, "mx": 1, "lo": "دھلے کپڑوں والی چمک کم ہوگی۔", "hi": "تیز کڑوی بو جو ناک میں چبھے۔", "fl": null}, {"en": "Allyl Amyl Glycolate", "ur": "ایلائل ایمائل گلائیکولیٹ", "alt": [["اے اے جی", "AAG"]], "fam": "پھل و سبز", "sm": "انناس جیسی تیز سبز خوشبو۔", "use": "سرف والی خوشبو کی خاص سبز پھلوں والی پہچان — بہت تھوڑے میں بڑا اثر۔", "harm": "بہت طاقتور؛ زیادہ ہو تو گیس یا لہسن جیسی بو محسوس ہو سکتی ہے۔", "care": "پتلا کر کے تولیں، دستانے پہنیں۔", "mn": 0.1, "mx": 2, "lo": "سرف والی سبز پہچان کم ہوگی۔", "hi": "بھاری، ناگوار سبز بو۔", "fl": null}, {"en": "Alpha Isomethyl Ionone", "ur": "الفا آئسو میتھائل آئیونون", "alt": [["میتھائل آئیونون", "Methyl Ionone"], ["آئسورالڈین", "Isoraldeine"]], "fam": "پھول", "sm": "بنفشی، نرم پاؤڈری خوشبو۔", "use": "خوشبو کو نرم پاؤڈری مٹھاس اور گولائی دیتا ہے۔", "harm": "الرجی والی فہرست میں شامل؛ زیادہ ہو تو خوشبو بوڑھی لگتی ہے۔", "care": "حد کے اندر رکھیں۔", "mn": 1, "mx": 8, "lo": "پاؤڈری نرمی کم ہوگی۔", "hi": "خوشبو بھاری اور پرانی سی لگے گی۔", "fl": null}, {"en": "Ambroxan", "ur": "ایمبروکسان", "alt": [["ایمبروفکس", "Ambrofix"], ["ایمبروکس", "Ambrox"], ["سیٹالوکس", "Cetalox"]], "fam": "مشک و لکڑی", "sm": "گرم عنبر، صاف جلد جیسی۔", "use": "بہت دیرپا — کپڑوں پر کئی دن رہتا ہے، تھوڑے میں اثر۔", "harm": "مہنگا ہے۔", "care": "یہ پاؤڈر (ٹھوس) ہے — پہلے ڈی پی جی میں گھول لیں۔", "mn": 0.1, "mx": 2, "lo": "آخر میں رہنے والی گرمی کم ہوگی۔", "hi": "خشک عنبر غالب، خرچہ بہت بڑھے گا۔", "fl": null}, {"en": "Amyl Cinnamic Aldehyde", "ur": "ایمائل سنامک الڈیہائیڈ", "alt": [["اے سی اے", "ACA"], ["جیسمین الڈیہائیڈ", "Jasminaldehyde"], ["ایمائل سنامل", "Amylcinnamal"]], "fam": "چمبیلی", "sm": "چمبیلی، ہلکی تیل جیسی۔", "use": "سستی چمبیلی — ایچ سی اے کے ساتھ چمبیلی کو بھرتا ہے۔", "harm": "الرجی والی فہرست میں؛ پرانا ہو کر پیلا پڑ سکتا ہے۔", "care": "ٹھنڈی اندھیری جگہ رکھیں۔", "mn": 1, "mx": 10, "lo": "چمبیلی کمزور ہوگی۔", "hi": "تیل جیسی بھاری خوشبو، ہلکی پیلاہٹ۔", "fl": null}, {"en": "Amyl Salicylate", "ur": "ایمائل سیلیسیلیٹ", "alt": [["آئسو ایمائل سیلیسیلیٹ", "Isoamyl Salicylate"]], "fam": "پھول و سبز", "sm": "گھاس اور لونگ جیسی ہلکی پھولوں والی۔", "use": "سستا — خوشبو کو پکڑتا اور درمیان کو بھرتا ہے۔", "harm": "زیادہ ہو تو دوائی جیسی بو۔", "care": "عام احتیاط کافی ہے۔", "mn": 1, "mx": 8, "lo": "درمیانی خوشبو خالی لگے گی۔", "hi": "دوائی جیسی بو۔", "fl": null}, {"en": "Benzyl Acetate", "ur": "بینزائل ایسیٹیٹ", "alt": [["جیسمین ایسٹر", "Jasmine Ester"]], "fam": "چمبیلی", "sm": "تیز میٹھی چمبیلی، ناشپاتی جیسی۔", "use": "چمبیلی کا سب سے اہم اور سستا کیمیکل — چمبیلی کو تیز اور اصلی بناتا ہے۔", "harm": "جلد اڑ جاتا ہے؛ زیادہ ہو تو نیل پالش جیسی بو۔", "care": "آگ سے دور رکھیں، بوتل بند رکھیں۔", "mn": 2, "mx": 15, "lo": "چمبیلی کی تازہ تیزی کم ہوگی۔", "hi": "نیل پالش یا تھنر جیسی بو۔", "fl": null}, {"en": "Benzyl Alcohol", "ur": "بینزائل الکحل", "alt": [], "fam": "گھولنے والا", "sm": "تقریباً بے بو، ہلکی میٹھی۔", "use": "ٹھوس کیمیکل (جیسے کومارین) گھولنے میں مدد دیتا ہے۔", "harm": "الرجی والی فہرست میں؛ اپنی خوشبو نہیں دیتا۔", "care": "کم استعمال کریں — ڈی پی جی بہتر ہے۔", "mn": 0, "mx": 5, "lo": "کوئی نقصان نہیں۔", "hi": "خوشبو پتلی ہوگی، الرجی لیبل لگانا پڑ سکتا ہے۔", "fl": null}, {"en": "Benzyl Benzoate", "ur": "بینزائل بینزوایٹ", "alt": [], "fam": "گھولنے والا", "sm": "بہت ہلکی میٹھی بالسمی۔", "use": "سستا گھولنے والا، ساتھ خوشبو کو ہلکا سا پکڑتا بھی ہے۔", "harm": "الرجی والی فہرست میں۔", "care": "عام احتیاط کافی ہے۔", "mn": 0, "mx": 10, "lo": "کوئی نقصان نہیں۔", "hi": "خوشبو کمزور ہوگی۔", "fl": null}, {"en": "Benzyl Salicylate", "ur": "بینزائل سیلیسیلیٹ", "alt": [], "fam": "خوشبو پکڑنے والا", "sm": "بہت ہلکی میٹھی پھولوں والی۔", "use": "خوشبو کو پکڑ کر رکھتا ہے تاکہ جلد نہ اڑے، ساتھ ہلکی پھولوں کی مٹھاس۔", "harm": "الرجی والی فہرست میں؛ زیادہ ہو تو خوشبو دب جاتی ہے۔", "care": "عام احتیاط کافی ہے۔", "mn": 4, "mx": 15, "lo": "خوشبو جلد اڑ جائے گی، کپڑوں پر دیر تک نہیں رہے گی۔", "hi": "خوشبو دبی دبی اور بے جان لگے گی، شروع کی تازگی چھپ جائے گی۔", "fl": null}, {"en": "Butylphenyl Methylpropional", "ur": "لیلیال", "alt": [["لیلیال", "Lilial"], ["لیلسٹرالس", "Lilestralis"]], "fam": "ممنوع", "sm": "للی کے پھول جیسی نرم خوشبو۔", "use": "پہلے لانڈری خوشبو میں بہت عام تھا۔", "harm": "یورپ میں 2022 سے پابندی — صحت کے خطرے کی وجہ سے۔", "care": "استعمال نہ کریں۔ اس کی جگہ سائکلیمن الڈیہائیڈ یا ہائیڈروکسی سٹرونیلال (حد میں) لیں۔", "mn": 0, "mx": 0, "lo": "—", "hi": "صحت کا خطرہ، برآمد میں رکاوٹ۔", "fl": "ban"}, {"en": "Cashmeran", "ur": "کشمیران", "alt": [["ڈی پی ایم آئی", "DPMI"]], "fam": "لکڑی", "sm": "مخملی، مشک جیسی نرم لکڑی۔", "use": "خوشبو کو گرمی اور گہرائی دیتا ہے۔", "harm": "زیادہ ہو تو بھاری اور مٹی جیسی بو۔", "care": "عام احتیاط کافی ہے۔", "mn": 0.2, "mx": 3, "lo": "گہرائی کم ہوگی۔", "hi": "بھاری، مٹی جیسی خوشبو۔", "fl": null}, {"en": "Cedarwood Oil Virginia", "ur": "سیڈر ووڈ آئل", "alt": [["دیودار کا تیل", "Cedar Oil"]], "fam": "لکڑی", "sm": "خشک پنسل جیسی لکڑی۔", "use": "سستا — خوشبو کو ٹھہراؤ دیتا ہے۔", "harm": "زیادہ ہو تو پنسل کی بو۔", "care": "عام احتیاط کافی ہے۔", "mn": 1, "mx": 8, "lo": "خوشبو کا نیچے والا حصہ کمزور۔", "hi": "پنسل اور لکڑی کے برادے جیسی بو۔", "fl": null}, {"en": "cis-3-Hexenol", "ur": "سس-3-ہیکسینول", "alt": [["لیف الکحل", "Leaf Alcohol"]], "fam": "سبز", "sm": "تازہ کٹی گھاس۔", "use": "خوشبو میں قدرتی سبز جان ڈالتا ہے۔", "harm": "بہت طاقتور؛ زیادہ ہو تو کچی گھاس کی تیز بو۔", "care": "پتلا کر کے تولیں۔", "mn": 0.05, "mx": 0.5, "lo": "تازگی کم قدرتی۔", "hi": "کچی گھاس جیسی تیز بو۔", "fl": null}, {"en": "cis-3-Hexenyl Acetate", "ur": "سس-3-ہیکسینائل ایسیٹیٹ", "alt": [], "fam": "سبز و پھل", "sm": "سبز سیب اور کیلے کے چھلکے جیسی۔", "use": "شروع میں رسیلی سبز تازگی۔", "harm": "زیادہ ہو تو کچے پھل جیسی بو۔", "care": "پتلا کر کے تولیں۔", "mn": 0.1, "mx": 1, "lo": "شروع کی رسیلی تازگی کم۔", "hi": "کچے پھل جیسی تیز بو۔", "fl": null}, {"en": "cis-3-Hexenyl Salicylate", "ur": "سس-3-ہیکسینائل سیلیسیلیٹ", "alt": [], "fam": "سبز", "sm": "تازہ پتوں والی سبز خوشبو۔", "use": "چمبیلی کو زندہ پھول جیسا بناتا ہے۔", "harm": "زیادہ ہو تو گھاس جیسی چبھنے والی بو۔", "care": "عام احتیاط کافی ہے۔", "mn": 0.5, "mx": 3, "lo": "چمبیلی میں تازہ پتوں والی قدرتی جان کم ہوگی۔", "hi": "گھاس جیسی تیز سبز بو آئے گی جو چبھتی ہے۔", "fl": null}, {"en": "cis-Jasmone", "ur": "سس جیسمون", "alt": [["جیسمون", "Jasmone"]], "fam": "چمبیلی", "sm": "اصل چمبیلی کے پھول کی جھلک، ہلکی سبز۔", "use": "چمبیلی کو اصلی پھول جیسا بناتا ہے۔", "harm": "مہنگا ہے۔", "care": "بہت تھوڑا — پتلا کر کے تولیں۔", "mn": 0.05, "mx": 0.5, "lo": "چمبیلی مصنوعی لگے گی۔", "hi": "سبز کڑوی بو۔", "fl": null}, {"en": "Citral", "ur": "سٹرال", "alt": [["جیرانیال / نیرال", "Geranial / Neral"]], "fam": "تازگی", "sm": "تیز تازہ لیموں۔", "use": "بہترین لیموں کی خوشبو دیتا ہے۔", "harm": "الکلائن پاؤڈر میں جلد خراب ہو کر بو بدل جاتی ہے؛ جلد پر حساسیت۔", "care": "لانڈری پاؤڈر میں بہت کم ڈالیں — بہتر ہے ڈائی ہائیڈرو مائرسینول استعمال کریں۔", "mn": 0.1, "mx": 1, "lo": "لیموں کی تیزی کم۔", "hi": "کچھ دن بعد بو خراب، جلد پر جلن کا خطرہ۔", "fl": "warn"}, {"en": "Citronellol", "ur": "سٹرونیلول", "alt": [["سٹرونیلول 950", "Citronellol 950"]], "fam": "گلاب", "sm": "ہلکا تازہ گلاب۔", "use": "پھولوں کو قدرتی اور تازہ بناتا ہے۔", "harm": "الرجی والی فہرست میں۔", "care": "عام احتیاط کافی ہے۔", "mn": 1, "mx": 8, "lo": "پھول کم قدرتی لگیں گے۔", "hi": "گلاب غالب آ جائے گا۔", "fl": null}, {"en": "Coumarin", "ur": "کومارین", "alt": [["ٹونکا", "Tonka"]], "fam": "مٹھاس", "sm": "تازہ گھاس اور بادام جیسی مٹھاس۔", "use": "مٹھاس دیتا ہے اور خوشبو کو پکڑ کر رکھتا ہے۔", "harm": "الرجی والی فہرست میں؛ اس کی حد مقرر ہے۔", "care": "سفید دانے ہیں — پہلے گھول لیں۔", "mn": 0.5, "mx": 5, "lo": "مٹھاس اور ٹھہراؤ کم۔", "hi": "خوشبو میٹھی اور بھاری۔", "fl": null}, {"en": "Cyclamen Aldehyde", "ur": "سائکلیمن الڈیہائیڈ", "alt": [["سائکلیمال", "Cyclamal"]], "fam": "پھول", "sm": "تازہ پھول، ہلکا خربوزہ۔", "use": "لیلیال کا محفوظ متبادل — تازہ پھولوں والا حصہ۔", "harm": "زیادہ ہو تو دھاتی بو۔", "care": "عام احتیاط کافی ہے۔", "mn": 0.2, "mx": 2, "lo": "پھولوں کی تازگی کم۔", "hi": "دھاتی تیز بو۔", "fl": null}, {"en": "Diethyl Phthalate", "ur": "ڈائی ایتھائل فتھیلیٹ", "alt": [["ڈی ای پی", "DEP"]], "fam": "ممنوع", "sm": "بے بو۔", "use": "پہلے سستا گھولنے والا تھا۔", "harm": "فتھیلیٹس پر صحت کے سوال ہیں؛ بہت سی کمپنیاں ترک کر چکی ہیں۔", "care": "استعمال نہ کریں — اس کی جگہ ڈی پی جی یا ٹی ای سی لیں۔", "mn": 0, "mx": 0, "lo": "—", "hi": "صحت کے سوال، خریدار اعتراض کر سکتے ہیں۔", "fl": "ban"}, {"en": "Dihydromyrcenol", "ur": "ڈائی ہائیڈرو مائرسینول", "alt": [["ڈی ایچ ایم", "DHM"]], "fam": "تازگی", "sm": "صاف لیموں جیسی تیز تازگی۔", "use": "پیکٹ کھولتے ہی تازگی — پاؤڈر میں خراب نہیں ہوتا۔ سرف والی خوشبو کی جان۔", "harm": "زیادہ ہو تو دھاتی تیزی اور باقی خوشبو دب جاتی ہے۔", "care": "آگ سے دور رکھیں۔", "mn": 4, "mx": 15, "lo": "پیکٹ کھولتے وقت تازگی کم محسوس ہوگی۔", "hi": "لیموں والی تیز تازگی چمبیلی کو ڈھک دے گی، خوشبو 'سرف ایکسل' جیسی ہو جائے گی۔", "fl": null}, {"en": "Dimethyl Benzyl Carbinyl Acetate", "ur": "ڈی ایم بی سی اے", "alt": [["ڈی ایم بی سی اے", "DMBCA"]], "fam": "پھل و پھول", "sm": "ناشپاتی جیسی پھولوں والی۔", "use": "پھولوں میں پھلوں کی مٹھاس ڈالتا ہے۔", "harm": "زیادہ ہو تو مصنوعی پھل جیسی بو۔", "care": "عام احتیاط کافی ہے۔", "mn": 0.5, "mx": 5, "lo": "پھلوں والی مٹھاس کم۔", "hi": "ٹافی جیسی مصنوعی بو۔", "fl": null}, {"en": "Dipropylene Glycol", "ur": "ڈائی پروپائلین گلائیکول", "alt": [["ڈی پی جی", "DPG"]], "fam": "گھولنے والا", "sm": "بے بو۔", "use": "سب کیمیکل کو گھولتا اور یکساں کرتا ہے — خود خوشبو نہیں دیتا۔", "harm": "زیادہ ہو تو خوشبو پتلی اور پیسے ضائع۔", "care": "عام احتیاط کافی ہے۔", "mn": 0, "mx": 10, "lo": "مکسچر گاڑھا ہوگا اور کیمیکل آپس میں مشکل سے گھلیں گے۔", "hi": "خوشبو پتلی ہو جائے گی (یہ خود خوشبو نہیں دیتا)، پیسے ضائع ہوں گے۔", "fl": null}, {"en": "Ethanol", "ur": "ایتھانول", "alt": [["ایتھائل الکحل", "Ethyl Alcohol"], ["پرفیومر الکحل", "Perfumer's Alcohol"], ["ایس ڈی اے 40-بی", "SDA 40-B"], ["اسپرٹ", "Spirit"]], "fam": "گھولنے والا", "sm": "تیز الکحل جیسی بو جو چند سیکنڈ میں اڑ جاتی ہے — اپنی کوئی خوشبو نہیں چھوڑتا۔", "use": "پرفیوم، باڈی اسپرے اور روم فریشنر میں خوشبو کو پتلا کرتا اور ہوا میں تیزی سے پھیلاتا ہے۔ ٹھوس کیمیکل جلد گھول دیتا ہے اور سستا ہے۔", "harm": "بہت جلد آگ پکڑتا ہے۔ تیزی سے اڑتا ہے، اس لیے پاؤڈر میں ڈالیں تو خوشبو کے ساتھ خود بھی اڑ جاتا ہے اور کچھ فائدہ نہیں دیتا۔ پیکٹ کھولنے پر الکحل کی بو آ سکتی ہے۔", "care": "آگ، چولہے، سگریٹ اور بجلی کے سپارک سے بالکل دور رکھیں۔ بوتل مضبوطی سے بند رکھیں۔ صرف خوشبو والا (پرفیومری گریڈ، بے بو) الکحل لیں — صنعتی یا میتھانول ملا ہوا الکحل ہرگز نہیں، وہ زہریلا ہوتا ہے۔ لانڈری پاؤڈر کی خوشبو میں ڈی پی جی یا ٹی ای سی بہتر ہیں۔", "mn": 0, "mx": 5, "lo": "لانڈری پاؤڈر کی خوشبو میں کوئی نقصان نہیں — یہاں اس کی ضرورت ہی نہیں۔", "hi": "خوشبو کمزور اور جلد اڑ جانے والی، الکحل کی بو، اور ڈبے یا بوری میں آگ لگنے کا خطرہ بڑھتا ہے۔", "fl": "warn"}, {"en": "Ethylene Brassylate", "ur": "ایتھائلین براسیلیٹ", "alt": [["مشک ٹی", "Musk T"], ["ایسٹراٹون", "Astratone"]], "fam": "مشک", "sm": "صاف میٹھی مشک۔", "use": "سستی اور دیرپا مشک۔", "harm": "آہستہ اثر کرتی ہے؛ زیادہ ہو تو خوشبو بے جان۔", "care": "عام احتیاط کافی ہے۔", "mn": 2, "mx": 15, "lo": "کپڑوں پر خوشبو کم ٹھہرے گی۔", "hi": "خوشبو بے جان اور بھاری۔", "fl": null}, {"en": "Galaxolide 50%", "ur": "گیلیکسولائیڈ 50٪", "alt": [["ایچ ایچ سی بی", "HHCB"], ["مشک 50", "Musk 50"], ["سفید مشک", "White Musk"], ["ایبالائیڈ", "Abbalide"]], "fam": "مشک", "sm": "صاف سفید مشک۔", "use": "دھلے کپڑوں پر کئی دن تک خوشبو رہتی ہے — لانڈری کی سب سے عام مشک۔", "harm": "ماحول میں جمع ہونے پر کچھ سوال ہیں؛ زیادہ ہو تو مشک غالب۔", "care": "گاڑھا ہے — ہلکا گرم کر کے ڈالیں تو آسانی ہوتی ہے۔", "mn": 8, "mx": 20, "lo": "دھلے کپڑوں پر خوشبو ایک دو دن میں ختم ہو جائے گی۔", "hi": "مشک غالب آ جائے گی، چمبیلی پیچھے رہ جائے گی اور خرچہ بڑھے گا۔", "fl": null}, {"en": "Geraniol", "ur": "جیرانیول", "alt": [], "fam": "گلاب", "sm": "میٹھا گلاب۔", "use": "پھولوں کو بھرتا ہے۔", "harm": "الرجی والی فہرست میں۔", "care": "عام احتیاط کافی ہے۔", "mn": 0.5, "mx": 5, "lo": "گلاب والی مٹھاس کم۔", "hi": "گلاب غالب اور تیز۔", "fl": null}, {"en": "Geranyl Acetate", "ur": "جیرانائل ایسیٹیٹ", "alt": [], "fam": "گلاب و پھل", "sm": "میٹھا گلاب، ہلکا لیونڈر۔", "use": "پھولوں میں نرم پھلوں والی مٹھاس۔", "harm": "زیادہ ہو تو خوشبو بھاری۔", "care": "عام احتیاط کافی ہے۔", "mn": 0.5, "mx": 5, "lo": "پھولوں کی مٹھاس کم۔", "hi": "بھاری میٹھی خوشبو۔", "fl": null}, {"en": "Habanolide", "ur": "ہبانولائیڈ", "alt": [["گلوبالائیڈ", "Globalide"]], "fam": "مشک", "sm": "استری شدہ کپڑوں جیسی چمکدار صاف مشک۔", "use": "کپڑوں پر 'صاف استری' والا احساس، دیرپا۔", "harm": "مہنگا ہے۔", "care": "عام احتیاط کافی ہے۔", "mn": 0.5, "mx": 5, "lo": "مشک کی چمک کم۔", "hi": "خرچہ زیادہ، مشک غالب۔", "fl": null}, {"en": "Hedione", "ur": "ہیڈیون", "alt": [["میتھائل ڈائی ہائیڈرو جیسمونیٹ", "Methyl Dihydrojasmonate"], ["ایم ڈی جے", "MDJ"]], "fam": "چمبیلی", "sm": "ہوا دار نرم چمبیلی۔", "use": "خوشبو کو پورے کمرے میں پھیلاتا ہے — ہر اچھی خوشبو میں۔", "harm": "زیادہ ہو تو خوشبو پتلی اور مہنگی۔", "care": "عام احتیاط کافی ہے۔", "mn": 10, "mx": 30, "lo": "چمبیلی پھیکی لگے گی اور خوشبو کمرے میں کم پھیلے گی۔", "hi": "خوشبو پانی جیسی پتلی اور ہلکی لگے گی، اور خرچہ بڑھے گا۔", "fl": null}, {"en": "Helional", "ur": "ہیلیونال", "alt": [], "fam": "تازگی و پانی", "sm": "پانی جیسی، سمندری ہوا، ہلکا خربوزہ۔", "use": "ہوا دار آسمانی تازگی دیتا ہے۔", "harm": "زیادہ ہو تو دھاتی بو۔", "care": "عام احتیاط کافی ہے۔", "mn": 0.2, "mx": 3, "lo": "ہوا داری کم۔", "hi": "دھاتی اور کچی بو۔", "fl": null}, {"en": "Hexyl Cinnamic Aldehyde", "ur": "ایچ سی اے", "alt": [["ہیکسائل سنامک الڈیہائیڈ", "Hexylcinnamal"], ["جیسمین الڈیہائیڈ", "Jasmine Aldehyde"]], "fam": "چمبیلی", "sm": "نرم بھرپور چمبیلی۔", "use": "چمبیلی کا دل — دھلے کپڑوں پر ٹھہرتی ہے، سستا۔", "harm": "الرجی والی فہرست میں؛ زیادہ ہو تو بھاری۔", "care": "عام احتیاط کافی ہے۔", "mn": 8, "mx": 25, "lo": "چمبیلی کمزور ہوگی اور دھلے کپڑوں پر خوشبو کم ٹھہرے گی۔", "hi": "خوشبو بھاری اور چکنی سی لگے گی، تازگی دب جائے گی۔", "fl": null}, {"en": "Hexyl Salicylate", "ur": "ہیکسائل سیلیسیلیٹ", "alt": [], "fam": "سبز", "sm": "ہلکی سبز پھولوں والی۔", "use": "ہلکی سبز تازگی، ساتھ خوشبو کو پکڑتا بھی ہے۔", "harm": "الرجی والی فہرست میں۔", "care": "عام احتیاط کافی ہے۔", "mn": 1, "mx": 10, "lo": "سبز تازگی کم۔", "hi": "خوشبو دبی ہوئی۔", "fl": null}, {"en": "Hydroxycitronellal", "ur": "ہائیڈروکسی سٹرونیلال", "alt": [["لارین", "Laurine"]], "fam": "پھول", "sm": "للی، نرم صاف پھول۔", "use": "سفید پھولوں کی نرمی اور صفائی۔", "harm": "الرجی والی فہرست میں؛ دنیا بھر میں اس کی حد مقرر ہے۔", "care": "حد سے زیادہ نہ ڈالیں۔", "mn": 0.5, "mx": 4, "lo": "سفید پھولوں کی نرمی کم۔", "hi": "الرجی کا خطرہ، حد سے باہر۔", "fl": "warn"}, {"en": "Indole", "ur": "انڈول", "alt": [], "fam": "چمبیلی", "sm": "خالص حالت میں ناگوار؛ بہت تھوڑے میں اصل چمبیلی۔", "use": "چمبیلی کو گہرا اور اصلی بناتا ہے۔", "harm": "پاؤڈر کو پیلا یا گلابی کر سکتا ہے۔", "care": "بہت ہی تھوڑا — پہلے 1٪ گھول بنائیں۔ پاؤڈر رنگ بدلے تو چھوڑ دیں۔", "mn": 0.01, "mx": 0.3, "lo": "چمبیلی کم گہری۔", "hi": "ناگوار بو، پاؤڈر کا رنگ خراب۔", "fl": "warn"}, {"en": "Iso E Super", "ur": "آئسو ای سپر", "alt": [["او ٹی این ای", "OTNE"]], "fam": "لکڑی", "sm": "مخملی نرم لکڑی۔", "use": "خوشبو کو گہرا اور دیرپا بناتا ہے۔", "harm": "زیادہ ہو تو خشک لکڑی غالب۔", "care": "عام احتیاط کافی ہے۔", "mn": 2, "mx": 10, "lo": "خوشبو میں گہرائی کم ہوگی، ہلکی سی لگے گی۔", "hi": "لکڑی والی خشک خوشبو آئے گی، چمبیلی دب جائے گی۔", "fl": null}, {"en": "Isobornyl Acetate", "ur": "آئسوبورنائل ایسیٹیٹ", "alt": [], "fam": "لکڑی و تازگی", "sm": "چیڑ کے درخت، کافور جیسی۔", "use": "سستی جنگلی تازگی۔", "harm": "زیادہ ہو تو فینائل جیسی بو۔", "care": "عام احتیاط کافی ہے۔", "mn": 1, "mx": 5, "lo": "جنگلی تازگی کم۔", "hi": "فرش صاف کرنے والے فینائل جیسی بو۔", "fl": null}, {"en": "Isopropyl Myristate", "ur": "آئسوپروپائل مائریسٹیٹ", "alt": [["آئی پی ایم", "IPM"]], "fam": "گھولنے والا", "sm": "بے بو، چکنا۔", "use": "سستا گھولنے والا۔", "harm": "پانی میں نہیں ملتا؛ زیادہ ہو تو خوشبو کمزور۔", "care": "عام احتیاط کافی ہے۔", "mn": 0, "mx": 10, "lo": "کوئی نقصان نہیں۔", "hi": "خوشبو پتلی، پیسے ضائع۔", "fl": null}, {"en": "Lemon Oil Terpeneless", "ur": "لیمن آئل ٹرپین لیس", "alt": [], "fam": "تازگی", "sm": "قدرتی لیموں کی چمک۔", "use": "شروع میں ہلکی لیموں والی تازگی۔", "harm": "اس میں سٹرال ہوتا ہے — جلد پر حساسیت اور پاؤڈر میں بو بدل سکتی ہے۔", "care": "زیادہ نہ ڈالیں۔", "mn": 0.5, "mx": 4, "lo": "شروع کی لیموں والی چمک کم۔", "hi": "کچھ دن بعد بو خراب، الرجی کا خطرہ۔", "fl": "warn"}, {"en": "Limonene", "ur": "لیمونین", "alt": [["ڈی لیمونین", "D-Limonene"]], "fam": "تازگی", "sm": "سنگترے کا رسیلا چھلکا۔", "use": "سستی رسیلی تازگی۔", "harm": "ہوا سے خراب ہو کر بو بدلتا اور الرجی کرتا ہے؛ جلد اڑ جاتا ہے۔", "care": "بوتل بند رکھیں، پرانا مال نہ لیں۔", "mn": 1, "mx": 8, "lo": "رسیلی تازگی کم۔", "hi": "خراب ہو کر ترپین جیسی بو۔", "fl": null}, {"en": "Linalool", "ur": "لینالول", "alt": [["لینالول آئل", "Linalool Oil"]], "fam": "پھول و تازگی", "sm": "ہلکی پھولوں والی تازگی۔", "use": "پھولوں اور تازگی کو آپس میں جوڑتا ہے۔", "harm": "ہوا سے آکسیڈائز ہو کر الرجی کر سکتا ہے۔", "care": "بوتل بند رکھیں۔", "mn": 5, "mx": 15, "lo": "پھولوں اور تازگی کا جوڑ ٹوٹے گا، شروع کی ہلکی تازگی کم ہوگی۔", "hi": "خوشبو لیونڈر جیسی تیز ہو جائے گی، اور پرانی ہو کر اس کی بو بدل سکتی ہے۔", "fl": null}, {"en": "Linalyl Acetate", "ur": "لینالائل ایسیٹیٹ", "alt": [["برگاموٹ نوٹ", "Bergamot Note"]], "fam": "تازگی", "sm": "برگاموٹ جیسی میٹھی تازگی۔", "use": "چمبیلی کو میٹھی تازگی دیتا ہے۔", "harm": "زیادہ ہو تو لیونڈر جیسی۔", "care": "عام احتیاط کافی ہے۔", "mn": 2, "mx": 8, "lo": "میٹھی تازگی کم۔", "hi": "لیونڈر غالب۔", "fl": null}, {"en": "Lyral", "ur": "لائرال", "alt": [["ایچ آئی سی سی", "HICC"]], "fam": "ممنوع", "sm": "للی جیسی نرم خوشبو۔", "use": "پہلے عام تھا۔", "harm": "یورپ میں 2021 سے پابندی — شدید الرجی کی وجہ سے۔", "care": "استعمال نہ کریں — سائکلیمن الڈیہائیڈ لیں۔", "mn": 0, "mx": 0, "lo": "—", "hi": "الرجی، برآمد میں رکاوٹ۔", "fl": "ban"}, {"en": "Musk Ketone", "ur": "مشک کیٹون", "alt": [], "fam": "مشک", "sm": "میٹھی پاؤڈری مشک۔", "use": "سستی میٹھی مشک۔", "harm": "کئی ملکوں میں پابندی یا حد؛ ماحول میں جمع ہوتا ہے۔", "care": "بہتر ہے گیلیکسولائیڈ یا ایتھائلین براسیلیٹ لیں۔", "mn": 0, "mx": 1, "lo": "کوئی نقصان نہیں۔", "hi": "پابندی کا مسئلہ۔", "fl": "warn"}, {"en": "Orange Oil Sweet", "ur": "اورنج آئل", "alt": [["سنگترے کا تیل", "Orange Oil"]], "fam": "تازگی", "sm": "میٹھا سنگترہ۔", "use": "سستی قدرتی تازگی۔", "harm": "جلد اڑ جاتا ہے اور ہوا سے خراب ہوتا ہے۔", "care": "بوتل بند، ٹھنڈی جگہ۔", "mn": 1, "mx": 5, "lo": "قدرتی تازگی کم۔", "hi": "خراب ہو کر ترپین جیسی بو۔", "fl": null}, {"en": "Phenyl Ethyl Alcohol", "ur": "پی ای اے", "alt": [["فینائل ایتھائل الکحل", "Phenylethyl Alcohol"], ["روز الکحل", "Rose Alcohol"]], "fam": "گلاب", "sm": "نرم گلاب۔", "use": "چمبیلی کو گول اور بھرپور بناتا ہے، سستا۔", "harm": "زیادہ ہو تو گلاب غالب۔", "care": "عام احتیاط کافی ہے۔", "mn": 3, "mx": 12, "lo": "چمبیلی پتلی اور ادھوری لگے گی، گولائی نہیں آئے گی۔", "hi": "گلاب کی خوشبو چمبیلی پر غالب آ جائے گی، شہد جیسی میٹھی ہوگی۔", "fl": null}, {"en": "Rose Oxide", "ur": "روز آکسائیڈ", "alt": [], "fam": "گلاب", "sm": "تازہ گلاب، ہلکا دھاتی۔", "use": "گلاب کو تازہ اور قدرتی بناتا ہے۔", "harm": "بہت طاقتور۔", "care": "پتلا کر کے تولیں۔", "mn": 0.05, "mx": 0.5, "lo": "گلاب کم تازہ۔", "hi": "دھاتی تیز بو۔", "fl": null}, {"en": "Styrallyl Acetate", "ur": "سٹائرالائل ایسیٹیٹ", "alt": [["گارڈینیا نوٹ", "Gardenia Note"]], "fam": "سبز و پھول", "sm": "گارڈینیا، سبز۔", "use": "پھولوں میں سبز تازگی۔", "harm": "زیادہ ہو تو کچی سبز بو۔", "care": "پتلا کر کے تولیں۔", "mn": 0.1, "mx": 1, "lo": "سبز جھلک کم۔", "hi": "کچی سبز بو۔", "fl": null}, {"en": "Terpineol", "ur": "ٹرپینول", "alt": [["الفا ٹرپینول", "Alpha Terpineol"]], "fam": "تازگی و پھول", "sm": "صابن جیسی، ہلکی لائلک۔", "use": "بہت سستی صاف تازگی — لینالول کا سستا ساتھی۔", "harm": "زیادہ ہو تو سستے صابن جیسی۔", "care": "عام احتیاط کافی ہے۔", "mn": 2, "mx": 10, "lo": "صابن والی صفائی کم۔", "hi": "سستے صابن جیسی بو۔", "fl": null}, {"en": "Terpinyl Acetate", "ur": "ٹرپینائل ایسیٹیٹ", "alt": [], "fam": "تازگی", "sm": "ہربل، لیونڈر جیسی۔", "use": "سستی ہربل تازگی۔", "harm": "زیادہ ہو تو دوائی جیسی۔", "care": "عام احتیاط کافی ہے۔", "mn": 1, "mx": 5, "lo": "ہربل تازگی کم۔", "hi": "دوائی جیسی بو۔", "fl": null}, {"en": "Tetrahydrolinalool", "ur": "ٹیٹرا ہائیڈرو لینالول", "alt": [["ٹی ایچ ایل", "THL"]], "fam": "تازگی و پھول", "sm": "لینالول جیسی مگر زیادہ صاف۔", "use": "الکلائن پاؤڈر میں خراب نہیں ہوتا — لینالول سے زیادہ مستحکم۔", "harm": "زیادہ ہو تو خوشبو پھیکی۔", "care": "عام احتیاط کافی ہے۔", "mn": 2, "mx": 10, "lo": "تازگی کم۔", "hi": "پھیکی خوشبو۔", "fl": null}, {"en": "Tonalide", "ur": "ٹونالائیڈ", "alt": [["اے ایچ ٹی این", "AHTN"], ["فکسولائیڈ", "Fixolide"]], "fam": "مشک", "sm": "میٹھی پاؤڈری مشک۔", "use": "مشک کو پاؤڈری مٹھاس دیتا ہے۔", "harm": "ماحول میں جمع ہونے پر سوال ہیں۔", "care": "حد میں رکھیں۔", "mn": 1, "mx": 5, "lo": "پاؤڈری مشک کم۔", "hi": "بھاری پاؤڈری۔", "fl": null}, {"en": "Triethyl Citrate", "ur": "ٹرائی ایتھائل سائٹریٹ", "alt": [["ٹی ای سی", "TEC"], ["سٹروفلیکس 2", "Citroflex 2"]], "fam": "گھولنے والا", "sm": "بے بو۔", "use": "سب کیمیکل کو گھولتا اور ملاتا ہے — محفوظ گھولنے والا۔", "harm": "زیادہ ہو تو خوشبو پتلی۔", "care": "عام احتیاط کافی ہے۔", "mn": 0, "mx": 10, "lo": "مکسچر گاڑھا۔", "hi": "خوشبو پتلی، پیسے ضائع۔", "fl": null}, {"en": "Vanillin", "ur": "ونیلن", "alt": [["ونیلا", "Vanilla"]], "fam": "مٹھاس", "sm": "ونیلا۔", "use": "مٹھاس دیتا ہے۔", "harm": "پاؤڈر اور کپڑوں کو بھورا یا پیلا کر سکتا ہے۔", "care": "لانڈری میں پرہیز کریں یا بہت کم ڈالیں۔", "mn": 0, "mx": 0.5, "lo": "کوئی نقصان نہیں۔", "hi": "پاؤڈر اور کپڑوں پر بھورے داغ۔", "fl": "warn"}, {"en": "Verdox", "ur": "ورڈوکس", "alt": [["او ٹی بی سی ایچ اے", "o-tert-Butylcyclohexyl Acetate"]], "fam": "تازگی و لکڑی", "sm": "سیب جیسی سبز تازگی اور ہلکی لکڑی۔", "use": "سستی اور مستحکم تازگی — پاؤڈر میں خراب نہیں ہوتا۔", "harm": "زیادہ ہو تو پھیکی لکڑی۔", "care": "عام احتیاط کافی ہے۔", "mn": 2, "mx": 10, "lo": "سیب والی تازگی کم۔", "hi": "پھیکی لکڑی۔", "fl": null}, {"en": "Vertenex", "ur": "ورٹینیکس", "alt": [["پی ٹی بی سی ایچ اے", "p-tert-Butylcyclohexyl Acetate"]], "fam": "لکڑی و تازگی", "sm": "صاف لکڑی، ہلکے پھول۔", "use": "سستی اور مستحکم — صابن اور پاؤڈر میں عام۔", "harm": "زیادہ ہو تو خوشبو سپاٹ۔", "care": "عام احتیاط کافی ہے۔", "mn": 2, "mx": 8, "lo": "صاف لکڑی والا حصہ کم۔", "hi": "سپاٹ خوشبو۔", "fl": null}];
 const FAMC={"الڈیہائیڈ": "#2F8FA5", "تازگی": "#2FA58F", "تازگی و پانی": "#2F8FA5", "تازگی و پھول": "#2FA58F", "تازگی و لکڑی": "#4E9A6E", "پھول": "#D0587E", "پھول و تازگی": "#D0587E", "پھول و سبز": "#C06A8E", "پھل و سبز": "#6FA23A", "پھل و پھول": "#C9784B", "سبز": "#5C9A3A", "سبز و پھل": "#5C9A3A", "سبز و پھول": "#5C9A3A", "چمبیلی": "#D0587E", "گلاب": "#C2456A", "گلاب و پھل": "#C2456A", "مشک": "#7A6BB0", "مشک و لکڑی": "#7A6BB0", "لکڑی": "#8A5A36", "لکڑی و تازگی": "#8A5A36", "مٹھاس": "#C98A5B", "خوشبو پکڑنے والا": "#4F6FB0", "گھولنے والا": "#6B7F7A", "ممنوع": "#A12626"};
+render(); initDb();
 (function(){
   const inF=new Set(R.map(r=>r.en.replace(/ \(.*\)$/,'')));
   const num=v=>String(v);
