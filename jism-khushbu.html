@@ -219,7 +219,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <body>
 <div class="wrap">
 <nav class="pswitch" aria-label="خوشبو بدلیں"><a href="khushbu.html" data-pg="surf">🧺 سرف والی خوشبو</a><a aria-current="page" href="jism-khushbu.html" data-pg="jism">🧴 جسم کی خوشبو</a></nav>
-<script>document.currentScript.previousElementSibling.addEventListener("click",function(e){var a=e.target.closest("a");if(a)try{localStorage.setItem("khb-page",a.dataset.pg)}catch(x){}});try{localStorage.setItem("khb-page","jism")}catch(x){}</script>
+<script src="app-nav.js"></script>
   <header>
     <h1>جسم کی خوشبو — 12 کیمیکل پرفیوم نسخہ</h1>
     <p class="sync off" id="sync">محفوظ: صرف اس ڈیوائس میں</p>
@@ -432,6 +432,11 @@ const saveR=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(RATE)); }catch(e)
 const saveW=()=>{ try{ localStorage.setItem(WKEY,JSON.stringify(G)); }catch(e){} push(); };
 const saveM=()=>{ try{ localStorage.setItem(MKEY,JSON.stringify(MK)); }catch(e){} push(); };
 function setSync(on,t){ const s=$('sync'); s.className='sync '+(on?'on':'off'); s.textContent=t; }
+let LIVE=false, INIT=false;
+function netShow(){ if(!KHB.online()) setSync(false,'No internet 🛜 — تبدیلی اسی موبائل میں محفوظ ہے، انٹرنیٹ آتے ہی ہر ڈیوائس پر چلی جائے گی'); else if(DOC&&LIVE) setSync(true,'🟢 لائیو — ہر موبائل اور کمپیوٹر پر ایک جیسا'); else setSync(false,DOC?'⏳ جڑ رہا ہے…':'محفوظ: صرف اس ڈیوائس میں'); }
+addEventListener('offline',netShow);
+addEventListener('online',()=>{ if(DOC) LIVE=true; netShow(); if(!DOC) initDb(); });
+
 function applyRemote(d){
   if(!d) return;
   if(okW(d.weights)) G=d.weights.slice();
@@ -458,15 +463,17 @@ async function fireDoc(){
   return { set:body=>d.set(Object.assign({},body,{updatedAt:Date.now()})), onSnapshot:(f,err)=>d.onSnapshot(f,err) };
 }
 async function initDb(){
+  if(INIT) return; INIT=true; netShow();
   let db=null; try{ db=window.claude&&typeof claude.use==='function'?await claude.use('db'):null; }catch(e){ db=null; }
-  try{ DOC=db?db.doc('perfume/main'):await fireDoc(); }catch(e){ DOC=null; return; }
+  try{ DOC=db?db.doc('perfume/main'):await fireDoc(); }catch(e){ DOC=null; INIT=false; netShow(); return; }
   let first=true;
   DOC.onSnapshot(snap=>{
-    setSync(true,'🟢 لائیو — ہر موبائل اور کمپیوٹر پر ایک جیسا');
+    const cached=!!(snap.metadata&&snap.metadata.fromCache);
+    if(!cached) LIVE=true; netShow();
     if(snap.exists){ if(!snap.metadata||!snap.metadata.hasPendingWrites) applyRemote(snap.data()); }
-    else if(first){ lastSent=''; push(); }
-    first=false;
-  }, ()=>{ setSync(false,'محفوظ: صرف اس ڈیوائس میں'); DOC=null; });
+    else if(first&&!cached){ lastSent=''; push(); }
+    if(!cached) first=false;
+  }, ()=>{ DOC=null; LIVE=false; INIT=false; netShow(); });
 }
 const sumG=()=>G.reduce((a,x)=>a+x,0);
 const rs=v=>v.toLocaleString('en-US',{maximumFractionDigits:v<10?2:0})+' روپے';

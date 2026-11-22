@@ -297,7 +297,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 </div>
 <div class="wrap">
 <nav class="pswitch" aria-label="خوشبو بدلیں"><a aria-current="page" href="khushbu.html" data-pg="surf">🧺 سرف والی خوشبو</a><a href="jism-khushbu.html" data-pg="jism">🧴 جسم کی خوشبو</a></nav>
-<script>document.currentScript.previousElementSibling.addEventListener("click",function(e){var a=e.target.closest("a");if(a)try{localStorage.setItem("khb-page",a.dataset.pg)}catch(x){}});</script>
+<script src="app-nav.js"></script>
   <header>
     <h1>چمبیلی خوشبو — 9 کیمیکل نسخہ</h1>
     <button type="button" class="instbtn" id="instBtn" hidden>📲 ایپ انسٹال کریں</button>
@@ -464,6 +464,11 @@ function saveL(){ try{ localStorage.setItem(SKEY,JSON.stringify(state())); }catc
 function push(){ saveL(); if(!DOC) return; clearTimeout(pushT); pushT=setTimeout(async()=>{ const body=state(); const s=JSON.stringify(body); if(s===lastSent) return; lastSent=s; try{ await DOC.set(body); }catch(e){ lastSent=''; if(e&&(e.code==='invalid_argument'||e.code==='permission-denied')){ setSync(false,'صرف دیکھنے کی اجازت — تبدیلی محفوظ نہیں ہوگی'); DOC=null; } } },700); }
 const saveR=push, saveW=push, saveB=push;
 function setSync(on,t){ const s=$('sync'); s.className='sync '+(on?'on':'off'); s.textContent=t; }
+let LIVE=false, INIT=false;
+function netShow(){ if(!KHB.online()) setSync(false,'No internet 🛜 — تبدیلی اسی موبائل میں محفوظ ہے، انٹرنیٹ آتے ہی ہر ڈیوائس پر چلی جائے گی'); else if(DOC&&LIVE) setSync(true,'🟢 لائیو — ہر موبائل اور کمپیوٹر پر ایک جیسا'); else setSync(false,DOC?'⏳ جڑ رہا ہے…':'محفوظ: صرف اس ڈیوائس میں'); }
+addEventListener('offline',netShow);
+addEventListener('online',()=>{ if(DOC) LIVE=true; netShow(); if(!DOC) initDb(); });
+
 function applyRemote(d){
   if(!d) return;
   const act=document.activeElement, typing=act&&act.matches&&act.matches('#list input,#batch,#addName,#addPct');
@@ -488,15 +493,17 @@ async function fireDoc(){
   return { set:body=>d.set(Object.assign({},body,{updatedAt:Date.now()})), onSnapshot:(f,err)=>d.onSnapshot(f,err) };
 }
 async function initDb(){
+  if(INIT) return; INIT=true; netShow();
   let db=null; try{ db=window.claude&&typeof claude.use==='function'?await claude.use('db'):null; }catch(e){ db=null; }
-  try{ DOC=db?db.doc('nuskha/main'):await fireDoc(); }catch(e){ DOC=null; return; }
+  try{ DOC=db?db.doc('nuskha/main'):await fireDoc(); }catch(e){ DOC=null; INIT=false; netShow(); return; }
   let first=true;
   DOC.onSnapshot(snap=>{
-    setSync(true,'🟢 لائیو — ہر موبائل اور کمپیوٹر پر ایک جیسا');
+    const cached=!!(snap.metadata&&snap.metadata.fromCache);
+    if(!cached) LIVE=true; netShow();
     if(snap.exists){ if(!snap.metadata.hasPendingWrites){ const d=snap.data(); if(Array.isArray(d.f)) applyRemote(d); else { applyRemote(d); lastSent=''; push(); } } }
-    else if(first){ lastSent=''; push(); }
-    first=false;
-  }, ()=>{ setSync(false,'محفوظ: صرف اس ڈیوائس میں'); DOC=null; });
+    else if(first&&!cached){ lastSent=''; push(); }
+    if(!cached) first=false;
+  }, ()=>{ DOC=null; LIVE=false; INIT=false; netShow(); });
 }
 const rs=v=>v.toLocaleString('en-US',{maximumFractionDigits:v<10?2:0})+' روپے';
 const fmt=(g)=>{ if(!(g>0)) return '0 گرام';
@@ -670,10 +677,10 @@ render(); initDb();
     $('az').onclick=e=>{ const a=e.target.closest('a'); if(!a) return; e.preventDefault(); const t=document.getElementById('L-'+a.dataset.k); if(t) t.scrollIntoView({block:'start'}); };
     built=true;
   }
-  function open(){ if(!built) build(); lib.hidden=false; document.body.style.overflow='hidden'; lib.scrollTop=0; setTimeout(()=>$('libX').focus(),0); }
+  function open(){ if(!built) build(); lib.hidden=false; document.body.style.overflow='hidden'; lib.scrollTop=0; KHB.ovOpen(close); setTimeout(()=>$('libX').focus(),0); }
   function close(){ lib.hidden=true; document.body.style.overflow=''; $('libBtn').focus(); }
-  $('libBtn').onclick=open; $('libX').onclick=close;
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!lib.hidden) close(); });
+  $('libBtn').onclick=open; $('libX').onclick=KHB.ovBack;
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!lib.hidden) KHB.ovBack(); });
   $('libQ').oninput=()=>{ const q=$('libQ').value.trim().toLowerCase();
     document.querySelectorAll('#libBody .lc').forEach(c=>{ c.hidden=!!q&&c.dataset.s.indexOf(q)<0; });
     document.querySelectorAll('#libBody .lgrp').forEach(g=>{ g.hidden=!g.querySelector('.lc:not([hidden])'); });
@@ -720,10 +727,10 @@ const ZHF=[["Dihydromyrcenol", 1800, "top", "3", "فارمولے کی سب سے 
       '<div style="display:grid;gap:8px">'+ZHF.map(card).join('')+'</div>';
     built=true;
   }
-  function open(){ if(!built) build(); sp.hidden=false; document.body.style.overflow='hidden'; sp.scrollTop=0; setTimeout(()=>$('spX').focus(),0); }
+  function open(){ if(!built) build(); sp.hidden=false; document.body.style.overflow='hidden'; sp.scrollTop=0; KHB.ovOpen(close); setTimeout(()=>$('spX').focus(),0); }
   function close(){ sp.hidden=true; document.body.style.overflow=''; $('spBtn').focus(); }
-  $('spBtn').onclick=open; $('spX').onclick=close;
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!sp.hidden) close(); });
+  $('spBtn').onclick=open; $('spX').onclick=KHB.ovBack;
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!sp.hidden) KHB.ovBack(); });
   $('spQ').oninput=()=>{ const q=$('spQ').value.trim().toLowerCase(); body.querySelectorAll('.lc').forEach(c=>{ c.hidden=!!q&&c.dataset.s.indexOf(q)<0; }); };
 })();
 })();
@@ -757,7 +764,7 @@ const ZHF=[["Dihydromyrcenol", 1800, "top", "3", "فارمولے کی سب سے 
   var v='', busy=false;
   function sha(t){ return crypto.subtle.digest('SHA-256',new TextEncoder().encode('khb:'+t)).then(function(b){ return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0')}).join(''); }); }
   function draw(){ for(var i=0;i<dots.length;i++) dots[i].classList.toggle('on',i<v.length); inp.value=v; }
-  function unlock(){ try{ sessionStorage.setItem('khb-open','1'); if(localStorage.getItem('khb-page')==='jism'&&!sessionStorage.getItem('khb-nav')){ sessionStorage.setItem('khb-nav','1'); location.replace('jism-khushbu.html'); return; } sessionStorage.setItem('khb-nav','1'); localStorage.setItem('khb-page','surf'); }catch(e){} H.classList.remove('locked'); L.hidden=true; msg.textContent=''; v=''; draw(); $('lockTools').hidden=false; }
+  function unlock(){ try{ sessionStorage.setItem('khb-open','1'); if(localStorage.getItem('khb-page')==='jism'&&!sessionStorage.getItem('khb-nav')){ sessionStorage.setItem('khb-nav','1'); KHB.go('jism-khushbu.html'); return; } sessionStorage.setItem('khb-nav','1'); localStorage.setItem('khb-page','surf'); }catch(e){} H.classList.remove('locked'); L.hidden=true; msg.textContent=''; v=''; draw(); $('lockTools').hidden=false; }
   function lock(){ try{ sessionStorage.removeItem('khb-open'); }catch(e){} H.classList.add('locked'); L.hidden=false; msg.textContent=''; v=''; draw(); $('lockTools').hidden=true; setTimeout(function(){ try{ inp.focus({preventScroll:true}); }catch(e){} },150); }
   function check(){ if(busy||v.length<4) return; busy=true;
     sha(v).then(function(h){ busy=false;
